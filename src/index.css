@@ -1,0 +1,40 @@
+#image-card{
+    width: 20%;
+    background-color: lightgray;
+    margin: 10px;
+    padding: 10px;
+    display:inline-block;
+    align-content: center
+}
+#overlap-container{
+    position: relative;
+    height: 250px;
+    width: 250px;
+    background-color: purple;
+}
+
+#overlap-container img{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}
+#overlap-container div{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+#image-container{
+    background-color:lightblue;
+    margin: 0 auto;
+    width: 80%;
+    align-content: center;
+    text-align: center;
+}
+#day-layover{
+    width: 100%;
+    background-color: antiquewhite
+}
+
