@@ -1,7 +1,7 @@
 const pics = [
     {
         id: 1,
-        day: "2019-02-01",
+        day: "Feb.02,2019",
         image: "https://www.ikea.com/PIAimages/0121015_PE277828_S5.JPG"
     },
     {
