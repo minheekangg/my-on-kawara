@@ -8,11 +8,12 @@ document.addEventListener('DOMContentLoaded', () =>{
         giftList.innerHTML = pics.map(p=> {
             return `<div id="image-card">
             <div id="overlap-container">
-            <img data=${p.id} src=${p.image} />
-            <div id="day-layover">${p.day}</div>
-            </div>
+                <img data=${p.id} src=${p.image} />
+                <div>${p.day}</div>
                 <button>Edit</button>
+                </div>
             </div>`
+
         }).join('')
     }
     showPics(pics)
