@@ -1,28 +1,12 @@
-document.addEventListener('DOMContentLoaded', () =>{
-    const domController = new DOMController()
-    const pictureContainer = new PictureContainer()
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 
-    console.log('DOM has been loaded')
-    // console.table(pics)
+ReactDOM.render(<App />, document.getElementById('root'));
 
-    // const giftList = document.querySelector("#image-list")
-    
-    // showPics = pics => {
-    //     giftList.innerHTML = pics.map(p=> {
-
-    //         return `<div id="image-card">
-    //         <div id="overlap-single">
-    //             <p >${p.day}</p>
-    //             </div>
-    //                     <div id="overlap-container">
-    //             <img data=${p.id} src=${p.image} />
-    //             <div>${p.day}</div>
-    //             <button>Edit</button>
-    //             </div>
-    //         </div>`
-
-    //     }).join('')
-    // }
-    // showPics(pics)
-
-})
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
