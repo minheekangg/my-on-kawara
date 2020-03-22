@@ -5,6 +5,7 @@ const session = require("express-session");
 const cors = require("cors");
 const errorHandler = require("errorhandler");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 mongoose.promise = global.Promise;
 
@@ -30,21 +31,19 @@ if (!isProduction) {
     app.use(errorHandler());
 }
 
-
-mongoose.connect("mongodb://localhost:27017", {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true
 });
-mongoose.Promise = global.Promise;
 mongoose.connection
-    .on('connected', () => {
-        console.log(`Mongoose connection open on ${process.env.MONGODB_URI}`);
-    })
-    .on('error', (err) => {
-        console.log(`Connection error: ${err.message}`);
-    }); 
-mongoose.set("debug", true);
+.on('connected', () => {
+    console.log(`Mongoose connection open on ${process.env.MONGODB_URI}`);
+})
+.on('error', (err) => {
+    console.log(`Connection error: ${err.message}`);
+}); 
+
 
 // Add models
 require('./models/Articles');

@@ -43,7 +43,7 @@ router.post("/", (req, res, next) => {
 
 router.get("/", (req, res, next) => {
     return Articles.find()
-        // .sort({ createdAt: "descending" })
+        .sort({ createdAt: "descending" })
         .then(articles =>
             res.json({ articles: articles.map(article => article.toJSON()) })
         )
