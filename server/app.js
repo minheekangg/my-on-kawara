@@ -30,10 +30,20 @@ if (!isProduction) {
     app.use(errorHandler());
 }
 
-mongoose.connect("mongodb://localhost/lightblog", {
+
+mongoose.connect("mongodb://localhost:27017", {
     useNewUrlParser: true,
-    // useUnifiedTopology: true
+    useFindAndModify: false,
+    useUnifiedTopology: true
 });
+mongoose.Promise = global.Promise;
+mongoose.connection
+    .on('connected', () => {
+        console.log(`Mongoose connection open on ${process.env.MONGODB_URI}`);
+    })
+    .on('error', (err) => {
+        console.log(`Connection error: ${err.message}`);
+    }); 
 mongoose.set("debug", true);
 
 // Add models

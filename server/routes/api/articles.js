@@ -29,8 +29,8 @@ router.post("/", (req, res, next) => {
         });
     }
     const finalArticle = new Articles(body);
-    return finalArticle
-        .save()
+    console.log('here', finalArticle);
+    return finalArticle.save()
         .then(() => {
             console.log('success', finalArticle);
             res.json({ article: finalArticle.toJSON() })
@@ -42,9 +42,8 @@ router.post("/", (req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
-    console.log('fetchig');
     return Articles.find()
-        .sort({ createdAt: "descending" })
+        // .sort({ createdAt: "descending" })
         .then(articles =>
             res.json({ articles: articles.map(article => article.toJSON()) })
         )
