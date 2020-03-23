@@ -1,20 +1,49 @@
+require("dotenv").config();
+
+if (process.env.MONGODB_URI) {
+    // connect to the mongodb
+    const mongoose = require("mongoose");
+    mongoose.connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true
+    });
+    mongoose.Promise = global.Promise;
+    mongoose.connection
+        .on("connected", () => {
+            console.log(
+                `Mongoose connection open on ${process.env.MONGODB_URI}`
+            );
+        })
+        .on("error", err => {
+            console.log(`Connection error: ${err.message}`);
+        });
+
+    process.on("SIGINT", function() {
+        mongoose.connection.close(function() {
+            console.log("Mongoose disconnected on app termination");
+            process.exit(0);
+        });
+    });
+} else {
+    console.log("unconfigured mongo db");
+}
+
+
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const cors = require("cors");
 const errorHandler = require("errorhandler");
-const mongoose = require("mongoose");
-require("dotenv").config();
-
-mongoose.promise = global.Promise;
+const logger = require("morgan");
 
 const isProduction = process.env.NODE_ENV === "production";
 
 const app = express();
 
 app.use(cors());
-app.use(require("morgan")("dev"));
+app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -31,24 +60,10 @@ if (!isProduction) {
     app.use(errorHandler());
 }
 
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true
-});
-mongoose.connection
-.on('connected', () => {
-    console.log(`Mongoose connection open on ${process.env.MONGODB_URI}`);
-})
-.on('error', (err) => {
-    console.log(`Connection error: ${err.message}`);
-}); 
-
-
 // Add models
 require('./models/Articles');
-// Add routes
 
+// Add routes
 app.use(require("./routes"));
 
 app.use((req, res, next) => {

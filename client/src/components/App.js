@@ -3,17 +3,16 @@ import axios from "axios";
 
 export const App = () => {
   const [articles, setArticles] = useState();
-//   const [nextTodoId, setNextTodoId] = useState(0);
-//   const [newTodoLabel, setNewTodoLabel] = useState("");
 
   useEffect(() => {
     axios
       .get(
         "http://localhost:8000/api/articles/"
       )
-      .then( ({articles})=> {
-          console.log(articles);
-        setArticles(articles);
+      .then( res => {
+          if (res && res.data && res.data.articles) {
+              setArticles(res.data.articles);
+          }
       })
       .catch(err=>console.log('error', err));
   }, []);
