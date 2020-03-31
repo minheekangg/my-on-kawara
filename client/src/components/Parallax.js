@@ -25,7 +25,8 @@ const ParallaxStyled = styled.div`
     }
 `;
 
-const Parallax = props => (
+const Parallax = ({post}) => (
+    console.log('props are', post),
     <ParallaxStyled>
         <Controller>
             <div className="section" />
@@ -57,7 +58,7 @@ const Parallax = props => (
                             scale: 2
                         }}
                     >
-                        <h2>{props.title || "Paris"}</h2>
+                        <h2>{post.title || "Paris"}</h2>
                     </Tween>
                 </Timeline>
             </Scene>
