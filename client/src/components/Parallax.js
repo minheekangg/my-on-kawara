@@ -5,7 +5,7 @@ import { Tween, Timeline } from "react-gsap";
 
 const ParallaxStyled = styled.div`
     .section {
-        height: 50vh;
+        height: 40vh;
     }
     .parallax {
         height: 500px;
@@ -25,7 +25,7 @@ const ParallaxStyled = styled.div`
     }
 `;
 
-const Parallax = () => (
+const Parallax = props => (
     <ParallaxStyled>
         <Controller>
             <div className="section" />
@@ -39,9 +39,10 @@ const Parallax = () => (
                         to={{
                             yPercent: 0
                         }}
+                        offset={1000}
                     >
                         <img
-                            src="https://onkawara2.s3.amazonaws.com/jdg576tdRX6FprK6jooumA.jpg"
+                            src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80"
                             alt=""
                         />
                     </Tween>
@@ -56,7 +57,7 @@ const Parallax = () => (
                             scale: 2
                         }}
                     >
-                        <h2>Das ist ein Titel</h2>
+                        <h2>{props.title || "Paris"}</h2>
                     </Tween>
                 </Timeline>
             </Scene>

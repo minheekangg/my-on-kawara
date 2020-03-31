@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom'; 
+import { Route, Switch, withRouter } from 'react-router-dom'; 
 
 import Articles from './components/articles';
 import Welcome from './components/welcome';
@@ -18,4 +18,4 @@ const App =()=> {
     )
 }
 
-export default App;
+export default withRouter(App);
