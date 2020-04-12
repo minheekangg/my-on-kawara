@@ -13,7 +13,6 @@ const post = {
 
 const SamplePost = () => {
     return <div>
-        sample post here
         <PostTitle />
     </div>
 }
