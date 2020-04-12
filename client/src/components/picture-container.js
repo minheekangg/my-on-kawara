@@ -2,31 +2,26 @@ import React from "react";
 import styled from "styled-components";
 
 const PictureContainerWrapper = styled.div`
+    display: flex;
     height: 100vh;
-    border: 1px solid red;
     background-color: #f2eade;
-
-    .parallax {
-        height: 500px;
-        position: relative;
-        overflow: hidden;
-        img {
-            width: 100%;
-            height: auto;
-            position: absolute;
-        }
-        h2 {
-            position: absolute;
-            left: 200px;
-            text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2),
-                0px -5px 35px rgba(255, 255, 255, 0.3);
-        }
-    }
+`;
+const PictureFullBleed = styled.div`
+    border: 1px solid;
+`;
+const PicturesContainer = styled.div`
+    border:1px solid white;
 `;
 
-const PictureContainer = ({post}) => (
+const PictureContainer = () => (
     <PictureContainerWrapper>
-        hi
+        <PictureFullBleed
+            style={{
+                backgroundImage:
+                    "url(https://images.unsplash.com/photo-1524063221847-15c7329095d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80)",
+            }}
+        ></PictureFullBleed>
+        <PicturesContainer></PicturesContainer>
     </PictureContainerWrapper>
 );
 

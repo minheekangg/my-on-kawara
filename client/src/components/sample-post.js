@@ -1,19 +1,23 @@
 import React from 'react';
 
 import PostTitle from './post-title';
+import PictureContainer from './picture-container';
 
 const post = {
-    title: "Paris",
+    title: "Paris, London, Amsterdam",
     startDate: new Date("03/25/2015"),
     endDate: new Date("03/30/2015"),
-    location: "London",
-    coverImage:
-        "https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80"
+    location: ["London", "Paris", "Amsterdam"],
+    stickerPictures: [{img: '', x:0, y:0 }],
+    pictures: [{
+        
+    }]
 };
 
 const SamplePost = () => {
     return <div>
         <PostTitle />
+        <PictureContainer/>
     </div>
 }
 
