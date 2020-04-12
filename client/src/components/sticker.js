@@ -8,8 +8,8 @@ export default class Sticker extends React.Component {
         originalX: 0,
         originalY: 0,
 
-        translateX: this.props.x || 0,
-        translateY: this.props.y || 0,
+        translateX: 0,
+        translateY: 0,
 
         lastTranslateX: 0,
         lastTranslateY: 0,
@@ -83,7 +83,7 @@ export default class Sticker extends React.Component {
     };
 
     render() {
-        const { children } = this.props;
+        const { children, x, y } = this.props;
         const { translateX, translateY, isDragging } = this.state;
 
         return (
@@ -93,6 +93,7 @@ export default class Sticker extends React.Component {
                 y={translateY}
                 isDragging={isDragging}
                 img={this.props.img}
+                style={{left: x, top: y}}
             >
                 {children}
                 </Container>
