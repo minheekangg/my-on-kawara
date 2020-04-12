@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Parallax from './parallax';
+import PostTitle from './post-title';
 
 const post = {
     title: "Paris",
@@ -14,7 +14,7 @@ const post = {
 const SamplePost = () => {
     return <div>
         sample post here
-        <Parallax post={post}/>
+        <PostTitle />
     </div>
 }
 
