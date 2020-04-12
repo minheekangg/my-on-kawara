@@ -102,22 +102,23 @@ export default class Sticker extends React.Component {
 
 const Container = styled.div`
     cursor: grab;
-    width: 200px;
+    width: ${(props) => props.width || 200}px;
     transform: translate(
         ${(props) => props.x || 0}px,
         ${(props) => props.y || 0}px
     );
     transition: transform 0.3s ease-in-out;
     background-image: url(${(props) => props.img});
-    padding-top: 50%;
+    padding-top: ${(props) => props.height || 50}%;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    position: absolute;
 
     ${({ isDragging }) =>
-    isDragging &&
-    css`
-        opacity: 0.8;
-        cursor: grabbing;
-    `};
+        isDragging &&
+        css`
+            opacity: 0.8;
+            cursor: grabbing;
+        `};
 `;

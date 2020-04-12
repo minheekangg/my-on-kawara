@@ -16,7 +16,7 @@ const PostTitleWrapper = styled.div`
     .title-container {
         position: absolute;
         margin: auto;
-        border: 1px solid red;
+        // border: 1px solid red;
         background-color: #f2eade;
         width: 100px;
         left: calc(50% - 100px);
@@ -37,6 +37,22 @@ export default class PostTitle extends React.Component {
                     }
                     x={100}
                     y={0}
+                    width={100}
+                    height={30}
+                />
+                <Sticker
+                    img={
+                        "https://images.unsplash.com/photo-1520010017217-db8870fd542f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"
+                    }
+                    x={550}
+                    y={100}
+                />
+                <Sticker
+                    img={
+                        "https://images.unsplash.com/photo-1524850301259-7729d41d11d9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1026&q=80"
+                    }
+                    x={700}
+                    y={400}
                 />
             </PostTitleWrapper>
         );
