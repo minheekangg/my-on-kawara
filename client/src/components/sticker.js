@@ -111,7 +111,7 @@ const Container = styled.div`
     transition: transform 0.3s ease-in-out;
     background-image: url(${(props) => props.img});
     padding-top: ${(props) => props.height || 50}%;
-    background-position: center;
+    background-position: center top;
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
