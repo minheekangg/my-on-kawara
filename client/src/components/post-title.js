@@ -22,6 +22,7 @@ const PostTitleWrapper = styled.div`
         left: calc(50% - 100px);
         top: calc(50% - 50px);
         padding: 50px;
+        z-index: 3;
     }
 `;
 
@@ -29,11 +30,15 @@ export default class PostTitle extends React.Component {
     render(){
         return (
             <PostTitleWrapper>
-                <div className="title-container">
-                hi
-                </div>
-                <Sticker img={'https://www.teachok.com/logo.svg'} x={100} y={0}/>
+                <div className="title-container">hi</div>
+                <Sticker
+                    img={
+                        "https://images.unsplash.com/photo-1567748534085-467f8a8a475d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=582&q=80"
+                    }
+                    x={100}
+                    y={0}
+                />
             </PostTitleWrapper>
-        )
+        );
     }
 };

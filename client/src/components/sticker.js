@@ -8,8 +8,8 @@ export default class Sticker extends React.Component {
         originalX: 0,
         originalY: 0,
 
-        translateX: 0,
-        translateY: 0,
+        translateX: this.props.x || 0,
+        translateY: this.props.y || 0,
 
         lastTranslateX: 0,
         lastTranslateY: 0,
@@ -85,13 +85,14 @@ export default class Sticker extends React.Component {
     render() {
         const { children } = this.props;
         const { translateX, translateY, isDragging } = this.state;
-        console.log('state', this.state);
+
         return (
             <Container
                 onMouseDown={this.handleMouseDown}
                 x={translateX}
                 y={translateY}
                 isDragging={isDragging}
+                img={this.props.img}
             >
                 {children}
                 </Container>
@@ -101,11 +102,17 @@ export default class Sticker extends React.Component {
 
 const Container = styled.div`
     cursor: grab;
-    border: 1px solid blue;
-    width: 100px;
-    height: 100px;
-    transform: translate(${props=>props.x || 0}px, ${props=>props.y || 0}px);
-    transition: transform .3s ease-in-out;
+    width: 200px;
+    transform: translate(
+        ${(props) => props.x || 0}px,
+        ${(props) => props.y || 0}px
+    );
+    transition: transform 0.3s ease-in-out;
+    background-image: url(${(props) => props.img});
+    padding-top: 50%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 
     ${({ isDragging }) =>
     isDragging &&
