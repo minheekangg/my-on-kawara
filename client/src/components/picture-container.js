@@ -34,7 +34,7 @@ const PicturesContainer = styled.div`
 `;
 
 const PictureDescription = styled.div`
-    padding: 30px 10px 0;
+    padding: 30px 15px 0;
 `;
 
 const AdditionalContent = styled.div`
@@ -59,7 +59,7 @@ const PICTURES = [{
     src: "https://images.unsplash.com/photo-1524063221847-15c7329095d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80",
     date: new Date(),
     people: ['minhee', 'jonah'],
-    location: 'url here?',
+    location: 'https://goo.gl/maps/to5RLscS7XbVqeT18',
     description: 'paris'
 }, {
     src: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80",
@@ -71,13 +71,11 @@ const PICTURES = [{
     src: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1607&q=80",
     date: new Date(),
     people: ['minhee', 'jonah'],
-    location: 'url here?',
     description: 'paris'
 }, {
     src: "https://images.unsplash.com/photo-1542729716-86ee2c2c92ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
     date: new Date(),
     people: ['minhee', 'jonah'],
-    location: 'url here?',
     description: 'paris'
 }]
 
@@ -100,8 +98,9 @@ const PictureContainer = () => {
             </PicturesContainer>
             <PictureDescription>
                 <Moment format="MM/DD/YYYY">{PICTURES[currentPictureIdx].date}</Moment>
-                <span> {PICTURES[currentPictureIdx].location} </span>
                 <span> {PICTURES[currentPictureIdx].people.join(", ")} </span>
+                { !!PICTURES[currentPictureIdx].location && <span><a target="_blank" rel="noopener noreferrer" href={PICTURES[currentPictureIdx].location}>location</a> </span>}
+                { !!PICTURES[currentPictureIdx].description && <span>{PICTURES[currentPictureIdx].description}</span>}
             </PictureDescription>
             <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}>
                 here are some contents of my thoughts about this trip
