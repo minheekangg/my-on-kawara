@@ -4,18 +4,17 @@ import styled from "styled-components";
 import Sticker from './sticker';
 
 const PostTitleWrapper = styled.div`
-    height: 100vh;
+    height: calc(100vh - 20px);
     background-color: #f2eade;
     position: relative;
+    margin: 10px;
+    overflow: hidden;
     
     .title-container {
         position: absolute;
         margin: auto;
         background-color: #f2eade;
         width: 300px;
-        // height: 100px;
-        // left: calc(50% - 150px - 50px);
-        // top: 30%;
         border: 1px solid;
         margin: 10px;
         bottom: 10%;
@@ -23,8 +22,6 @@ const PostTitleWrapper = styled.div`
         padding: 30px;
         z-index: 3;
         text-align: center;
-
-        // h2 { margin-top: 0;}
     }
 `;
 
@@ -56,10 +53,10 @@ export default class PostTitle extends React.Component {
         return this.state.dimensions && STICKERS.map(s=> {
             return <Sticker
                 img={s}
-                x={Math.floor(Math.random() * this.state.dimensions.width)}
-                y={Math.floor(Math.random() * this.state.dimensions.height)}
-                // width={100}
-                // height={30}
+                x={Math.floor(Math.random() * (this.state.dimensions.width - 300))}
+                y={Math.floor(Math.random() * (this.state.dimensions.height - 300))}
+                width={100}
+                height={30}
             />
         })
     }
@@ -74,7 +71,6 @@ export default class PostTitle extends React.Component {
                 </div>
                 <StickerContainer ref={el => {this.container = el}}>
                     {this.renderStickers()}
-                   
                 </StickerContainer>
             </PostTitleWrapper>
         );
