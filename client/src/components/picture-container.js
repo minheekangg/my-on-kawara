@@ -28,6 +28,11 @@ const PicturesContainer = styled.div`
    }
 `;
 
+const AdditionalContent = styled.div`
+   margin: 10px;
+   font-size: 14px;
+`;
+
 const PICTURES = [
     "https://images.unsplash.com/photo-1524063221847-15c7329095d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80",
     "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80",
@@ -55,7 +60,10 @@ const PictureContainer = () => {
                     return <img data={idx} onClick={()=>setCurrentPictureIdx(idx)} src={p}/>
                 })}
             </PicturesContainer>
-            here are some contents of my thoughts about this trip
+            <hr/>
+            <AdditionalContent>
+                here are some contents of my thoughts about this trip
+            </AdditionalContent>
         </PostContentContainer>
     </PictureContainerWrapper>
 };
