@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import Moment from "react-moment";
+import "moment-timezone";
+
 const PictureContainerWrapper = styled.div`
     display: flex;
     height: calc(100vh - 20px);
@@ -96,7 +99,9 @@ const PictureContainer = () => {
                 })}
             </PicturesContainer>
             <PictureDescription>
-                {PICTURES[currentPictureIdx].location}
+                <Moment format="MM/DD/YYYY">{PICTURES[currentPictureIdx].date}</Moment>
+                <span> {PICTURES[currentPictureIdx].location} </span>
+                <span> {PICTURES[currentPictureIdx].people.join(", ")} </span>
             </PictureDescription>
             <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}>
                 here are some contents of my thoughts about this trip
