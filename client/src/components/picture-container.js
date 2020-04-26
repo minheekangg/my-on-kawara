@@ -16,21 +16,35 @@ const PictureFullBleed = styled.div`
     margin: 10px;
 `;
 const PostContentContainer = styled.div`
-    // border:1px solid white;
     width: 50vw;
     margin: 10px;
+    position: relative;
 `;
 const PicturesContainer = styled.div`
-   img {
-       width: 100px;
-       height: 100px;
-       margin: 10px;
-   }
+    height: 80vh;
+    img {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        cursor: pointer;
+    }
 `;
 
 const AdditionalContent = styled.div`
    margin: 10px;
    font-size: 14px;
+   border-top: 1px solid;
+   height: 100%;
+   background-color: white;
+   width: 100%;
+   transition: all 0.5s;
+
+   &.active {
+       transform: translateY(-80vh);
+   }
+   &.not-active {
+       
+   }
 `;
 
 const PICTURES = [
@@ -46,6 +60,7 @@ const PICTURES = [
 
 const PictureContainer = () => {
     const [currentPictureIdx, setCurrentPictureIdx] = useState(0);
+    const [expandText, setExpandText] = useState(false);
 
     return <PictureContainerWrapper>
         <PictureFullBleed
@@ -60,8 +75,7 @@ const PictureContainer = () => {
                     return <img data={idx} onClick={()=>setCurrentPictureIdx(idx)} src={p}/>
                 })}
             </PicturesContainer>
-            <hr/>
-            <AdditionalContent>
+            <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}>
                 here are some contents of my thoughts about this trip
             </AdditionalContent>
         </PostContentContainer>
