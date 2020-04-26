@@ -18,7 +18,7 @@ const PictureFullBleed = styled.div`
 const PostContentContainer = styled.div`
     width: 50vw;
     margin: 10px;
-    position: relative;
+    overflow: hidden;
 `;
 const PicturesContainer = styled.div`
     height: 80vh;
@@ -30,21 +30,26 @@ const PicturesContainer = styled.div`
     }
 `;
 
-const AdditionalContent = styled.div`
-   margin: 10px;
-   font-size: 14px;
-   border-top: 1px solid;
-   height: 100%;
-   background-color: white;
-   width: 100%;
-   transition: all 0.5s;
+const PictureDescription = styled.div`
+    padding: 30px 10px 0;
+`;
 
-   &.active {
-       transform: translateY(-80vh);
-   }
-   &.not-active {
-       
-   }
+const AdditionalContent = styled.div`
+    margin: 10px;
+    font-size: 14px;
+    border-top: 1px solid;
+    height: 100%;
+    background-color: white;
+    padding: 10px;
+    transition: all 0.5s;
+    cursor:pointer;
+
+    &.active {
+        transform: translateY(-80vh);
+    }
+    &.not-active {
+        
+    }
 `;
 
 const PICTURES = [
@@ -75,8 +80,14 @@ const PictureContainer = () => {
                     return <img data={idx} onClick={()=>setCurrentPictureIdx(idx)} src={p}/>
                 })}
             </PicturesContainer>
+            <PictureDescription>
+                Day 1; Jonah + MinHee airbnb
+            </PictureDescription>
             <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}>
                 here are some contents of my thoughts about this trip
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <br/>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </AdditionalContent>
         </PostContentContainer>
     </PictureContainerWrapper>
