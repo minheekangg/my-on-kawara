@@ -52,16 +52,31 @@ const AdditionalContent = styled.div`
     }
 `;
 
-const PICTURES = [
-    "https://images.unsplash.com/photo-1524063221847-15c7329095d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80",
-    "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80",
-    "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1607&q=80",
-    "https://images.unsplash.com/photo-1542729716-86ee2c2c92ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    "https://images.unsplash.com/photo-1542729716-86ee2c2c92ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    "https://images.unsplash.com/photo-1542729716-86ee2c2c92ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    "https://images.unsplash.com/photo-1542729716-86ee2c2c92ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-
-]
+const PICTURES = [{
+    src: "https://images.unsplash.com/photo-1524063221847-15c7329095d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80",
+    date: new Date(),
+    people: ['minhee', 'jonah'],
+    location: 'url here?',
+    description: 'paris'
+}, {
+    src: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80",
+    date: new Date(),
+    people: ['minhee', 'jonah'],
+    location: 'url here?',
+    description: 'paris',
+}, {
+    src: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1607&q=80",
+    date: new Date(),
+    people: ['minhee', 'jonah'],
+    location: 'url here?',
+    description: 'paris'
+}, {
+    src: "https://images.unsplash.com/photo-1542729716-86ee2c2c92ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+    date: new Date(),
+    people: ['minhee', 'jonah'],
+    location: 'url here?',
+    description: 'paris'
+}]
 
 const PictureContainer = () => {
     const [currentPictureIdx, setCurrentPictureIdx] = useState(0);
@@ -70,18 +85,18 @@ const PictureContainer = () => {
     return <PictureContainerWrapper>
         <PictureFullBleed
             style={{
-                backgroundImage: `url(${PICTURES[currentPictureIdx]})`,
+                backgroundImage: `url(${PICTURES[currentPictureIdx].src})`,
             }}
         ></PictureFullBleed>
         <hr style={{margin: 0}} />
         <PostContentContainer>
             <PicturesContainer>
                 {PICTURES.map((p, idx)=> {
-                    return <img data={idx} onClick={()=>setCurrentPictureIdx(idx)} src={p}/>
+                    return <img key={p.description + idx} onClick={()=>setCurrentPictureIdx(idx)} src={p.src} alt={p.description}/>
                 })}
             </PicturesContainer>
             <PictureDescription>
-                Day 1; Jonah + MinHee airbnb
+                {PICTURES[currentPictureIdx].location}
             </PictureDescription>
             <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}>
                 here are some contents of my thoughts about this trip

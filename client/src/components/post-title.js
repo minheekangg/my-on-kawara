@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
+import Moment from "react-moment";
+import "moment-timezone";
+
 import Sticker from './sticker';
 
 const PostTitleWrapper = styled.div`
@@ -52,6 +55,7 @@ export default class PostTitle extends React.Component {
     renderStickers(){
         return this.state.dimensions && STICKERS.map(s=> {
             return <Sticker
+                key={s}
                 img={s}
                 x={Math.floor(Math.random() * (this.state.dimensions.width - 300))}
                 y={Math.floor(Math.random() * (this.state.dimensions.height - 300))}
@@ -67,9 +71,13 @@ export default class PostTitle extends React.Component {
                 <div className="title-container">
                     With love, from
                     <h2>Paris, Amsterdam, London</h2>
-                    <datetime>April 08, 2018 - April 14, 2018</datetime>
+                    <Moment>April 08, 2018 - April 14, 2018</Moment>
                 </div>
-                <StickerContainer ref={el => {this.container = el}}>
+                <StickerContainer
+                    ref={(el) => {
+                        this.container = el;
+                    }}
+                >
                     {this.renderStickers()}
                 </StickerContainer>
             </PostTitleWrapper>
