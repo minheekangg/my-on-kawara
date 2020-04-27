@@ -6,7 +6,7 @@ const PhotoSchema = new Schema(
     {
         src: { type: String, required: true },
         date: { type: String, required: true },
-        people: { type: [Schema.Types.ObjectId], ref: 'Person' },
+        people: { type: Array, ref: 'Person' },
         location: { type: String },
         description: { type: String, required: true },
     },

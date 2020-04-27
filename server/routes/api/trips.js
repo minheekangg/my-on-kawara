@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const router = require("express").Router();
 const Trip = mongoose.model("Trip");
+const Person = mongoose.model("Person");
 
-router.post("/", (req, res, next) => {
+router.post("/", async(req, res, next) => {
     const { body } = req;
-
+    console.log('body', body)
     if (!body.title) {
         return res.status(422).json({
             errors: {
@@ -45,15 +46,17 @@ router.post("/", (req, res, next) => {
     //     });
     // }
 
-    const finalTrip = new Trip(body);
+    console.log('request is', request);
+
+    const finalTrip = new Trip(request);
 
     return finalTrip.save()
         .then(() => {
             console.log('success', finalTrip);
             res.json({ trip: finalTrip.toJSON() })
         })
-        .catch(()=> {
-            console.log('error') 
+        .catch((err)=> {
+            console.log('error', err ) 
             next
         });
 });
