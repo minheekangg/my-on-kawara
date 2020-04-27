@@ -28,6 +28,7 @@ router.post("/", (req, res, next) => {
             }
         });
     }
+    
     const finalArticle = new Articles(body);
     console.log('here', finalArticle);
     return finalArticle.save()
@@ -44,9 +45,10 @@ router.post("/", (req, res, next) => {
 router.get("/", (req, res, next) => {
     return Articles.find()
         .sort({ createdAt: "descending" })
-        .then(articles =>
+        .then(articles =>{
+            console.log('here fetch done')
             res.json({ articles: articles.map(article => article.toJSON()) })
-        )
+        })
         .catch(next);
 });
 
