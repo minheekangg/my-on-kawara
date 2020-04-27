@@ -60,7 +60,10 @@ if (!isProduction) {
 }
 
 // Add models
-require('./models/Trips');
+require('./models/Trip');
+require('./models/Photo');
+require('./models/Person');
+require('./models/Destination');
 
 // Add routes
 app.use(require("./routes"));

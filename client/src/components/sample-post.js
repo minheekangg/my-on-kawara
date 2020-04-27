@@ -8,10 +8,6 @@ const post = {
     startDate: new Date("03/25/2015"),
     endDate: new Date("03/30/2015"),
     location: ["London", "Paris", "Amsterdam"],
-    stickerPictures: [{img: '', x:0, y:0 }],
-    pictures: [{
-        
-    }]
 };
 
 const SamplePost = () => {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const router = require("express").Router();
-const Trips = mongoose.model("Trips");
+const Trip = mongoose.model("Trip");
 
 router.post("/", (req, res, next) => {
     const { body } = req;
@@ -13,10 +13,10 @@ router.post("/", (req, res, next) => {
         });
     }
 
-    if (!body.author) {
+    if (!body.people) {
         return res.status(422).json({
             errors: {
-                author: "Author is required"
+                people: "People is required"
             }
         });
     }
@@ -29,12 +29,12 @@ router.post("/", (req, res, next) => {
         });
     }
 
-    const finalTrips = new Trips(body);
+    const finalTrip = new Trip(body);
 
-    return finalTrips.save()
+    return finalTrip.save()
         .then(() => {
-            console.log('success', finalTrips);
-            res.json({ trips: finalTrips.toJSON() })
+            console.log('success', finalTrip);
+            res.json({ trip: finalTrip.toJSON() })
         })
         .catch(()=> {
             console.log('error') 
@@ -43,17 +43,17 @@ router.post("/", (req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
-    return Trips.find()
+    return Trip.find()
         .sort({ createdAt: "descending" })
-        .then(trips =>{
+        .then(trip =>{
             console.log('here fetch done')
-            res.json({ trips: trips.map(trip => trip.toJSON()) })
+            res.json({ trip: trip.map(trip => trip.toJSON()) })
         })
         .catch(next);
 });
 
 router.param("id", (req, res, next, id) => {
-    return Trips.findById(id, (err, trip) => {
+    return Trip.findById(id, (err, trip) => {
         if (err) {
             return res.sendStatus(404);
         } else if (trip) {
@@ -91,7 +91,7 @@ router.patch("/:id", (req, res, next) => {
 });
 
 router.delete("/:id", (req, res, next) => {
-    return Trips.findByIdAndRemove(req.trip._id)
+    return Trip.findByIdAndRemove(req.trip._id)
         .then(() => res.sendStatus(200))
         .catch(next);
 });
