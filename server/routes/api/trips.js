@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 const router = require("express").Router();
-const Articles = mongoose.model("Articles");
+const Trips = mongoose.model("Trips");
 
 router.post("/", (req, res, next) => {
     const { body } = req;
 
-    if (!body.title) {
+    if (!body.dates) {
         return res.status(422).json({
             errors: {
-                title: "is required"
+                title: "Dates are required"
             }
         });
     }
@@ -16,7 +16,7 @@ router.post("/", (req, res, next) => {
     if (!body.author) {
         return res.status(422).json({
             errors: {
-                author: "is required"
+                author: "Author is required"
             }
         });
     }
@@ -24,17 +24,17 @@ router.post("/", (req, res, next) => {
     if (!body.body) {
         return res.status(422).json({
             errors: {
-                body: "is required"
+                body: "Body is required"
             }
         });
     }
-    
-    const finalArticle = new Articles(body);
-    console.log('here', finalArticle);
-    return finalArticle.save()
+
+    const finalTrips = new Trips(body);
+
+    return finalTrips.save()
         .then(() => {
-            console.log('success', finalArticle);
-            res.json({ article: finalArticle.toJSON() })
+            console.log('success', finalTrips);
+            res.json({ trips: finalTrips.toJSON() })
         })
         .catch(()=> {
             console.log('error') 
@@ -43,21 +43,21 @@ router.post("/", (req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
-    return Articles.find()
+    return Trips.find()
         .sort({ createdAt: "descending" })
-        .then(articles =>{
+        .then(trips =>{
             console.log('here fetch done')
-            res.json({ articles: articles.map(article => article.toJSON()) })
+            res.json({ trips: trips.map(trip => trip.toJSON()) })
         })
         .catch(next);
 });
 
 router.param("id", (req, res, next, id) => {
-    return Articles.findById(id, (err, article) => {
+    return Trips.findById(id, (err, trip) => {
         if (err) {
             return res.sendStatus(404);
-        } else if (article) {
-            req.article = article;
+        } else if (trip) {
+            req.trip = trip;
             return next();
         }
     }).catch(next);
@@ -65,7 +65,7 @@ router.param("id", (req, res, next, id) => {
 
 router.get("/:id", (req, res, next) => {
     return res.json({
-        article: req.article.toJSON()
+        trip: req.trip.toJSON()
     });
 });
 
@@ -73,25 +73,25 @@ router.patch("/:id", (req, res, next) => {
     const { body } = req;
 
     if (typeof body.title !== "undefined") {
-        req.article.title = body.title;
+        req.trip.title = body.title;
     }
 
     if (typeof body.author !== "undefined") {
-        req.article.author = body.author;
+        req.trip.author = body.author;
     }
 
     if (typeof body.body !== "undefined") {
-        req.article.body = body.body;
+        req.trip.body = body.body;
     }
 
-    return req.article
+    return req.trip
         .save()
-        .then(() => res.json({ article: req.article.toJSON() }))
+        .then(() => res.json({ trip: req.trip.toJSON() }))
         .catch(next);
 });
 
 router.delete("/:id", (req, res, next) => {
-    return Articles.findByIdAndRemove(req.article._id)
+    return Trips.findByIdAndRemove(req.trip._id)
         .then(() => res.sendStatus(200))
         .catch(next);
 });
