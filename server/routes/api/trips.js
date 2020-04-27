@@ -45,8 +45,6 @@ router.post("/", (req, res, next) => {
     //     });
     // }
 
-    await 
-
     const finalTrip = new Trip(body);
 
     return finalTrip.save()
