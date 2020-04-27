@@ -11,7 +11,7 @@ const TripSchema = new Schema(
         destination: { type: [Schema.Types.ObjectId], required: true, ref: 'Destination' },
         content: { type: String },
         stickers: { type: [String] },
-        photos: { type: [Schema.Types.ObjectId], required: true, ref: 'Photo' },
+        photos: { type: [Schema.Types.ObjectId], ref: 'Photo' },
     },
     { timestamps: true }
 );

@@ -8,7 +8,7 @@ router.post("/", (req, res, next) => {
     if (!body.date) {
         return res.status(422).json({
             errors: {
-                date: "Date is required"
+                date: "is required"
             }
         });
     }
@@ -16,7 +16,7 @@ router.post("/", (req, res, next) => {
     if (!body.destination) {
         return res.status(422).json({
             errors: {
-                destination: "Destination is required"
+                destination: "is required"
             }
         });
     }

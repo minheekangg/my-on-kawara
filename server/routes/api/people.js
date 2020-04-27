@@ -8,7 +8,7 @@ router.post("/", (req, res, next) => {
     if (!body.name) {
         return res.status(422).json({
             errors: {
-                name: "Name is required"
+                name: "is required"
             }
         });
     }

@@ -5,10 +5,26 @@ const Trip = mongoose.model("Trip");
 router.post("/", (req, res, next) => {
     const { body } = req;
 
-    if (!body.dates) {
+    if (!body.title) {
         return res.status(422).json({
             errors: {
-                title: "Dates are required"
+                title: "is required"
+            }
+        });
+    }
+
+    if (!body.startDate) {
+        return res.status(422).json({
+            errors: {
+                startDate: "is required"
+            }
+        });
+    }
+
+    if (!body.endDate) {
+        return res.status(422).json({
+            errors: {
+                endDate: "is required"
             }
         });
     }
@@ -16,18 +32,20 @@ router.post("/", (req, res, next) => {
     if (!body.people) {
         return res.status(422).json({
             errors: {
-                people: "People is required"
+                people: "are required"
             }
         });
     }
 
-    if (!body.body) {
-        return res.status(422).json({
-            errors: {
-                body: "Body is required"
-            }
-        });
-    }
+    // if (!body.destination) {
+    //     return res.status(422).json({
+    //         errors: {
+    //             destination: "is required"
+    //         }
+    //     });
+    // }
+
+    await 
 
     const finalTrip = new Trip(body);
 
@@ -47,7 +65,7 @@ router.get("/", (req, res, next) => {
         .sort({ createdAt: "descending" })
         .then(trip =>{
             console.log('here fetch done')
-            res.json({ trip: trip.map(trip => trip.toJSON()) })
+            res.json({ trip })
         })
         .catch(next);
 });
@@ -65,7 +83,7 @@ router.param("id", (req, res, next, id) => {
 
 router.get("/:id", (req, res, next) => {
     return res.json({
-        trip: req.trip.toJSON()
+        trip: req.trip
     });
 });
 
@@ -76,17 +94,21 @@ router.patch("/:id", (req, res, next) => {
         req.trip.title = body.title;
     }
 
-    if (typeof body.author !== "undefined") {
-        req.trip.author = body.author;
+    if (typeof body.startDate !== "undefined") {
+        req.trip.startDate = body.startDate;
     }
 
-    if (typeof body.body !== "undefined") {
-        req.trip.body = body.body;
+    if (typeof body.endDate !== "undefined") {
+        req.trip.endDate = body.endDate;
+    }
+
+    if (typeof body.people !== "undefined") {
+        req.trip.people = body.people;
     }
 
     return req.trip
         .save()
-        .then(() => res.json({ trip: req.trip.toJSON() }))
+        .then(() => res.json({ trip }))
         .catch(next);
 });
 

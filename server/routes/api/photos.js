@@ -9,7 +9,7 @@ router.post("/", (req, res, next) => {
     if (!body.src) {
         return res.status(422).json({
             errors: {
-                src: "Src is required"
+                src: "is required"
             }
         });
     }
@@ -17,7 +17,7 @@ router.post("/", (req, res, next) => {
     if (!body.description) {
         return res.status(422).json({
             errors: {
-                description: "Description is required"
+                description: "is required"
             }
         });
     }
@@ -25,7 +25,7 @@ router.post("/", (req, res, next) => {
     if (!body.date) {
         return res.status(422).json({
             errors: {
-                date: "Date is required"
+                date: "is required"
             }
         });
     }
