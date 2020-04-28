@@ -36,7 +36,7 @@ export default function articlesReducer(state = initialState, action) {
                 ...state,
                 fetched: true,
                 fetching: false,
-                ...articles
+                articles
             };
         }
         case ActionTypes.RESET:
