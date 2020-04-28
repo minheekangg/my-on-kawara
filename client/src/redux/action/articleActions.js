@@ -1,4 +1,4 @@
-import { ActionTypes } from 'utils/constants';
+import { ActionTypes } from '../../utils/constants';
 import axios from 'axios';
 
 export const fetchArticles = () => {
@@ -7,22 +7,21 @@ export const fetchArticles = () => {
             { type: ActionTypes.FETCH_ARTICLES + '_PENDING' }
         )
         return axios.get(
-            `${process.env.REACT_APP_SERVER}/api/articles`,
+            "http://localhost:8000/api/trips",
             {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-                    "content-type": "application/json",
-                    accept: "application/json"
+                    "Content-Type": "application/json",
+                    // accept: "application/json"
                 }
-            }
-        )
-            .then(r => r.json())
-            .then(articles => {
-                dispatch({ type: ActionTypes.FETCH_ARTICLES + '_FULFILLED', payload: articles });
+            })
+            .then(r => {
+                if (r && r.data && r.data.trip && !!r.data.trip.length) {
+                    dispatch({ type: ActionTypes.FETCH_ARTICLES + '_FULFILLED', payload: r.data.trip });
+                }
             })
             .catch(err=> {
-                dispatch({ type: ActionTypes.FETCH_ARTICLES + '_FULFILLED', payload: err });
+                dispatch({ type: ActionTypes.FETCH_ARTICLES + '_REJECTED', payload: err });
             })
     }
-}
 }

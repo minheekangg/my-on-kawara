@@ -1,8 +1,7 @@
-import { ActionTypes } from 'utils/constants';
+import { ActionTypes } from '../../utils/constants';
 
 const initialState = {
 };
-
 
 export default function articlesReducer(state = initialState, action) {
     console.log('%c articlesReducer', 'color: blue', state, action);
@@ -13,7 +12,7 @@ export default function articlesReducer(state = initialState, action) {
             };
         }
         case ActionTypes.FETCH_ARTICLES + '_REJECTED': {
-            // const error = getErrorMsg(action);
+            const error = action.payload.error;
             // const code = getErrorStatusCode(action);
 
             // if (code === 404) {
@@ -31,7 +30,7 @@ export default function articlesReducer(state = initialState, action) {
             };
         }
         case ActionTypes.FETCH_ARTICLES + '_FULFILLED': {
-            const articles = action.payload.articles;
+            const articles = action.payload;
 
             return {
                 ...state,
@@ -40,7 +39,7 @@ export default function articlesReducer(state = initialState, action) {
                 ...articles
             };
         }
-        case RESET:
+        case ActionTypes.RESET:
             return initialState
         default:
             return state;
