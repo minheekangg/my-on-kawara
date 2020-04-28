@@ -79,10 +79,9 @@ const PICTURES = [{
     description: 'paris'
 }]
 
-const PictureContainer = () => {
+const PictureContainer = ({article}) => {
     const [currentPictureIdx, setCurrentPictureIdx] = useState(0);
     const [expandText, setExpandText] = useState(false);
-
     return <PictureContainerWrapper>
         <PictureFullBleed
             style={{
@@ -102,11 +101,7 @@ const PictureContainer = () => {
                 { !!PICTURES[currentPictureIdx].location && <span><a target="_blank" rel="noopener noreferrer" href={PICTURES[currentPictureIdx].location}>location</a> </span>}
                 { !!PICTURES[currentPictureIdx].description && <span>{PICTURES[currentPictureIdx].description}</span>}
             </PictureDescription>
-            <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}>
-                here are some contents of my thoughts about this trip
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                <br/>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}> {!!article.content && article.content}
             </AdditionalContent>
         </PostContentContainer>
     </PictureContainerWrapper>

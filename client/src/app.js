@@ -3,7 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 
 import Articles from './components/articles';
 import Welcome from './components/welcome';
-// import SamplePost from './components/sample-post';
+import CreateArticle from './components/create-article';
 
 const App =()=> {
     return (
@@ -12,7 +12,7 @@ const App =()=> {
             <Switch>
                 <Route exact path="/" component={Welcome}/>
                 <Route path="/articles" component={Articles}/>
-                {/* <Route path="/post" component={SamplePost}/> */}
+                <Route path="/create-article" component={CreateArticle}/>
             </Switch>
         </>
     )
