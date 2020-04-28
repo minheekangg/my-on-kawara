@@ -1,40 +1,37 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const searchTerm = 'paris';
-const upsplash_id = process.env.REACT_APP_UPSPLASH_ACCESS_KEY.replace("'", "");
+import PostTitle from './post-title';
+import PictureContainer from './picture-container';
 
 const Articles = () => {
     const [articles, setArticles] = useState();
 
     useEffect(() => {
         axios
-            .get(`https://api.unsplash.com/search/photos`, {
-                params: { query: searchTerm },
+            .get("http://localhost:8000/api/trips", {
                 headers: {
-                    Authorization:
-                        `Client-ID ${upsplash_id}`
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then((res) => {
+                if (
+                    res &&
+                    res.data &&
+                    res.data.trip &&
+                    !!res.data.trip.length
+                ) {
+                    console.log(res.data.trip);
+                    setArticles(res.data.trip);
                 }
             })
-            .then(res => {
-                if (res && res.data && res.data.results && !!res.data.results.length) {
-                    console.log(res.data.results);
-                    setArticles(res.data.results);
-                }
-            })
-            //   .then( res => {
-            //       if (res && res.data && res.data.articles) {
-            //           setArticles(res.data.articles);
-            //       }
-            //   })
-            .catch(err => console.log("error", err));
+            .catch((err) => console.log("error", err));
     }, []);
 
     return articles ? (
         <div>
-            {articles.map(article => {
-                return <img src={article.urls.small} key={article.id} alt={article.alt_description} />
-            })}
+            <PostTitle article={articles[0]}/>
+            <PictureContainer article={articles[0]}/>
         </div>
     ) : (
             <div>nothing yet</div>

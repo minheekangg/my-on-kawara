@@ -41,9 +41,17 @@ const STICKERS = [
 ]
 
 export default class PostTitle extends React.Component {
-    state = {
-        dimensions: null,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            dimensions: null,
+            stickers: props.article.stickers || STICKERS,
+            title: props.article.title || 'title',
+            startDate: props.article.startDate || "",
+            endDate: props.article.endDate || "",
+        }
+    }
+
     componentDidMount() {
         this.setState({
             dimensions: {
@@ -66,12 +74,13 @@ export default class PostTitle extends React.Component {
     }
 
     render(){
+        console.log('props are', this.props)
         return (
             <PostTitleWrapper>
                 <div className="title-container">
                     With love, from
-                    <h2>Paris, Amsterdam, London</h2>
-                    <Moment>April 08, 2018 - April 14, 2018</Moment>
+                    <h2>{this.state.title}</h2>
+                    <Moment format="MM/DD/YYYY">{this.state.startDate}</Moment> - <Moment format="MM/DD/YYYY">{this.state.endDate}</Moment>
                 </div>
                 <StickerContainer
                     ref={(el) => {
