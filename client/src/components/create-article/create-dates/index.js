@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
 import CreateDates from './create-dates';
 
-import { fetchArticles } from 'redux/action/articleActions';
+import { updateProp } from 'redux/action/createActions';
 
 const mapStateToProps = (state, ownProps) => (
     {
-        articles: (state.articles && state.articles.articles) || [],
+        startDate: (state.create && state.create.startDate) || "",
+        endDate: (state.create && state.create.endDate) || "",
         ...ownProps
     }
 );
 
-export default connect(mapStateToProps)(CreateDates);
+export default connect(mapStateToProps, { updateProp})(CreateDates);

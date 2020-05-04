@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 
-import Moment from "react-moment";
-import "moment-timezone";
 
 import Sticker from './sticker';
 
@@ -80,7 +79,13 @@ export default class PostTitle extends React.Component {
                 <div className="title-container">
                     With love, from
                     <h2>{this.state.title}</h2>
-                    <Moment format="MM/DD/YYYY">{this.state.startDate}</Moment> - <Moment format="MM/DD/YYYY">{this.state.endDate}</Moment>
+                    <timestamp>
+                        {moment(this.state.startDate).format("MMMM Do YYYY")}
+                    </timestamp>{" "}
+                    -
+                    <timestamp>
+                        {moment(this.state.endDate).format("MMMM Do YYYY")}
+                    </timestamp>
                 </div>
                 <StickerContainer
                     ref={(el) => {

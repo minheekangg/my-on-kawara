@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
-import Moment from "react-moment";
-import "moment-timezone";
+import moment from "moment"
 
 const PictureContainerWrapper = styled.div`
     display: flex;
@@ -96,7 +94,7 @@ const PictureContainer = ({article}) => {
                 })}
             </PicturesContainer>
             <PictureDescription>
-                <Moment format="MM/DD/YYYY">{PICTURES[currentPictureIdx].date}</Moment>
+                <timestamp>{moment(PICTURES[currentPictureIdx].date).format('MMMM Do YYYY')}</timestamp>
                 <span> {PICTURES[currentPictureIdx].people.join(", ")} </span>
                 { !!PICTURES[currentPictureIdx].location && <span><a target="_blank" rel="noopener noreferrer" href={PICTURES[currentPictureIdx].location}>location</a> </span>}
                 { !!PICTURES[currentPictureIdx].description && <span>{PICTURES[currentPictureIdx].description}</span>}
