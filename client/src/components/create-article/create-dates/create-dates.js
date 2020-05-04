@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
+import { Button, Form } from "semantic-ui-react";
 
 import CreateDestinations from '../create-destinations';
 
@@ -26,8 +27,7 @@ const CreateDates = (props) => {
     const calculateDays = () => {
         var a = moment(startDate);
         var b = moment(endDate);
-        debugger
-        return a.diff(b, "days") + 1;
+        return b.diff(a, "days");
     };
 
     const handleSubmit = (e) => {
@@ -40,39 +40,42 @@ const CreateDates = (props) => {
         };
     };
 
-
-
     if (datesValidated) {
         return <CreateDestinations start={startDate} end={endDate} days={calculateDays()} />
     }
 
     return (
         <StyledFormWrapper>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    startDate:
-                    <input
-                        type="text"
-                        name="startDate"
-                        placeholder="startDate goes here"
-                        value={startDate}
-                        onChange={(e) => setstartDate(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    endDate:
-                    <input
-                        type="text"
-                        name="endDate"
-                        placeholder="endDate goes here"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                        required
-                    />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
+            <Form onSubmit={handleSubmit}>
+                <Form.Field>
+                    <label>
+                        startDate:
+                        <input
+                            type="text"
+                            name="startDate"
+                            placeholder="startDate goes here"
+                            value={startDate}
+                            onChange={(e) => setstartDate(e.target.value)}
+                            required
+                        />
+                    </label>
+                </Form.Field>
+                <Form.Field>
+                    <label>
+                        endDate:
+                        <input
+                            type="text"
+                            name="endDate"
+                            placeholder="endDate goes here"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            required
+                        />
+                    </label>
+                </Form.Field>
+
+                <Button type="submit">Submit</Button>
+            </Form>
         </StyledFormWrapper>
     );
 };
