@@ -28,7 +28,6 @@ if (process.env.MONGODB_URI) {
     console.log("unconfigured mongo db");
 }
 
-
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");

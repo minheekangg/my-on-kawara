@@ -46,9 +46,9 @@ router.post("/", async(req, res, next) => {
     //     });
     // }
 
-    console.log('request is', request);
+    console.log('request is', body);
 
-    const finalTrip = new Trip(request);
+    const finalTrip = new Trip(body);
 
     return finalTrip.save()
         .then(() => {
@@ -62,6 +62,7 @@ router.post("/", async(req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
+    console.log('here')
     return Trip.find()
         .sort({ createdAt: "descending" })
         .then(trip =>{

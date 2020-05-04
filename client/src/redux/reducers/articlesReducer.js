@@ -4,7 +4,6 @@ const initialState = {
 };
 
 export default function articlesReducer(state = initialState, action) {
-    console.log('%c articlesReducer', 'color: blue', state, action);
     switch (action.type) {
         case ActionTypes.FETCH_ARTICLES + '_PENDING': {
             return {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Moment from "react-moment";
 // import styled from "styled-components";
 
-import CreateDestinations from './create-destinations';
+import CreateDestinations from '../create-destinations';
 
 const CreateDates = (props) => {
     const [startDate, setstartDate] = useState("");

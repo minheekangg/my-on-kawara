@@ -14,7 +14,6 @@
 
 
 // export default function userReducer(state = initialState, action) {
-//     console.log('%c userReducer', 'color: blue', state, action);
 //     switch (action.type) {
 //         case SET_CURRENT_USER:
 //             return { ...state, username: action.payload.username, userId: action.payload.id, image: action.payload.image, city: action.payload.city, isLoggedIn: true, authenticatingUser: false }
