@@ -3,49 +3,14 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Dropdown, Form, Select, Input } from "semantic-ui-react";
 
-const options = [];
 
 const CreateDestinations = (props) => {
-    const [days, setDays] = useState(props.days);
-    const [endDate, setEndDate] = useState(props.end);
-    const [startDate, setStartDate] = useState(props.start);
-    const [destinations, setDestinations] = useState([""]);
-    const [daysOptions, setDaysOptions] = useState([]);
+    const [days, setDays] = useState([...props.days]);
+    // const [endDate, setEndDate] = useState(props.end);
+    // const [startDate, setStartDate] = useState(props.start);
+    // const [destinations, setDestinations] = useState([""]);
+    // const [daysOptions, setDaysOptions] = useState([]);
 
-    useEffect(() => {
-        function formatDays(){
-            console.log("props are", props);
-            var daysArr = [];
-            var counter = 0;
-            var day = moment(startDate).format("MM/DD/YYYY");
-            // var end = moment(endDate, "MM/DD/YYYY");
-
-            while (counter <= days) {
-                console.log("day is", day);
-                daysArr.push({
-                    key: day,
-                    text: day,
-                    value: day,
-                });
-
-                day = moment(day).add(1, "days").format("MM/DD/YYYY");
-
-                counter++;
-            }
-
-            console.log("days are", daysArr);
-            return setDaysOptions(daysArr);
-        };
-
-        formatDays();
-    });
-    
-
-    const handleSubmit = () => {
-        // if (!!formValidation()) {
-        //     console.log('handle submit');
-        // };
-    }
 
     // const formValidation = () => {
     //     if (startDate === "") {
@@ -55,21 +20,40 @@ const CreateDestinations = (props) => {
     //     }
     // };
 
+    const formatDays = (days) => {
+        if (!days || days.length <= 0 ) {
+            return {}
+        }
+
+        return days.map(d=> {
+            return {
+                'key': d,
+                'text': d,
+                'value' : d
+            }
+        })
+    }
+    
+
 
     return (
-        <form onSubmit={handleSubmit}>
-            {days} days
+        <Form>
+            {/* {days} days */}
             <Form.Field control={Input} label="City" placeholder="City" />
-            {daysOptions.length > 0 && (
-                <Form.Field
-                    control={Select}
-                    label="Gender"
-                    options={options}
-                    placeholder="Gender"
-                />
-            )}
-            <input type="submit" value="Submit" />
-        </form>
+            <Form.Field
+                control={Select}
+                label="Start Date"
+                options={formatDays(days)}
+                placeholder="Gender"
+            />
+            <Form.Field
+                control={Select}
+                label="End Date"
+                options={formatDays(days)}
+                placeholder="Gender"
+            />
+            <Form.Button>Submit</Form.Button>
+        </Form>
     );
 };
 

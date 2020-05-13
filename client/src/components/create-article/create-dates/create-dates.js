@@ -25,9 +25,17 @@ const CreateDates = (props) => {
     };
 
     const calculateDays = () => {
-        var a = moment(startDate);
-        var b = moment(endDate);
-        return b.diff(a, "days");
+        var dates = [];
+
+        var currDate = moment(startDate, "MM/DD/YYYY").startOf('day');
+        var lastDate = moment(endDate, "MM/DD/YYYY").startOf('day');
+        dates.push(currDate.clone().format("MM/DD/YYYY"))
+
+        while (currDate.add(1, 'days').diff(lastDate) <= 0) {
+            dates.push(currDate.clone().format("MM/DD/YYYY"));
+        }
+
+        return dates;   
     };
 
     const handleSubmit = (e) => {
