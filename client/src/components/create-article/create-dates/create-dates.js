@@ -81,7 +81,6 @@ const CreateDates = (props) => {
                         />
                     </label>
                 </Form.Field>
-
                 <Button type="submit">Submit</Button>
             </Form>
         </StyledFormWrapper>

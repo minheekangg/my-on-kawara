@@ -2,35 +2,21 @@ const mongoose = require("mongoose");
 const router = require("express").Router();
 const Destination = mongoose.model("Destination");
 
-router.post("/", (req, res, next) => {
-    const { body } = req;
+router.post("/", async (req, res, next) => {
+    const { data } = req.body;
 
-    if (!body.date) {
-        return res.status(422).json({
-            errors: {
-                date: "is required"
-            }
-        });
-    }
-
-    if (!body.destination) {
-        return res.status(422).json({
-            errors: {
-                destination: "is required"
-            }
-        });
-    }
-
-    const newDestination = new Destination(body);
-
-    return newDestination.save()
-        .then(() => {
-            console.log('success', newDestination);
-            res.json({ destination: newDestination.toJSON() })
+    const createdTrips = data.map((trip) => {
+        console.log('creating', trip);
+        const newDestination = new Destination(trip)
+        return newDestination.save();
+    });
+    await Promise.all(createdTrips)
+        .then((destinations) => {
+            res.json({ destinations: destinations });
         })
-        .catch(()=> {
-            console.log('error') 
-            next
+        .catch((err) => {
+            console.log('error!', err)
+            return next
         });
 });
 
