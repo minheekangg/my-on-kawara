@@ -3,4 +3,5 @@ export const ActionTypes = {
            UPDATE_PROP: "UPDATE_PROP",
            RESET: "RESET",
            CREATE_DESTINATIONS: 'CREATE_DESTINATIONS',
+        CREATE_TRIP:'CREATE_TRIP'
        };

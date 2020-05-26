@@ -12,12 +12,19 @@ const StyledFormWrapper = styled.div`
 `;
 
 const CreateDates = (props) => {
-    const [startDate, setstartDate] = useState(props.startDate);
-    const [endDate, setEndDate] = useState(props.endDate);
     const [datesValidated, setDatesValidated] = useState(false);
+    const [people, setPeople] = useState([{
+        name: "",
+    }]);
+    const [form, setState] = useState({
+        startDate: props.startDate,
+        title: props.title,
+        endDate: props.endDate
+    });
+
 
     const formValidation = () => {
-        if (startDate !== "" && endDate !== "") {
+        if (form.startDate !== "" && form.endDate !== "" && form.title !== "") {
             return true;
         } else {
             return false;
@@ -27,8 +34,8 @@ const CreateDates = (props) => {
     const calculateDays = () => {
         var dates = [];
 
-        var currDate = moment(startDate, "MM/DD/YYYY").startOf('day');
-        var lastDate = moment(endDate, "MM/DD/YYYY").startOf('day');
+        var currDate = moment(form.startDate, "MM/DD/YYYY").startOf('day');
+        var lastDate = moment(form.endDate, "MM/DD/YYYY").startOf('day');
         dates.push(currDate.clone().format("MM/DD/YYYY"))
 
         while (currDate.add(1, 'days').diff(lastDate) <= 0) {
@@ -43,13 +50,25 @@ const CreateDates = (props) => {
 
         if (!!formValidation()) {
             calculateDays();
-            props.updateProp({startDate, endDate});
+            props.createDestination({...form, people: people});
             setDatesValidated(true);
         };
+        return;
     };
 
-    if (datesValidated) {
-        return <CreateDestinations start={startDate} end={endDate} days={calculateDays()} />
+    const updateField = e => {
+        setState({
+            ...form,
+            [e.target.name]: e.target.value
+        });
+        return;
+    };
+
+    const handlePeopleChange = (name, idx) => {
+        let users = [...people];
+        users[idx].name = name;
+        setPeople(users);
+        return;
     }
 
     return (
@@ -57,13 +76,26 @@ const CreateDates = (props) => {
             <Form onSubmit={handleSubmit}>
                 <Form.Field>
                     <label>
+                        Title:
+                            <input
+                            type="text"
+                            name="title"
+                            placeholder="Title of the trip"
+                            value={form.title}
+                            onChange={updateField}
+                            required
+                        />
+                    </label>
+                </Form.Field>
+                <Form.Field>
+                    <label>
                         startDate:
                         <input
                             type="text"
                             name="startDate"
                             placeholder="startDate goes here"
-                            value={startDate}
-                            onChange={(e) => setstartDate(e.target.value)}
+                            value={form.startDate}
+                            onChange={updateField}
                             required
                         />
                     </label>
@@ -75,11 +107,30 @@ const CreateDates = (props) => {
                             type="text"
                             name="endDate"
                             placeholder="endDate goes here"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
+                            value={form.endDate}
+                            onChange={updateField}
                             required
                         />
                     </label>
+                </Form.Field>
+                <Form.Field>
+                    <label>
+                        People:
+                        {
+                            people.map((p, idx)=> {
+                                return <input
+                                    type="person"
+                                    name="person"
+                                    placeholder="person name goes here"
+                                    value={p.name}
+                                    onChange={(e) => handlePeopleChange(e.target.value, idx)}
+                                    required
+                                />
+                            })
+                        }
+                        
+                    </label>
+                    <Button onClick={()=>setPeople(people.concat({name: ""}))}>+</Button>
                 </Form.Field>
                 <Button type="submit">Submit</Button>
             </Form>

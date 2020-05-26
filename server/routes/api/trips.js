@@ -4,9 +4,9 @@ const Trip = mongoose.model("Trip");
 const Person = mongoose.model("Person");
 
 router.post("/", async(req, res, next) => {
-    const { body } = req;
-    console.log('body', body)
-    if (!body.title) {
+    const { data } = req.body;
+    console.log('******* here', data )
+    if (!data.title) {
         return res.status(422).json({
             errors: {
                 title: "is required"
@@ -14,7 +14,7 @@ router.post("/", async(req, res, next) => {
         });
     }
 
-    if (!body.startDate) {
+    if (!data.startDate) {
         return res.status(422).json({
             errors: {
                 startDate: "is required"
@@ -22,7 +22,7 @@ router.post("/", async(req, res, next) => {
         });
     }
 
-    if (!body.endDate) {
+    if (!data.endDate) {
         return res.status(422).json({
             errors: {
                 endDate: "is required"
@@ -30,7 +30,7 @@ router.post("/", async(req, res, next) => {
         });
     }
 
-    if (!body.people) {
+    if (!data.people) {
         return res.status(422).json({
             errors: {
                 people: "are required"
@@ -38,26 +38,39 @@ router.post("/", async(req, res, next) => {
         });
     }
 
-    // if (!body.destination) {
-    //     return res.status(422).json({
-    //         errors: {
-    //             destination: "is required"
-    //         }
-    //     });
-    // }
+    console.log('request is', data);
 
-    console.log('request is', body);
+    const createdPeople = data.people.map(async (person) => {
+        let foundPerson = await Person.find(person);
+        console.log('found', foundPerson)
+        if (!!foundPerson && foundPerson.length > 0) {
+            return foundPerson
+        } else {
+            let newPerson = await new Person(person);
+            return newPerson;
+        }
+    });
 
-    const finalTrip = new Trip(body);
-
-    return finalTrip.save()
-        .then(() => {
-            console.log('success', finalTrip);
-            res.json({ trip: finalTrip.toJSON() })
+    
+    await Promise.all(createdPeople)
+        .then((people) => {
+            console.log('create people', people)
+            const tripParam = {
+                people, 
+                title: data.title, 
+                startDate: data.startDate, 
+                endDate: data.endDate,
+            }
+            const finalTrip = new Trip(tripParam);
+            finalTrip.save()
+                .then((trip) => {
+                    console.log('success', finalTrip);
+                    res.json({ trip: trip });
+                })  
         })
-        .catch((err)=> {
-            console.log('error', err ) 
-            next
+        .catch((err) => {
+            console.log('error!', err)
+            return next
         });
 });
 
