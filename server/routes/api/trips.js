@@ -38,10 +38,11 @@ router.post("/", async(req, res, next) => {
         });
     }
 
-    console.log('request is', data);
 
+    
     const createdPeople = data.people.map(async (person) => {
-        let foundPerson = await Person.find(person);
+        console.log(person.name)
+        let foundPerson = await Person.findOne({'name': person.name});
         console.log('found', foundPerson)
         if (!!foundPerson && foundPerson.length > 0) {
             return foundPerson

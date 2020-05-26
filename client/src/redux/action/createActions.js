@@ -52,13 +52,12 @@ export const createDestination = payload => {
                 data: payload
             })
             .then((r) => {
-                debugger
-                // if (r && r.data && r.data.destinations && !!r.data.destinations.length) {
-                //     dispatch({
-                //         type: ActionTypes.CREATE_TRIP + "_FULFILLED",
-                //         payload: r.data.trip,
-                //     });
-                // }
+                if (r && r.data && r.data.trip) {
+                    dispatch({
+                        type: ActionTypes.CREATE_TRIP + "_FULFILLED",
+                        payload: r.data.trip,
+                    });
+                }
             })
             .catch((err) => {
                 dispatch({
