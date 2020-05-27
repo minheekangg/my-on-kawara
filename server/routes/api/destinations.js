@@ -1,18 +1,36 @@
 const mongoose = require("mongoose");
 const router = require("express").Router();
 const Destination = mongoose.model("Destination");
+const Date = mongoose.model("Date");
 
 router.post("/", async (req, res, next) => {
     const { data } = req.body;
+    console.log('inside destination post', data);
 
-    const createdTrips = data.map((trip) => {
-        console.log('creating', trip);
-        const newDestination = new Destination(trip)
-        return newDestination.save();
+    if (!data.tripId) {
+        return res.status(422).json({
+            errors: {
+                tripId: "is required"
+            }
+        });
+    }
+
+    const createdDestinations = data.destinations.map(async (trip) => {
+        console.log('creating', trip, 'dates are', trip.dates);
+        let datesId = await Date.insertMany(trip.dates)
+        console.log('created dates', datesId);
+        let createdDestination = await Destination.create({
+            dates: datesId,
+            city: trip.city,
+        })
+        return createdDestination
     });
-    await Promise.all(createdTrips)
+
+    await Promise.all(createdDestinations)
         .then((destinations) => {
-            res.json({ destinations: destinations });
+            console.log('returning', destinations, 'trip id is', tripId)
+            //update trip with destinations Ids.
+            // res.json({ destinations: destinations });
         })
         .catch((err) => {
             console.log('error!', err)

@@ -11,34 +11,33 @@ export default function destinationReducer(state = initialState, action) {
                 ...action.payload,
             };
         }
-        // case ActionTypes.FETCH_ARTICLES + '_REJECTED': {
-        //     const error = action.payload.error;
-        //     // const code = getErrorStatusCode(action);
+        case ActionTypes.CREATE_DESTINATIONS + '_PENDING': {
+            return {
+                ...state,
+                fetching: true,
+            };
+        }
+        case ActionTypes.CREATE_DESTINATIONS + '_REJECTED': {
+            debugger
+            const error = action.payload && action.payload.response && action.payload.response.data;
 
-        //     // if (code === 404) {
-        //     //     return {
-        //     //         ...state,
-        //     //         fetched: true,
-        //     //         fetching: false
-        //     //     };
-        //     // }
+            return {
+                fetching: false,
+                fetched: false,
+                error
+            };
+        }
+        case ActionTypes.CREATE_DESTINATIONS + '_FULFILLED': {
+            debugger
+            const destinations = action.payload;
 
-        //     return {
-        //         fetching: false,
-        //         fetched: true,
-        //         error
-        //     };
-        // }
-        // case ActionTypes.FETCH_ARTICLES + '_FULFILLED': {
-        //     const articles = action.payload;
-
-        //     return {
-        //         ...state,
-        //         fetched: true,
-        //         fetching: false,
-        //         articles
-        //     };
-        // }
+            return {
+                ...state,
+                fetched: true,
+                fetching: false,
+                destinations
+            };
+        }
         case ActionTypes.RESET:
             return initialState
         default:

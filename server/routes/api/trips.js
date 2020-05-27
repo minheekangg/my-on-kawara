@@ -5,7 +5,7 @@ const Person = mongoose.model("Person");
 
 router.post("/", async(req, res, next) => {
     const { data } = req.body;
-    console.log('******* here', data )
+
     if (!data.title) {
         return res.status(422).json({
             errors: {

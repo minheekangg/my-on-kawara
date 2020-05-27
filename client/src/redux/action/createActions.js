@@ -2,8 +2,11 @@ import { ActionTypes } from '../../utils/constants';
 import axios from "axios";
 
 export const createDestinations = (destinations) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch({ type: ActionTypes.CREATE_DESTINATIONS + "_PENDING" });
+
+        let tripId = getState().trip.trip._id;
+
         return axios
             .post("http://localhost:8000/api/destinations", {
                 headers: {
@@ -11,7 +14,7 @@ export const createDestinations = (destinations) => {
                     "Content-Type": "application/json",
                     // accept: "application/json"
                 },
-                data: [...destinations]
+                data: { destinations, tripId }
             })
             .then((r) => {
                 if (r && r.data && r.data.destinations && !!r.data.destinations.length) {
@@ -39,7 +42,7 @@ export const updateProp = (payload) => {
     }
 }
 
-export const createDestination = payload => {
+export const createTrip = payload => {
     return (dispatch) => {
         dispatch({ type: ActionTypes.CREATE_TRIP + "_PENDING" });
         return axios

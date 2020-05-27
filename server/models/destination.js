@@ -4,8 +4,7 @@ const { Schema } = mongoose;
 
 const DestinationSchema = new Schema(
     {
-        startDate: { type: String, required: true },
-        endDate: { type: String, required: true },
+        dates: { type: Array, ref: 'Date', required: true },
         city: { type: String, required: true },
     },
     { timestamps: true }

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import CreateTrip from './create-trip';
 
-import { createDestination } from 'redux/action/createActions';
+import { createTrip } from 'redux/action/createActions';
 
 const mapStateToProps = (state, ownProps) => (
     {
@@ -12,4 +12,4 @@ const mapStateToProps = (state, ownProps) => (
     }
 );
 
-export default connect(mapStateToProps, { createDestination })(CreateTrip);
+export default connect(mapStateToProps, { createTrip })(CreateTrip);

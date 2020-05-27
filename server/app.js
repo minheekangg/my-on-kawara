@@ -63,6 +63,7 @@ require('./models/Trip');
 require('./models/Photo');
 require('./models/Person');
 require('./models/Destination');
+require('./models/date');
 
 // Add routes
 app.use(require("./routes"));

@@ -50,7 +50,7 @@ const CreateTrip = (props) => {
 
         if (!!formValidation()) {
             calculateDays();
-            props.createDestination({...form, people: people});
+            props.createTrip({...form, people: people});
         };
   
     };
