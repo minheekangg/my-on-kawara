@@ -3,13 +3,14 @@ import React, { useState } from "react";
 // import moment from "moment";
 import { Form, Dropdown, Input, Button } from "semantic-ui-react";
 
-
 const CreateDestinations = (props) => {
     const [days] = useState(props.days);
     const [destinations, setDestinations] = useState([{
         city: "",
         dates: []
     }]);
+    const [fetched] = useState(props.fetched);
+    const [destinationsCreated] = useState(props.destinations);
 
     const formatDays = (days) => {
         if (!days || days.length <= 0 ) {
@@ -31,7 +32,6 @@ const CreateDestinations = (props) => {
         current[key] = value;
         
         setDestinations(newDestinations);
-        console.log('destinations ', destinations)
         return;
     }
 
@@ -56,7 +56,6 @@ const CreateDestinations = (props) => {
         setDestinations(updatedDestinations)
         return;
     }
-
 
     return (
         <Form onSubmit={handleSubmit}>

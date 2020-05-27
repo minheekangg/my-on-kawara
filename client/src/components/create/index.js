@@ -1,3 +1,11 @@
-import CreateArticle from './trip';
+import { connect } from "react-redux";
+import Create from "./create";
 
-export default CreateArticle;
+const mapStateToProps = (state) => {
+    console.log('inside', state.trip.fetched, state.destination.fetched)
+    return {
+    isTripFetched: state && !!state.trip && state.trip.fetched,
+    isDestinationsFetched: state && !!state.destination && state.destination.fetched
+}};
+
+export default connect(mapStateToProps)(Create);

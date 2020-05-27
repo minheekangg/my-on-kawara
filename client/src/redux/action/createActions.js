@@ -71,3 +71,32 @@ export const createTrip = payload => {
             });
     };
 }
+
+export const createPhotos = payload => {
+    return (dispatch) => {
+        dispatch({ type: ActionTypes.CREATE_PHOTO + "_PENDING" });
+        return axios
+            .post("http://localhost:8000/api/trips", {
+                headers: {
+                    // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                    "Content-Type": "application/json",
+                    // accept: "application/json"
+                },
+                data: payload
+            })
+            .then((r) => {
+                if (r && r.data && r.data.trip) {
+                    dispatch({
+                        type: ActionTypes.CREATE_PHOTO + "_FULFILLED",
+                        payload: r.data,
+                    });
+                }
+            })
+            .catch((err) => {
+                dispatch({
+                    type: ActionTypes.CREATE_PHOTO + "_REJECTED",
+                    payload: err,
+                });
+            });
+    };
+}
