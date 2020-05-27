@@ -46,6 +46,17 @@ const CreateDestinations = (props) => {
         return;
     }
 
+    const handleSubtractBtn = (e) => {
+        e.preventDefault();
+        if (destinations.length <= 1) {
+            return;
+        }
+        let updatedDestinations = [...destinations];
+        updatedDestinations.pop();
+        setDestinations(updatedDestinations)
+        return;
+    }
+
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -72,6 +83,7 @@ const CreateDestinations = (props) => {
                     })
                 }
             <Button onClick={handleAddBtn}>+</Button>
+            <Button onClick={handleSubtractBtn}>-</Button>
             <Form.Button>Submit</Form.Button>
         </Form>
     );

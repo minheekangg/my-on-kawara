@@ -27,8 +27,7 @@ router.post("/", async (req, res, next) => {
 
     await Promise.all(createdDestinations)
         .then((destinations) => {
-            const formattedDestinations = createdDestinations.map(d=>d._id);
-            Trip.findByIdAndUpdate(data.tripId, { 'destinations': formattedDestinations})
+            Trip.findByIdAndUpdate(data.tripId, { 'destinations': destinations })
                 .then((trip)=> {
                     res.json({ destinations: destinations, trip: trip });
                 })

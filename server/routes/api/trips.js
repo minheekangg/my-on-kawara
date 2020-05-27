@@ -58,6 +58,7 @@ router.post("/", async(req, res, next) => {
                 title: data.title, 
                 startDate: data.startDate, 
                 endDate: data.endDate,
+                content: data.content,
             }
             const finalTrip = new Trip(tripParam);
             finalTrip.save()

@@ -19,7 +19,8 @@ const CreateTrip = (props) => {
     const [form, setState] = useState({
         startDate: props.startDate,
         title: props.title,
-        endDate: props.endDate
+        endDate: props.endDate,
+        content: props.content
     });
 
 
@@ -73,6 +74,17 @@ const CreateTrip = (props) => {
     const handleAddPeople = (e) => {
         e.preventDefault();
         setPeople(people.concat({ name: "" }))
+    }
+
+    const handleSubtractPeople = (e) => {
+        e.preventDefault();
+        if (people.length <= 1) {
+            return;
+        }
+        let updatedPeople = [...people];
+        updatedPeople.pop();
+        setPeople(updatedPeople)
+        return;
     }
 
     if (days && days.length > 0) {
@@ -140,6 +152,19 @@ const CreateTrip = (props) => {
                         
                     </label>
                     <Button onClick={handleAddPeople}>+</Button>
+                    <Button onClick={handleSubtractPeople}>-</Button>
+                    <Form.Field>
+                        <label>
+                            content:
+                        <input
+                                type="text-area"
+                                name="content"
+                                placeholder="tell me more"
+                                value={form.content}
+                                onChange={updateField}
+                            />
+                        </label>
+                    </Form.Field>
                 </Form.Field>
                 <Button type="submit">Submit</Button>
             </Form>
