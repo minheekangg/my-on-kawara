@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 // import styled from "styled-components";
-// import moment from "moment";
+import moment from "moment";
 import { Form, Select, Input, Button } from "semantic-ui-react";
 
 
 const CreateDestinations = (props) => {
-    const [days] = useState([...props.days]);
+    const [days , setDays] = useState(props.days);
     const [destination1, setDestination1] = useState();
     const [destination2, setDestination2] = useState();
     const [destination3, setDestination3] = useState();

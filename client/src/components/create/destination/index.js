@@ -5,6 +5,7 @@ import { createDestinations } from "redux/action/createActions";
 
 const mapStateToProps = (state, ownProps) => (
     {
+        fetched: (state.create && state.create.fetched) || false,
         ...ownProps
     }
 );

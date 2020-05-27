@@ -8,15 +8,15 @@ export default function tripReducer(state = initialState, action) {
         case ActionTypes.CREATE_TRIP + '_PENDING': {
             return {
                 ...state,
-                creating: true,
+                fetching: true,
             };
         }
         case ActionTypes.CREATE_TRIP + '_REJECTED': {
             const error = action.payload && action.payload.response && action.payload.response.data;
 
             return {
-                creating: false,
-                created: false,
+                fetching: false,
+                fetched: false,
                 error
             };
         }
@@ -25,8 +25,8 @@ export default function tripReducer(state = initialState, action) {
 
             return {
                 ...state,
-                created: true,
-                creating: false,
+                fetched: true,
+                fetching: false,
                 trip
             };
         }

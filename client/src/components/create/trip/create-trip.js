@@ -3,7 +3,7 @@ import styled from "styled-components";
 import moment from "moment";
 import { Button, Form } from "semantic-ui-react";
 
-import CreateDestinations from '../create-destinations';
+import CreateDestination from '../destination';
 
 const StyledFormWrapper = styled.div`
     max-width: 300px;
@@ -11,8 +11,8 @@ const StyledFormWrapper = styled.div`
     height: 100vh;
 `;
 
-const CreateDates = (props) => {
-    const [datesValidated, setDatesValidated] = useState(false);
+const CreateTrip = (props) => {
+    const [days, setDays] = useState([]);
     const [people, setPeople] = useState([{
         name: "",
     }]);
@@ -42,7 +42,7 @@ const CreateDates = (props) => {
             dates.push(currDate.clone().format("MM/DD/YYYY"));
         }
 
-        return dates;   
+        setDays(dates);   
     };
 
     const handleSubmit = (e) => {
@@ -51,9 +51,8 @@ const CreateDates = (props) => {
         if (!!formValidation()) {
             calculateDays();
             props.createDestination({...form, people: people});
-            setDatesValidated(true);
         };
-        return;
+  
     };
 
     const updateField = e => {
@@ -69,6 +68,10 @@ const CreateDates = (props) => {
         users[idx].name = name;
         setPeople(users);
         return;
+    }
+
+    if (days && days.length > 0) {
+        return <CreateDestination days={days} />
     }
 
     return (
@@ -123,6 +126,7 @@ const CreateDates = (props) => {
                                     name="person"
                                     placeholder="person name goes here"
                                     value={p.name}
+                                    key={`person${idx}`}
                                     onChange={(e) => handlePeopleChange(e.target.value, idx)}
                                     required
                                 />
@@ -138,4 +142,4 @@ const CreateDates = (props) => {
     );
 };
 
-export default CreateDates;
+export default CreateTrip;

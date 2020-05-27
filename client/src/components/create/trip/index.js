@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import CreateDates from './create-dates';
+import CreateTrip from './create-trip';
 
 import { createDestination } from 'redux/action/createActions';
 
@@ -12,4 +12,4 @@ const mapStateToProps = (state, ownProps) => (
     }
 );
 
-export default connect(mapStateToProps, { createDestination })(CreateDates);
+export default connect(mapStateToProps, { createDestination })(CreateTrip);

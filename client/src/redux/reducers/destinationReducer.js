@@ -3,7 +3,7 @@ import { ActionTypes } from '../../utils/constants';
 const initialState = {
 };
 
-export default function createReducer(state = initialState, action) {
+export default function destinationReducer(state = initialState, action) {
     switch (action.type) {
         case ActionTypes.UPDATE_PROP: {
             return {
