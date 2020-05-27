@@ -54,7 +54,6 @@ router.post("/", async(req, res, next) => {
     
     await Promise.all(createdPeople)
         .then((people) => {
-            console.log('create people', people)
             const tripParam = {
                 people, 
                 title: data.title, 
@@ -64,7 +63,6 @@ router.post("/", async(req, res, next) => {
             const finalTrip = new Trip(tripParam);
             finalTrip.save()
                 .then((trip) => {
-                    console.log('success', finalTrip);
                     res.json({ trip: trip });
                 })  
         })

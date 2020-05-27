@@ -20,15 +20,14 @@ export default function tripReducer(state = initialState, action) {
                 error
             };
         }
-        case ActionTypes.FETCH_ARTICLES + '_FULFILLED': {
-            debugger
-            const articles = action.payload;
+        case ActionTypes.CREATE_TRIP + '_FULFILLED': {
+            const trip = action.payload;
 
             return {
                 ...state,
                 created: true,
                 creating: false,
-                articles
+                trip
             };
         }
         case ActionTypes.RESET:
