@@ -1,28 +1,22 @@
 const mongoose = require("mongoose");
 const router = require("express").Router();
 const Photo = mongoose.model("Photo");
+const Date = mongoose.model("Date");
+const Person = mongoose.model("Person");
 
-router.post("/", (req, res, next) => {
-    const { body } = req;
-    console.log('body', body);
+router.post("/", async (req, res, next) => {
+    const { data } = req.body;
+    console.log('body', data);
 
-    if (!body.src) {
+    if (!data.url || !data.publicId) {
         return res.status(422).json({
             errors: {
-                src: "is required"
+                url: "is required"
             }
         });
     }
 
-    if (!body.description) {
-        return res.status(422).json({
-            errors: {
-                description: "is required"
-            }
-        });
-    }
-
-    if (!body.date) {
+    if (!data.date) {
         return res.status(422).json({
             errors: {
                 date: "is required"
@@ -30,16 +24,46 @@ router.post("/", (req, res, next) => {
         });
     }
 
-    const newPhoto = new Photo(body);
+    const params = {
+        src: data.publicId,
+        location: data.location || "",
+    }
 
-    return newPhoto.save()
-        .then(() => {
-            console.log('success', newPhoto);
-            res.json({ photo: newPhoto})
+    console.log('before anything params are', params)
+
+    let foundData = await Date.find({_id: data.date});
+    params.data = foundData;
+    console.log('after data found  params are', params)
+
+    const foundPeople = data.people.map(async (person) => {
+        let foundPerson = await Person.find({_id: person});
+        return foundPerson;
+    });
+    
+    await Promise.all(foundPeople)
+        .then(async people=> {
+            params.people = people;
+            console.log('after people found  params are', params)
+
+            const createdPhotos = data.url.map(async p=> {
+                const newParam = {...params, src: p}
+                let createdPhoto = await Photo.create(newParam)
+                console.log('created photo is', createdPhoto)
+                return createdPhoto
+            })
+
+            await Promise.all(createdPhotos) 
+                .then(photo=> {
+                    res.json(photo)
+                })
+                .catch((err) => {
+                    console.log('error creating photos!', err)
+                    return next
+                });
         })
-        .catch(()=> {
-            console.log('error') 
-            next
+        .catch((err) => {
+            console.log('error finding people!', err)
+            return next
         });
 });
 

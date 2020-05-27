@@ -4,7 +4,7 @@ const Destination = mongoose.model("Destination");
 const Date = mongoose.model("Date");
 const Trip = mongoose.model("Trip");
 
-router.post("/", async (req, res, next) => {
+router.post("/", async(req, res, next) => {
     const { data } = req.body;
 
     if (!data.tripId) {

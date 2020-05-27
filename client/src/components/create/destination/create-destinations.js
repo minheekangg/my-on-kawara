@@ -9,8 +9,7 @@ const CreateDestinations = (props) => {
         city: "",
         dates: []
     }]);
-    const [fetched] = useState(props.fetched);
-    const [destinationsCreated] = useState(props.destinations);
+
 
     const formatDays = (days) => {
         if (!days || days.length <= 0 ) {

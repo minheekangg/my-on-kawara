@@ -76,7 +76,7 @@ export const createPhotos = payload => {
     return (dispatch) => {
         dispatch({ type: ActionTypes.CREATE_PHOTO + "_PENDING" });
         return axios
-            .post("http://localhost:8000/api/trips", {
+            .post("http://localhost:8000/api/photos", {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
@@ -85,6 +85,7 @@ export const createPhotos = payload => {
                 data: payload
             })
             .then((r) => {
+                debugger
                 if (r && r.data && r.data.trip) {
                     dispatch({
                         type: ActionTypes.CREATE_PHOTO + "_FULFILLED",

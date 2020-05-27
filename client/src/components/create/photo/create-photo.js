@@ -1,6 +1,6 @@
 import React from 'react'
 // import styled from "styled-components";
-import { Form, Dropdown } from "semantic-ui-react";
+import { Form, Dropdown, Input } from "semantic-ui-react";
 import { Image } from "cloudinary-react";
 const MY_CLOUD_NAME = process.env.REACT_APP_MY_CLOUD_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
@@ -15,6 +15,7 @@ class CreatePhoto extends React.Component {
         people: [],
         date: "",
         destination: "",
+        location: "",
       },
       people: props.people,
       destinations: props.destinations,
@@ -46,20 +47,51 @@ class CreatePhoto extends React.Component {
     ).open()
   }
 
-  formatOptions = (options) => {
-    if (!options || options.length <= 0) {
+  formatPeople = (people) => {
+    if (!people || people.length <= 0) {
+        return [];
+    }
+   return people.map((d) => {
+        return {
+            key: d.name,
+            text: d.name,
+            value: d._id,
+        };
+    });
+  }
+
+  formatDestinations = (destinations) => {
+    if (!destinations || destinations.length <= 0) {
         return [];
     }
 
-    debugger
-
-    return options.map((d) => {
+    return destinations.map((d) => {
         return {
-            key: d,
-            text: d,
-            value: d,
+            key: d.city,
+            text: d.city,
+            value: d._id,
         };
     });
+  }
+
+  formatDates = (destinations) => {
+    if (!destinations || destinations.length <= 0) {
+        return [];
+    }
+
+    if (!this.state.photo.destination) {
+      return [];
+    }
+
+    const foundDestination = destinations.find(d=>d._id === this.state.photo.destination);
+    console.log('found', foundDestination);
+    return foundDestination.dates.map(d => {
+      return {
+            key: d.date,
+            text: d.date,
+            value: d._id,
+        };
+    })
   }
 
   handleChange = (value, key)=> {
@@ -68,14 +100,12 @@ class CreatePhoto extends React.Component {
           ...this.state.photo,
           [key]: value
         }
-      })
-      debugger
+      }, ()=> {console.log('state changed to', this.state)})
       return;
   }
 
   handleSubmit = (e) => {
       e.preventDefault();
-
       return this.props.createPhotos(this.state.photo);
   }
 
@@ -83,21 +113,24 @@ class CreatePhoto extends React.Component {
   render() {
     return (
         <Form onSubmit={this.handleSubmit}>
-            {
-              this.state.photo.publicId &&
-              this.state.photo.publicId.length > 0 &&
-              this.state.photo.publicId.map((e) => {
-                  return <Image publicId={e} width="100" cloudName={MY_CLOUD_NAME} />;
-              })
-            }
+            {this.state.photo.publicId &&
+                this.state.photo.publicId.length > 0 &&
+                this.state.photo.publicId.map((e) => {
+                    return (
+                        <Image
+                            publicId={e}
+                            width="100"
+                            cloudName={MY_CLOUD_NAME}
+                        />
+                    );
+                })}
             <Form.Group>
                 <Dropdown
                     placeholder="People"
                     name="people"
-                    fluid
                     multiple
                     selection
-                    options={this.formatOptions(this.state.people)}
+                    options={this.formatPeople(this.state.people)}
                     onChange={(e, { value }) =>
                         this.handleChange(value, "people")
                     }
@@ -105,22 +138,30 @@ class CreatePhoto extends React.Component {
                 <Dropdown
                     placeholder="Destination"
                     name="destination"
-                    fluid
                     selection
-                    options={this.formatOptions(this.state.destinations)}
+                    required
+                    options={this.formatDestinations(this.state.destinations)}
                     onChange={(e, { value }) =>
                         this.handleChange(value, "destination")
                     }
                 />
-                {this.state.destination && (
+                <Form.Field
+                    control={Input}
+                    label="Location"
+                    name="location"
+                    value={this.state.photo.location}
+                    onChange={(e, { value }) =>
+                        this.handleChange(value, "location")
+                    }
+                />
+                {this.state.photo.destination && (
                     <Dropdown
                         placeholder="Date"
                         name="date"
-                        fluid
                         selection
-                        options={this.formatOptions(this.state.dates)}
+                        options={this.formatDates(this.state.destinations)}
                         onChange={(e, { value }) =>
-                            this.handleChange(value, "dates")
+                            this.handleChange(value, "date")
                         }
                     />
                 )}
