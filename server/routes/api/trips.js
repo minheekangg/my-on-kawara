@@ -41,13 +41,12 @@ router.post("/", async(req, res, next) => {
 
     
     const createdPeople = data.people.map(async (person) => {
-        console.log(person.name)
-        let foundPerson = await Person.findOne({'name': person.name});
-        console.log('found', foundPerson)
-        if (!!foundPerson && foundPerson.length > 0) {
+        console.log(person.name, 'here', mongoose.modelNames())
+        let foundPerson = await Person.findOne(person);
+        if (!!foundPerson) {
             return foundPerson
         } else {
-            let newPerson = await new Person(person);
+            let newPerson = await Person.create(person);
             return newPerson;
         }
     });

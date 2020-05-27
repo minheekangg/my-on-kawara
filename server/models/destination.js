@@ -11,4 +11,4 @@ const DestinationSchema = new Schema(
     { timestamps: true }
 );
 
-mongoose.model("Destination", DestinationSchema);
+module.exports = mongoose.model("Destination", DestinationSchema);
