@@ -41,7 +41,6 @@ router.post("/", async(req, res, next) => {
 
     
     const createdPeople = data.people.map(async (person) => {
-        console.log(person.name, 'here', mongoose.modelNames())
         let foundPerson = await Person.findOne(person);
         if (!!foundPerson) {
             return foundPerson

@@ -5,7 +5,9 @@ export const createDestinations = (destinations) => {
     return (dispatch, getState) => {
         dispatch({ type: ActionTypes.CREATE_DESTINATIONS + "_PENDING" });
 
-        let tripId = getState().trip.trip._id;
+        const state = getState();
+        const tripId = state && state.trip && state.trip.trip._id;
+        debugger
 
         return axios
             .post("http://localhost:8000/api/destinations", {
