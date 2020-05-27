@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import styled from "styled-components";
-import moment from "moment";
+// import moment from "moment";
 import { Form, Select, Input, Button } from "semantic-ui-react";
 
 
 const CreateDestinations = (props) => {
-    const [days , setDays] = useState(props.days);
+    const [days] = useState(props.days);
     const [destinations, setDestinations] = useState([{
         city: "",
         startDate: "",
@@ -36,14 +36,7 @@ const CreateDestinations = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const trips = [];
-        trips.push(destination1);
-        trips.push(destination2);
-        trips.push(destination3);
-
-        const filteredTrips = trips.filter(t=>t!==undefined)
-
-        return props.createDestinations(filteredTrips);
+        return props.createDestinations(destinations);
     }
 
 
@@ -57,7 +50,7 @@ const CreateDestinations = (props) => {
                                 label="City"
                                 name="city"
                                 value={d.city}
-                                onChange={(e) => handlePeopleChange(e.target.value, "city", idx)}
+                                onChange={(e) => handleChange(e.target.value, "city", idx)}
                             />
                             <Form.Field
                                 control={Select}
@@ -74,7 +67,7 @@ const CreateDestinations = (props) => {
                         </Form.Group>
                     })
                 }
-            <Button onClick={() => setDestinations(destination.concat({ city: "", startDate: "", endDate: "" }))}>+</Button>
+            <Button onClick={() => setDestinations(destinations.concat({ city: "", startDate: "", endDate: "" }))}>+</Button>
             <Form.Button>Submit</Form.Button>
         </Form>
     );
