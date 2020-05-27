@@ -70,6 +70,11 @@ const CreateTrip = (props) => {
         return;
     }
 
+    const handleAddPeople = (e) => {
+        e.preventDefault();
+        setPeople(people.concat({ name: "" }))
+    }
+
     if (days && days.length > 0) {
         return <CreateDestination days={days} />
     }
@@ -134,7 +139,7 @@ const CreateTrip = (props) => {
                         }
                         
                     </label>
-                    <Button onClick={()=>setPeople(people.concat({name: ""}))}>+</Button>
+                    <Button onClick={handleAddPeople}>+</Button>
                 </Form.Field>
                 <Button type="submit">Submit</Button>
             </Form>

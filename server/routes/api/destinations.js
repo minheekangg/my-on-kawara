@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const router = require("express").Router();
 const Destination = mongoose.model("Destination");
 const Date = mongoose.model("Date");
+const Trip = mongoose.model("Trip");
 
 router.post("/", async (req, res, next) => {
     const { data } = req.body;
-    console.log('inside destination post', data);
 
     if (!data.tripId) {
         return res.status(422).json({
@@ -16,21 +16,26 @@ router.post("/", async (req, res, next) => {
     }
 
     const createdDestinations = data.destinations.map(async (trip) => {
-        console.log('creating', trip, 'dates are', trip.dates);
-        let datesId = await Date.insertMany(trip.dates)
-        console.log('created dates', datesId);
+        let formattedDates = trip.dates.map(d=>({'date': d}));
+        let datesId = await Date.insertMany(formattedDates)
         let createdDestination = await Destination.create({
             dates: datesId,
             city: trip.city,
         })
-        return createdDestination
+        return createdDestination;
     });
 
     await Promise.all(createdDestinations)
         .then((destinations) => {
-            console.log('returning', destinations, 'trip id is', tripId)
-            //update trip with destinations Ids.
-            // res.json({ destinations: destinations });
+            const formattedDestinations = createdDestinations.map(d=>d._id);
+            Trip.findByIdAndUpdate(data.tripId, { 'destinations': formattedDestinations})
+                .then((trip)=> {
+                    res.json({ destinations: destinations, trip: trip });
+                })
+                .catch((err) => {
+                    console.log('error updating trip', err)
+                    return next
+                });
         })
         .catch((err) => {
             console.log('error!', err)

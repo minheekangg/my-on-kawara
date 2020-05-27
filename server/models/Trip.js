@@ -8,7 +8,7 @@ const TripSchema = new Schema(
         startDate: { type: String, required: true },
         endDate: { type: String, required: true },
         people: { type: Array, required: true, ref: 'Person'},
-        destination: { type: Array, required: true, ref: 'Destination' },
+        destinations: { type: Array, required: true, ref: 'Destination' },
         content: { type: String },
         stickers: { type: Array },
         photos: { type: Array, ref: 'Photo' },

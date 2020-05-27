@@ -7,7 +7,6 @@ export const createDestinations = (destinations) => {
 
         const state = getState();
         const tripId = state && state.trip && state.trip.trip._id;
-        debugger
 
         return axios
             .post("http://localhost:8000/api/destinations", {
@@ -19,10 +18,10 @@ export const createDestinations = (destinations) => {
                 data: { destinations, tripId }
             })
             .then((r) => {
-                if (r && r.data && r.data.destinations && !!r.data.destinations.length) {
+                if (r && r.data && r.data.destinations && r.data.destinations.length > 0) {
                     dispatch({
                         type: ActionTypes.CREATE_DESTINATIONS + "_FULFILLED",
-                        payload: r.data.trip,
+                        payload: r.data,
                     });
                 }
             })
@@ -60,7 +59,7 @@ export const createTrip = payload => {
                 if (r && r.data && r.data.trip) {
                     dispatch({
                         type: ActionTypes.CREATE_TRIP + "_FULFILLED",
-                        payload: r.data.trip,
+                        payload: r.data,
                     });
                 }
             })

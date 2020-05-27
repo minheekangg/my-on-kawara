@@ -11,7 +11,8 @@ export default function tripReducer(state = initialState, action) {
                 fetching: true,
             };
         }
-        case ActionTypes.CREATE_TRIP + '_REJECTED': {
+        case ActionTypes.CREATE_TRIP + '_REJECTED': 
+        case ActionTypes.CREATE_DESTINATIONS + '_REJECTED': {
             const error = action.payload && action.payload.response && action.payload.response.data;
 
             return {
@@ -20,8 +21,9 @@ export default function tripReducer(state = initialState, action) {
                 error
             };
         }
-        case ActionTypes.CREATE_TRIP + '_FULFILLED': {
-            const trip = action.payload;
+        case ActionTypes.CREATE_TRIP + '_FULFILLED': 
+        case ActionTypes.CREATE_DESTINATIONS + '_FULFILLED': {
+            const trip = action.payload.trip;
 
             return {
                 ...state,

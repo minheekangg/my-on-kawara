@@ -18,7 +18,6 @@ export default function destinationReducer(state = initialState, action) {
             };
         }
         case ActionTypes.CREATE_DESTINATIONS + '_REJECTED': {
-            debugger
             const error = action.payload && action.payload.response && action.payload.response.data;
 
             return {
@@ -28,8 +27,7 @@ export default function destinationReducer(state = initialState, action) {
             };
         }
         case ActionTypes.CREATE_DESTINATIONS + '_FULFILLED': {
-            debugger
-            const destinations = action.payload;
+            const destinations = action.payload.destinations;
 
             return {
                 ...state,
