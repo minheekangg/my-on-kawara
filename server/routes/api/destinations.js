@@ -46,7 +46,6 @@ router.get("/", (req, res, next) => {
     return Destination.find()
         .sort({ createdAt: "descending" })
         .then((destination) => {
-            console.log("here fetch done");
             res.json({
                 destination: destination.map((destination) =>
                     destination.toJSON()

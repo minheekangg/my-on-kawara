@@ -73,8 +73,13 @@ export const createTrip = payload => {
 }
 
 export const createPhotos = payload => {
-    return (dispatch) => {
+    
+    return (dispatch, getState) => {
         dispatch({ type: ActionTypes.CREATE_PHOTO + "_PENDING" });
+
+        const state = getState();
+        const tripId = state && state.trip && state.trip.trip._id;
+
         return axios
             .post("http://localhost:8000/api/photos", {
                 headers: {
@@ -82,7 +87,7 @@ export const createPhotos = payload => {
                     "Content-Type": "application/json",
                     accept: "application/json"
                 },
-                data: payload
+                data: {...payload, tripId}
             })
             .then((r) => {
                 if (r && r.data) {

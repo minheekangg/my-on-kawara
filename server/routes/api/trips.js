@@ -73,11 +73,9 @@ router.post("/", async(req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
-    console.log('here')
     return Trip.find()
         .sort({ createdAt: "descending" })
         .then(trip =>{
-            console.log('here fetch done')
             res.json({ trip })
         })
         .catch(next);

@@ -12,7 +12,7 @@ export const fetchArticles = () => {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
-                    // accept: "application/json"
+                    accept: "application/json"
                 }
             })
             .then(r => {

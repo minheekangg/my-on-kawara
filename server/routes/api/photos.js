@@ -3,10 +3,20 @@ const router = require("express").Router();
 const Photo = mongoose.model("Photo");
 const Date = mongoose.model("Date");
 const Person = mongoose.model("Person");
+const Trip = mongoose.model("Trip");
 
 router.post("/", async (req, res, next) => {
     const { data } = req.body;
-    console.log('body', data);
+
+    console.log('data ', data)
+
+    if (!data.tripId) {
+        return res.status(422).json({
+            errors: {
+                tripId: "is required"
+            }
+        });
+    }
 
     if (!data.url || !data.publicId) {
         return res.status(422).json({
@@ -51,7 +61,9 @@ router.post("/", async (req, res, next) => {
             await Promise.all(createdPhotos) 
                 .then(async photos=> {
                     let foundDate = await Date.findByIdAndUpdate(data.date, {'photos': photos});                
-                    console.log('date', foundDate);
+                    let foundTrip = await Trip.findByIdAndUpdate(data.tripId, {'photos': photos});         
+
+                    console.log('updated date and trip', foundTrip, foundDate);
                     res.json(photos);
                 })
                 .catch((err) => {
