@@ -22,7 +22,6 @@ class CreatePhoto extends React.Component {
       },
       people: props.people,
       destinations: props.destinations,
-      initiateRedirect: false,
     };
   }
 
@@ -104,7 +103,7 @@ class CreatePhoto extends React.Component {
           ...this.state.photo,
           [key]: value
         }
-      }, ()=> {console.log('state changed to', this.state)})
+      })
       return;
   }
 
