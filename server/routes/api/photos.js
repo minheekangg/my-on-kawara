@@ -4,6 +4,7 @@ const Photo = mongoose.model("Photo");
 const Date = mongoose.model("Date");
 const Person = mongoose.model("Person");
 const Trip = mongoose.model("Trip");
+const Destination = mongoose.model("Destination");
 
 router.post("/", async (req, res, next) => {
     const { data } = req.body;
@@ -39,7 +40,15 @@ router.post("/", async (req, res, next) => {
         location: data.location || "",
     }
 
-    console.log('before anything params are', params)
+    if (!!data.date) {
+        let dateObj = await Date.findOne({_id: data.date});
+        params.date = dateObj.date;
+    }
+
+    if (!!data.destination) {
+        let destinationObj = await Destination.findOne({_id: data.destination});
+        params.city = destinationObj.city;
+    }
 
     const foundPeople = data.people.map(async (person) => {
         let foundPerson = await Person.find({_id: person});
@@ -49,7 +58,6 @@ router.post("/", async (req, res, next) => {
     await Promise.all(foundPeople)
         .then(async people=> {
             params.people = people;
-            console.log('after people found  params are', params)
 
             const createdPhotos = data.url.map(async p=> {
                 const newParam = {...params, src: p}
@@ -60,10 +68,9 @@ router.post("/", async (req, res, next) => {
 
             await Promise.all(createdPhotos) 
                 .then(async photos=> {
-                    let foundDate = await Date.findByIdAndUpdate(data.date, {'photos': photos});                
-                    let foundTrip = await Trip.findByIdAndUpdate(data.tripId, {'photos': photos});         
+                    await Date.findByIdAndUpdate(data.date, {'photos': photos});                
+                    await Trip.findByIdAndUpdate(data.tripId, {'photos': photos});         
 
-                    console.log('updated date and trip', foundTrip, foundDate);
                     res.json(photos);
                 })
                 .catch((err) => {
@@ -79,9 +86,7 @@ router.post("/", async (req, res, next) => {
 
 router.get("/", (req, res, next) => {
     return Photo.find()
-        // .sort({ createdAt: "descending" })
         .then((photos) => {
-            console.log("here fetch done");
             res.json({photos});
         })
         .catch(next);
