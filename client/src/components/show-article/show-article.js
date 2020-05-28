@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Loader, Segment } from 'semantic-ui-react';
 
 import ArticleTitle from './article-title';
-import PictureContainer from './picture-container';
+import ArticlePictures from './article-pictures';
 
 const ShowArticle = (props) => {
     let { articleId } = useParams();
@@ -28,7 +28,7 @@ const ShowArticle = (props) => {
     return !!props.article 
         ? <div>
             <ArticleTitle  />
-            <PictureContainer  />
+            <ArticlePictures  />
         </div>
         : <div>nothing in single article</div>
 };

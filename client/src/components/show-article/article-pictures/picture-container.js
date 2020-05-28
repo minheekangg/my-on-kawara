@@ -80,17 +80,22 @@ const PICTURES = [{
 const PictureContainer = ({article}) => {
     const [currentPictureIdx, setCurrentPictureIdx] = useState(0);
     const [expandText, setExpandText] = useState(false);
+
+    if (!article.photos || article.photos.length < 1) {
+        return null;
+    } 
+    
     return <PictureContainerWrapper>
         <PictureFullBleed
             style={{
-                backgroundImage: `url(${PICTURES[currentPictureIdx].src})`,
+                backgroundImage: `url(${article.photos[currentPictureIdx].src})`,
             }}
         ></PictureFullBleed>
         <hr style={{margin: 0}} />
         <PostContentContainer>
             <PicturesContainer>
-                {PICTURES.map((p, idx)=> {
-                    return <img key={p.description + idx} onClick={()=>setCurrentPictureIdx(idx)} src={p.src} alt={p.description}/>
+                {article.photos.map((p, idx)=> {
+                return <img key={p} onClick={()=>setCurrentPictureIdx(idx)} src={p.src} alt={p.city + p.date}/>
                 })}
             </PicturesContainer>
             <PictureDescription>
@@ -99,8 +104,11 @@ const PictureContainer = ({article}) => {
                 { !!PICTURES[currentPictureIdx].location && <span><a target="_blank" rel="noopener noreferrer" href={PICTURES[currentPictureIdx].location}>location</a> </span>}
                 { !!PICTURES[currentPictureIdx].description && <span>{PICTURES[currentPictureIdx].description}</span>}
             </PictureDescription>
-            {/* <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}> {!!article.content && article.content} */}
-            {/* </AdditionalContent> */}
+            {!!article.content && article.content 
+                ? <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}> { article.content }
+                </AdditionalContent>
+                : null
+            }
         </PostContentContainer>
     </PictureContainerWrapper>
 };
