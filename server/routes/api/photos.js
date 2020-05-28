@@ -31,10 +31,6 @@ router.post("/", async (req, res, next) => {
 
     console.log('before anything params are', params)
 
-    let foundData = await Date.find({_id: data.date});
-    params.data = foundData;
-    console.log('after data found  params are', params)
-
     const foundPeople = data.people.map(async (person) => {
         let foundPerson = await Person.find({_id: person});
         return foundPerson;
@@ -53,11 +49,13 @@ router.post("/", async (req, res, next) => {
             })
 
             await Promise.all(createdPhotos) 
-                .then(photo=> {
-                    res.json(photo)
+                .then(async photos=> {
+                    let foundDate = await Date.findByIdAndUpdate(data.date, {'photos': photos});                
+                    console.log('date', foundDate);
+                    res.json(photos);
                 })
                 .catch((err) => {
-                    console.log('error creating photos!', err)
+                    console.log('error updating trip', err)
                     return next
                 });
         })

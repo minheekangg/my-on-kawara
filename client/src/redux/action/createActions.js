@@ -13,7 +13,7 @@ export const createDestinations = (destinations) => {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
-                    // accept: "application/json"
+                    accept: "application/json"
                 },
                 data: { destinations, tripId }
             })
@@ -51,7 +51,7 @@ export const createTrip = payload => {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
-                    // accept: "application/json"
+                    accept: "application/json"
                 },
                 data: payload
             })
@@ -80,13 +80,12 @@ export const createPhotos = payload => {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
-                    // accept: "application/json"
+                    accept: "application/json"
                 },
                 data: payload
             })
             .then((r) => {
-                debugger
-                if (r && r.data && r.data.trip) {
+                if (r && r.data) {
                     dispatch({
                         type: ActionTypes.CREATE_PHOTO + "_FULFILLED",
                         payload: r.data,
