@@ -147,31 +147,34 @@ class CreatePhoto extends React.Component {
                     name="destination"
                     selection
                     required
+                    fluid
                     options={this.formatDestinations(this.state.destinations)}
                     onChange={(e, { value }) =>
                         this.handleChange(value, "destination")
                     }
                 />
+                {this.state.photo.destination && (
+                    <Dropdown
+                    placeholder="Date"
+                    name="date"
+                    selection
+                    fluid
+                    options={this.formatDates(this.state.destinations)}
+                    onChange={(e, { value }) =>
+                    this.handleChange(value, "date")
+                    }
+                    />
+                )}
                 <Form.Field
                     control={Input}
                     label="Location"
                     name="location"
+                    fluid
                     value={this.state.photo.location}
                     onChange={(e, { value }) =>
                         this.handleChange(value, "location")
                     }
                 />
-                {this.state.photo.destination && (
-                    <Dropdown
-                        placeholder="Date"
-                        name="date"
-                        selection
-                        options={this.formatDates(this.state.destinations)}
-                        onChange={(e, { value }) =>
-                            this.handleChange(value, "date")
-                        }
-                    />
-                )}
             </Form.Group>
             <Form.Button>Submit</Form.Button>
         </Form>

@@ -1,29 +1,36 @@
 import React, { useEffect } from "react";
-
-import PostTitle from './post-title';
-import PictureContainer from './picture-container';
 import { useParams } from "react-router-dom";
+
+import { Loader, Segment } from 'semantic-ui-react';
+
+import ArticleTitle from './article-title';
+import PictureContainer from './picture-container';
 
 const ShowArticle = (props) => {
     let { articleId } = useParams();
     const { fetchArticle } = props;
-    // const { articles } = props;
 
     useEffect(() => {
         if (!!articleId) {
             fetchArticle(articleId);
         }
-    }, [fetchArticle]);
+    }, [articleId, fetchArticle]);
 
-    // return props.articles && !!props.articles.length ? (
-    //     <div>
-    //         <PostTitle article={articles[articles.length -1]} />
-    //         <PictureContainer article={articles[articles.length -1]} />
-    //     </div>
-    // ) : (
-    return (
-        <div>nothing in single article</div>
-    );
+    if (props.fetching) {
+        return (
+            <Segment>
+                <Loader active />
+            </Segment>
+        )
+    }
+
+
+    return !!props.article 
+        ? <div>
+            <ArticleTitle  />
+            <PictureContainer  />
+        </div>
+        : <div>nothing in single article</div>
 };
 
 export default ShowArticle;

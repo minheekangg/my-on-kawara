@@ -99,8 +99,8 @@ const PictureContainer = ({article}) => {
                 { !!PICTURES[currentPictureIdx].location && <span><a target="_blank" rel="noopener noreferrer" href={PICTURES[currentPictureIdx].location}>location</a> </span>}
                 { !!PICTURES[currentPictureIdx].description && <span>{PICTURES[currentPictureIdx].description}</span>}
             </PictureDescription>
-            <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}> {!!article.content && article.content}
-            </AdditionalContent>
+            {/* <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}> {!!article.content && article.content} */}
+            {/* </AdditionalContent> */}
         </PostContentContainer>
     </PictureContainerWrapper>
 };

@@ -65,11 +65,12 @@ const CreateDestinations = (props) => {
                                 control={Input}
                                 label="City"
                                 name="city"
+                                fluid
                                 value={d.city}
                                 onChange={(e) => handleChange(e.target.value, "city", idx)}
                             />
                             <Dropdown 
-                                placeholder='Skills' 
+                                placeholder='Days in this city' 
                                 name="days" 
                                 fluid 
                                 multiple 

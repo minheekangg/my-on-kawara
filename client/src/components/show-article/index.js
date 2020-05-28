@@ -5,7 +5,9 @@ import { fetchArticle } from 'redux/action/articleActions';
 
 const mapStateToProps = (state, ownProps) => (
     {
-        article: (state.article && state.articles.article) || [],
+        article: state.article,
+        fetching: state.article.fetching,
+        fetched: state.article.fetched,
         ...ownProps
     }
 );
