@@ -6,6 +6,7 @@ import { createPhotos } from "redux/action/createActions";
 const mapStateToProps = (state, ownProps) => {
     const trip = state.trip && state.trip.trip;
     const destinations = state.destination && state.destination.destinations;
+
     return {
         people: (trip && trip.people) || [],
         destinations: destinations || [],

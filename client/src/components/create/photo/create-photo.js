@@ -1,7 +1,10 @@
 import React from 'react'
-// import styled from "styled-components";
-import { Form, Dropdown, Input } from "semantic-ui-react";
+import { withRouter } from 'react-router-dom';
+
 import { Image } from "cloudinary-react";
+import { Form, Dropdown, Input } from "semantic-ui-react";
+// import styled from "styled-components";
+
 const MY_CLOUD_NAME = process.env.REACT_APP_MY_CLOUD_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
 
@@ -19,6 +22,7 @@ class CreatePhoto extends React.Component {
       },
       people: props.people,
       destinations: props.destinations,
+      initiateRedirect: false,
     };
   }
 
@@ -84,7 +88,7 @@ class CreatePhoto extends React.Component {
     }
 
     const foundDestination = destinations.find(d=>d._id === this.state.photo.destination);
-    console.log('found', foundDestination);
+
     return foundDestination.dates.map(d => {
       return {
             key: d.date,
@@ -106,10 +110,13 @@ class CreatePhoto extends React.Component {
 
   handleSubmit = (e) => {
       e.preventDefault();
-      return this.props.createPhotos(this.state.photo);
+      this.props.createPhotos(this.state.photo);
+      this.props.history.push("/articles")
+      return;
   }
 
- 
+  
+  
   render() {
     return (
         <Form onSubmit={this.handleSubmit}>
@@ -118,6 +125,7 @@ class CreatePhoto extends React.Component {
                 this.state.photo.publicId.map((e) => {
                     return (
                         <Image
+                            key={e}
                             publicId={e}
                             width="100"
                             cloudName={MY_CLOUD_NAME}
@@ -172,4 +180,4 @@ class CreatePhoto extends React.Component {
   }
 }
 
-export default CreatePhoto;
+export default withRouter(CreatePhoto);
