@@ -5,4 +5,5 @@ export const ActionTypes = {
            CREATE_DESTINATIONS: "CREATE_DESTINATIONS",
            CREATE_TRIP: "CREATE_TRIP",
            CREATE_PHOTO: "CREATE_PHOTO",
-       };
+        FETCH_ARTICLE: 'FETCH_ARTICLE'
+    };

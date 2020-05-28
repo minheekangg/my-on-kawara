@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
-import PostTitle from '../post-title';
-import PictureContainer from '../picture-container';
+import PostTitle from '../show-article/post-title';
+import PictureContainer from '../show-article/picture-container';
 
 const Articles = (props) => {
     const { fetchArticles } = props;

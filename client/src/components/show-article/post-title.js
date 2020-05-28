@@ -79,13 +79,13 @@ export default class PostTitle extends React.Component {
                 <div className="title-container">
                     With love, from
                     <h2>{this.state.title}</h2>
-                    <timestamp>
+                    <span>
                         {moment(this.state.startDate).format("MMMM Do YYYY")}
-                    </timestamp>{" "}
+                    </span>
                     -
-                    <timestamp>
+                    <span>
                         {moment(this.state.endDate).format("MMMM Do YYYY")}
-                    </timestamp>
+                    </span>
                 </div>
                 <StickerContainer
                     ref={(el) => {
