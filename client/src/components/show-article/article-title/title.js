@@ -72,19 +72,22 @@ export default class Title extends React.Component {
     }
 
     render(){
-        console.log('props are', this.props.article)
         return (
             <TitleWrapper>
                 <div className="title-container">
                     With love, from
                     <h2>{this.state.title}</h2>
-                    <span>
-                        {moment(this.state.startDate).format("MMMM Do YYYY")}
-                    </span>
-                    -
-                    <span>
-                        {moment(this.state.endDate).format("MMMM Do YYYY")}
-                    </span>
+                    {(!!this.state.startDate && !!this.state.endDate) 
+                        ? <span>
+                            {moment(this.state.startDate, "MMMM Do YYYY")}
+                        </span>
+                            -
+                            <span>
+                                {moment(this.state.endDate, "MMMM Do YYYY")}
+                            </span> 
+                        : null
+                    }
+                    
                 </div>
                 <StickerContainer
                     ref={(el) => {
