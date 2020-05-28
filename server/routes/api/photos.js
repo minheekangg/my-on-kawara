@@ -51,7 +51,7 @@ router.post("/", async (req, res, next) => {
     }
 
     const foundPeople = data.people.map(async (person) => {
-        let foundPerson = await Person.find({_id: person});
+        let foundPerson = await Person.findOne({_id: person});
         return foundPerson;
     });
     

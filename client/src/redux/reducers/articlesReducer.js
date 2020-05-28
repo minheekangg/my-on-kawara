@@ -12,15 +12,6 @@ export default function articlesReducer(state = initialState, action) {
         }
         case ActionTypes.FETCH_ARTICLES + '_REJECTED': {
             const error = action.payload.error;
-            // const code = getErrorStatusCode(action);
-
-            // if (code === 404) {
-            //     return {
-            //         ...state,
-            //         fetched: true,
-            //         fetching: false
-            //     };
-            // }
 
             return {
                 fetching: false,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import styled from "styled-components";
 import moment from "moment"
 
@@ -53,57 +53,69 @@ const AdditionalContent = styled.div`
     }
 `;
 
-const PICTURES = [{
-    src: "https://images.unsplash.com/photo-1524063221847-15c7329095d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80",
-    date: new Date(),
-    people: ['minhee', 'jonah'],
-    location: 'https://goo.gl/maps/to5RLscS7XbVqeT18',
-    description: 'paris'
-}, {
-    src: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80",
-    date: new Date(),
-    people: ['minhee', 'jonah'],
-    location: 'url here?',
-    description: 'paris',
-}, {
-    src: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1607&q=80",
-    date: new Date(),
-    people: ['minhee', 'jonah'],
-    description: 'paris'
-}, {
-    src: "https://images.unsplash.com/photo-1542729716-86ee2c2c92ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    date: new Date(),
-    people: ['minhee', 'jonah'],
-    description: 'paris'
-}]
 
 const PictureContainer = ({article}) => {
-    const [currentPictureIdx, setCurrentPictureIdx] = useState(0);
     const [expandText, setExpandText] = useState(false);
+    const [currentPicture, setCurrentPicture] = useState({})
+
+    useEffect(() => {
+        if (!!article.photos) {
+            setCurrentPicture(article.photos[0])
+        }
+
+    }, [setCurrentPicture, article.photos])
+    
+
+    const renderDescription = () => {
+        const desc = [];
+
+        if (!!currentPicture.date) {
+            desc.push(<span>{moment(currentPicture.date).format('MMMM Do YYYY')}</span>)
+        } 
+
+        if (!!currentPicture.people) {
+            if (currentPicture.people.length === 1) {
+                desc.push(<span> {currentPicture.people[0].name} </span>)
+            } else {
+                const peopleNames = currentPicture.people.map(e => e.name)
+                desc.push(<span> {peopleNames.join(", ")} </span>)
+            }
+        } 
+        
+        if (!!currentPicture.location) {
+            desc.push(<span><a target="_blank" rel="noopener noreferrer" href={currentPicture.location}>location</a> </span>)
+        }
+
+        if (!!currentPicture.city) {
+            desc.push(<span>{currentPicture.city}</span>)
+        }
+
+        return (
+            <PictureDescription>
+                {desc.map((e, idx)=> <Fragment key={idx}>{e}</Fragment>)}
+            </PictureDescription>
+        )
+    }
 
     if (!article.photos || article.photos.length < 1) {
         return null;
     } 
+
     
     return <PictureContainerWrapper>
         <PictureFullBleed
             style={{
-                backgroundImage: `url(${article.photos[currentPictureIdx].src})`,
+                backgroundImage: `url(${currentPicture.src})`,
             }}
         ></PictureFullBleed>
         <hr style={{margin: 0}} />
         <PostContentContainer>
             <PicturesContainer>
                 {article.photos.map((p, idx)=> {
-                return <img key={p} onClick={()=>setCurrentPictureIdx(idx)} src={p.src} alt={p.city + p.date}/>
+                    return <img key={p} onClick={() => setCurrentPicture(idx)} src={p.src} alt={p.city + p.date}/>
                 })}
             </PicturesContainer>
-            <PictureDescription>
-                <timestamp>{moment(PICTURES[currentPictureIdx].date).format('MMMM Do YYYY')}</timestamp>
-                <span> {PICTURES[currentPictureIdx].people.join(", ")} </span>
-                { !!PICTURES[currentPictureIdx].location && <span><a target="_blank" rel="noopener noreferrer" href={PICTURES[currentPictureIdx].location}>location</a> </span>}
-                { !!PICTURES[currentPictureIdx].description && <span>{PICTURES[currentPictureIdx].description}</span>}
-            </PictureDescription>
+            {renderDescription()}
             {!!article.content && article.content 
                 ? <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}> { article.content }
                 </AdditionalContent>
