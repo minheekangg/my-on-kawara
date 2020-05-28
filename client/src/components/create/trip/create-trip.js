@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Input, TextArea } from "semantic-ui-react";
 
 import CreateDestination from '../destination';
 
@@ -9,6 +9,8 @@ const StyledFormWrapper = styled.div`
     max-width: 300px;
     margin: auto;
     height: 100vh;
+    display: flex;
+    align-items: center;
 `;
 
 const CreateTrip = (props) => {
@@ -94,26 +96,26 @@ const CreateTrip = (props) => {
     return (
         <StyledFormWrapper>
             <Form onSubmit={handleSubmit}>
+                    <Form.Field>
+                        <label>
+                            Title:
+                                <input
+                                type="text"
+                                name="title"
+                                placeholder="Title of the trip"
+                                value={form.title}
+                                onChange={updateField}
+                                required
+                            />
+                        </label>
+                    </Form.Field>
                 <Form.Field>
                     <label>
-                        Title:
-                            <input
-                            type="text"
-                            name="title"
-                            placeholder="Title of the trip"
-                            value={form.title}
-                            onChange={updateField}
-                            required
-                        />
-                    </label>
-                </Form.Field>
-                <Form.Field>
-                    <label>
-                        startDate:
+                        Start Date:
                         <input
                             type="text"
                             name="startDate"
-                            placeholder="startDate goes here"
+                            placeholder="When did the trip start?"
                             value={form.startDate}
                             onChange={updateField}
                             required
@@ -122,11 +124,11 @@ const CreateTrip = (props) => {
                 </Form.Field>
                 <Form.Field>
                     <label>
-                        endDate:
+                        End Date:
                         <input
                             type="text"
                             name="endDate"
-                            placeholder="endDate goes here"
+                            placeholder="When did the trip end?"
                             value={form.endDate}
                             onChange={updateField}
                             required
@@ -138,7 +140,7 @@ const CreateTrip = (props) => {
                         People:
                         {
                             people.map((p, idx)=> {
-                                return <input
+                                return <Input
                                     type="person"
                                     name="person"
                                     placeholder="person name goes here"
@@ -153,18 +155,19 @@ const CreateTrip = (props) => {
                     </label>
                     <Button onClick={handleAddPeople}>+</Button>
                     <Button onClick={handleSubtractPeople}>-</Button>
-                    <Form.Field>
-                        <label>
-                            content:
-                        <input
-                                type="text-area"
-                                name="content"
-                                placeholder="tell me more"
-                                value={form.content}
-                                onChange={updateField}
-                            />
-                        </label>
-                    </Form.Field>
+                </Form.Field>
+                <Form.Field>
+                    <label>
+                        Content:
+                    <TextArea
+                            type="text-area"
+                            name="content"
+                            placeholder="Tell me more"
+                            value={form.content}
+                            onChange={updateField}
+                            style={{ minHeight: 100 }}
+                        />
+                    </label>
                 </Form.Field>
                 <Button type="submit">Submit</Button>
             </Form>
