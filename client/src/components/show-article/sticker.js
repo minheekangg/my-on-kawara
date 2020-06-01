@@ -102,7 +102,7 @@ export default class Sticker extends React.Component {
 }
 
 const Container = styled.div`
-    cursor: grab;
+    cursor: move;
     width: ${(props) => props.width || 200}px;
     transform: translate(
         ${(props) => props.x || 0}px,

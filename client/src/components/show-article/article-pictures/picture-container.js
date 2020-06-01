@@ -9,7 +9,6 @@ const PictureContainerWrapper = styled.div`
     overflow: hidden;
 `;
 const PictureFullBleed = styled.div`
-    // border: 1px solid;
     width: 50vw;
     background-position: center;
     background-repeat: no-repeat;
@@ -23,6 +22,7 @@ const PostContentContainer = styled.div`
 `;
 const PicturesContainer = styled.div`
     height: 80vh;
+    
     img {
         width: 100px;
         height: 100px;
@@ -112,7 +112,7 @@ const PictureContainer = ({article}) => {
         <PostContentContainer>
             <PicturesContainer>
                 {article.photos.map((p, idx)=> {
-                    return <img key={p} onClick={() => setCurrentPicture(idx)} src={p.src} alt={p.city + p.date}/>
+                    return <img key={p._id+idx} onClick={() => setCurrentPicture(p)} src={p.src} alt={p.city + p.date}/>
                 })}
             </PicturesContainer>
             {renderDescription()}
