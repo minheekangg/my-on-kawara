@@ -9,6 +9,7 @@ const mapStateToProps = (state, ownProps) => {
 
     return {
         people: (trip && trip.people) || [],
+        tripId: (trip && trip._id) || "",
         destinations: destinations || [],
         ...ownProps,
     };

@@ -7,10 +7,9 @@ const StyledWrapper = styled.div`
     height: 100vh;
     display: flex;
     align-items: center;
-    `;
+`;
     
 const StyledArticlesWrapper = styled.div`
-    // background-color: #f2eade;
     display: flex;
     border: 1px solid;
     flex-direction: column;

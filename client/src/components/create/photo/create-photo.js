@@ -38,12 +38,14 @@ class CreatePhoto extends React.Component {
   }
 
   componentDidMount() {
+    const tag = this.props.tripId ? [this.props.tripId] : [];
+
       window.cloudinary.createUploadWidget(
       {
         cloudName: MY_CLOUD_NAME,
         uploadPreset: UPLOAD_PRESET,
         folder: "trips",
-        // tags: ["mh", "paris"]
+        tags: tag
       },
       (error, result) => {
         if (result && result.event === "success") {

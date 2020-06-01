@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { Form, Dropdown, Button, Segment } from "semantic-ui-react";
+import { Form, Dropdown, Button } from "semantic-ui-react";
 
 const StyledFormWrapper = styled.div`
     max-width: 300px;
