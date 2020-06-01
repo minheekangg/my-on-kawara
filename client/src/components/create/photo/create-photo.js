@@ -3,10 +3,22 @@ import { withRouter } from 'react-router-dom';
 
 import { Image } from "cloudinary-react";
 import { Form, Dropdown, Input } from "semantic-ui-react";
-// import styled from "styled-components";
+import styled from "styled-components";
 
 const MY_CLOUD_NAME = process.env.REACT_APP_MY_CLOUD_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+
+const StyledWrapper = styled.div`
+    max-width: 300px;
+    margin: auto;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+
+    .ui.form{
+        width: 100%;
+    }
+`;
 
 class CreatePhoto extends React.Component {
   constructor(props) {
@@ -118,6 +130,7 @@ class CreatePhoto extends React.Component {
   
   render() {
     return (
+      <StyledWrapper>
         <Form onSubmit={this.handleSubmit}>
             {this.state.photo.publicId &&
                 this.state.photo.publicId.length > 0 &&
@@ -131,29 +144,38 @@ class CreatePhoto extends React.Component {
                         />
                     );
                 })}
-            <Form.Group>
+                <Form.Field>
+              <label>
+                People:
                 <Dropdown
                     placeholder="People"
                     name="people"
                     multiple
+                    fluid
                     selection
                     options={this.formatPeople(this.state.people)}
                     onChange={(e, { value }) =>
                         this.handleChange(value, "people")
                     }
                 />
-                <Dropdown
-                    placeholder="Destination"
-                    name="destination"
-                    selection
-                    required
-                    fluid
-                    options={this.formatDestinations(this.state.destinations)}
-                    onChange={(e, { value }) =>
-                        this.handleChange(value, "destination")
-                    }
-                />
+                </label>
+                <label>
+                  Destination:
+                  <Dropdown
+                      placeholder="Destination"
+                      name="destination"
+                      selection
+                      required
+                      fluid
+                      options={this.formatDestinations(this.state.destinations)}
+                      onChange={(e, { value }) =>
+                          this.handleChange(value, "destination")
+                      }
+                  />
+                </label>
                 {this.state.photo.destination && (
+                  <label>
+                    Date: 
                     <Dropdown
                     placeholder="Date"
                     name="date"
@@ -164,7 +186,10 @@ class CreatePhoto extends React.Component {
                     this.handleChange(value, "date")
                     }
                     />
+                  </label>
                 )}
+
+                </Form.Field>
                 <Form.Field
                     control={Input}
                     label="Location"
@@ -175,9 +200,9 @@ class CreatePhoto extends React.Component {
                         this.handleChange(value, "location")
                     }
                 />
-            </Form.Group>
             <Form.Button>Submit</Form.Button>
         </Form>
+      </StyledWrapper>
     );
   }
 }

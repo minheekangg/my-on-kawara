@@ -9,6 +9,10 @@ const StyledFormWrapper = styled.div`
     height: 100vh;
     display: flex;
     align-items: center;
+
+    .ui.form{
+        width: 100%;
+    }
 `;
 
 const CreateDestinations = (props) => {
@@ -67,7 +71,6 @@ const CreateDestinations = (props) => {
     return (
         <StyledFormWrapper>
             <Form onSubmit={handleSubmit}>
-                <Segment>
                     {
                         destinations.map((d, idx) => {
                             return <div key={`destination-${idx}`}>
@@ -77,14 +80,13 @@ const CreateDestinations = (props) => {
                                         <input
                                             type="text"
                                             name="city"
+                                            label="City"
                                             placeholder="Where does this take place?"
                                             value={d.city}
                                             onChange={(e) => handleChange(e.target.value, "city", idx)}
                                             required
                                         />
                                     </label>
-                                </Form.Field>
-                                <Form.Field>
                                     <label>
                                         Days:
                                         <Dropdown 
@@ -103,8 +105,7 @@ const CreateDestinations = (props) => {
                     }
                 <Button onClick={handleAddBtn}>+</Button>
                 <Button onClick={handleSubtractBtn}>-</Button>
-                </Segment>
-                <Form.Button>Submit</Form.Button>
+                <Form.Button style={{ marginTop: '30px', width: '100%' }}>Submit</Form.Button>
             </Form>
         </StyledFormWrapper>
     );

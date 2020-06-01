@@ -11,6 +11,10 @@ const StyledFormWrapper = styled.div`
     height: 100vh;
     display: flex;
     align-items: center;
+
+    .ui.form{
+        width: 100%;
+    }
 `;
 
 const CreateTrip = (props) => {
@@ -169,7 +173,7 @@ const CreateTrip = (props) => {
                         />
                     </label>
                 </Form.Field>
-                <Button type="submit">Submit</Button>
+                <Button type="submit" style={{width: '100%'}}>Submit</Button>
             </Form>
         </StyledFormWrapper>
     );
