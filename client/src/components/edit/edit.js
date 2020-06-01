@@ -12,7 +12,6 @@ import Articles from '../articles';
 const StyledFormWrapper = styled.div`
     max-width: 300px;
     margin: auto;
-    height: 100vh;
     display: flex;
     align-items: center;
 

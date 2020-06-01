@@ -46,22 +46,23 @@ const CreateTrip = (props) => {
     }, [setPeople, setDestinations, props, setDays]);
 
     const formValidation = () => {
-        if (form.startDate !== "" && form.endDate !== "" && form.title !== "") {
-            return true;
-        } else {
-            return false;
-        }
+        const requiredFields = ['startDate', 'endDate', 'title'];
+        requiredFields.forEach(field=> {
+            if (form[field] == "") {
+                return false;
+            }
+        })
+        return true;
     };
 
-    const calculateDays = () => {
+    // const calculateDays = () => {
            
-    };
+    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!!formValidation()) {
-            calculateDays();
             // props.createTrip({...form, people: people});
         };
   
@@ -91,22 +92,36 @@ const CreateTrip = (props) => {
         return;
     }
 
-    const handleAddPeople = (e) => {
+    const handleAdd = (e, field) => {
         e.preventDefault();
-        setPeople(people.concat({ name: "" }))
-    }
-
-    const handleSubtractPeople = (e) => {
-        e.preventDefault();
-        if (people.length <= 1) {
-            return;
+        if (field === 'people') {
+            setPeople(people.concat({ name: "" }))
+        } else if (field === 'destinations') {
+            setDestinations(destinations.concat({city: "'"}))
         }
-        let updatedPeople = [...people];
-        updatedPeople.pop();
-        setPeople(updatedPeople)
         return;
     }
 
+    const handleSubtract = (e, field) => {
+        e.preventDefault();
+        if (field === 'people') {
+            if (people.length <= 1) {
+                return;
+            }
+            let updatedPeople = [...people];
+            updatedPeople.pop();
+            setPeople(updatedPeople)
+        } else if (field === 'destinations') {
+            if (destinations.length <= 1) {
+                return;
+            }
+            let updatedDestinations = [...destinations];
+            updatedDestinations.pop();
+            setDestinations(updatedDestinations)
+        }
+        return;
+    }
+    console.log('form', form)
     return (
         <StyledFormWrapper>
             <Form onSubmit={handleSubmit}>
@@ -167,8 +182,8 @@ const CreateTrip = (props) => {
                         }
                         
                     </label>
-                    <Button onClick={handleAddPeople}>+</Button>
-                    <Button onClick={handleSubtractPeople}>-</Button>
+                    <Button onClick={e => handleAdd(e, 'people')}>+</Button>
+                    <Button onClick={e => handleSubtract(e, 'people')}>-</Button>
                 </Form.Field>
                 <Form.Field>
                     <label>
@@ -186,7 +201,6 @@ const CreateTrip = (props) => {
                 {
                     destinations.map((d, idx) => {
                         const dates = d.dates.map(dt=>dt.date);
-                        console.log('dates', dates);
                         return <div key={`destination-${idx}`}>
                             <Form.Field>
                                 <label>
@@ -218,8 +232,9 @@ const CreateTrip = (props) => {
                         </div>
                     })
                 }
-                {/* <Button onClick={handleAddBtn}>+</Button>
-                <Button onClick={handleSubtractBtn}>-</Button> */}
+                <Button onClick={e => handleAdd(e, 'destinations')}>+</Button>
+                <Button onClick={e => handleSubtract(e, 'destinations')}>-</Button>
+
                 <Button type="submit" style={{width: '100%', marginTop: '30px'}}>Submit</Button>
             </Form>
         </StyledFormWrapper>
