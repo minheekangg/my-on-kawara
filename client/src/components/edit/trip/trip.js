@@ -185,7 +185,8 @@ const CreateTrip = (props) => {
                 </Form.Field>
                 {
                     destinations.map((d, idx) => {
-                        const dates = d.dates.map(dt=>({'key': dt, 'value': dt, 'text': dt}))
+                        const dates = d.dates.map(dt=>dt.date);
+                        console.log('dates', dates);
                         return <div key={`destination-${idx}`}>
                             <Form.Field>
                                 <label>
