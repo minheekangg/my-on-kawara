@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "moment/locale/nl";
+
 import { Form, Dropdown, Button } from "semantic-ui-react";
 
 const StyledFormWrapper = styled.div`
@@ -19,7 +23,8 @@ const CreateDestinations = (props) => {
     const [days] = useState(props.days);
     const [destinations, setDestinations] = useState([{
         city: "",
-        dates: []
+        startDate: "",
+        endDate: ""
     }]);
 
 
@@ -88,16 +93,40 @@ const CreateDestinations = (props) => {
                                         />
                                     </label>
                                     <label>
-                                        Days:
-                                        <Dropdown 
+                                        Start Date:
+                                        <DatePicker
+                                            onChange={(e, { value }) => handleChange(value, "startDate", idx)}
+                                            selected={d.startDate}
+                                            dateFormat="MM/DD/YYYY"
+                                            isClearable={true}
+                                            placeholderText="Start Date"
+                                            tetherConstraints={[]}
+                                            locale="nl"
+                                            popperPlacement="bottom"
+                                            popperModifiers={{
+                                                flip: {
+                                                    enabled: false
+                                                },
+                                                preventOverflow: {
+                                                    enabled: true,
+                                                    escapeWithReference: false
+                                                }
+                                            }}
+                                            selectsStart
+                                            startDate={new Date()}
+                                            className="startDate"
+                                            showMonthDropdown
+                                            showYearDropdown
+                                        />
+                                        {/* <Dropdown 
                                             placeholder='Days in this city' 
                                             name="days" 
                                             multiple 
                                             selection 
                                             fluid
                                             options={formatDays(days)} 
-                                            onChange={(e, { value }) => handleChange(value, "dates", idx)} 
-                                        />
+                                            } 
+                                        /> */}
                                     </label>
                                 </Form.Field>
                             </div>

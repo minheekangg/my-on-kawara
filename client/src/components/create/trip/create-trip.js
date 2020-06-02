@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import moment from "moment";
 import { Button, Form, Input, TextArea } from "semantic-ui-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "moment/locale/nl";
 
 import CreateDestination from '../destination';
+
 
 const StyledFormWrapper = styled.div`
     max-width: 300px;
@@ -15,17 +18,21 @@ const StyledFormWrapper = styled.div`
     .ui.form{
         width: 100%;
     }
+
+    .react-datepicker-wrapper {
+        display: block!important;
+    }
 `;
 
 const CreateTrip = (props) => {
-    const [days, setDays] = useState([]);
+    const [isTripFilledOut, setIsTripFilledOut] = useState(false);
     const [people, setPeople] = useState([{
         name: "",
     }]);
-    const [form, setState] = useState({
-        startDate: props.startDate,
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [form, setForm] = useState({
         title: props.title,
-        endDate: props.endDate,
         content: props.content
     });
 
@@ -38,32 +45,18 @@ const CreateTrip = (props) => {
         }
     };
 
-    const calculateDays = () => {
-        var dates = [];
-
-        var currDate = moment(form.startDate, "MM/DD/YYYY").startOf('day');
-        var lastDate = moment(form.endDate, "MM/DD/YYYY").startOf('day');
-        dates.push(currDate.clone().format("MM/DD/YYYY"))
-
-        while (currDate.add(1, 'days').diff(lastDate) <= 0) {
-            dates.push(currDate.clone().format("MM/DD/YYYY"));
-        }
-
-        setDays(dates);   
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!!formValidation()) {
-            calculateDays();
             props.createTrip({...form, people: people});
+            setIsTripFilledOut(true)
         };
   
     };
 
     const updateField = e => {
-        setState({
+        setForm({
             ...form,
             [e.target.name]: e.target.value
         });
@@ -93,9 +86,11 @@ const CreateTrip = (props) => {
         return;
     }
 
-    if (days && days.length > 0) {
-        return <CreateDestination days={days} />
+    if (isTripFilledOut) {
+        return <CreateDestination minDate={form.startDate} maxDate={form.endDate} />
     }
+
+    console.log('forn is', startDate)
 
     return (
         <StyledFormWrapper>
@@ -116,26 +111,16 @@ const CreateTrip = (props) => {
                 <Form.Field>
                     <label>
                         Start Date:
-                        <input
-                            type="text"
-                            name="startDate"
-                            placeholder="When did the trip start?"
-                            value={form.startDate}
-                            onChange={updateField}
-                            required
+                        <DatePicker
+                            fluid selected={startDate} onChange={date => setStartDate(date)}
                         />
                     </label>
                 </Form.Field>
                 <Form.Field>
                     <label>
                         End Date:
-                        <input
-                            type="text"
-                            name="endDate"
-                            placeholder="When did the trip end?"
-                            value={form.endDate}
-                            onChange={updateField}
-                            required
+                        <DatePicker
+                            fluid selected={endDate} onChange={date => setEndDate(date)}
                         />
                     </label>
                 </Form.Field>

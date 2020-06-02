@@ -1,5 +1,5 @@
 import { ActionTypes } from '../../utils/constants';
-import axios from "axios";
+// import axios from "axios";
 
 export const updateProp = (payload) => {
     return (dispatch) => {

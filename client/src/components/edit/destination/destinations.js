@@ -56,7 +56,7 @@ const Destination = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         debugger
-        return props.Destination(destinations);
+        // return props.Destination(destinations);
     }
 
     const handleAddBtn = (e) => {
