@@ -17,6 +17,10 @@ const StyledFormWrapper = styled.div`
     .ui.form{
         width: 100%;
     }
+
+    .react-datepicker-wrapper {
+        display: block!important;
+    }
 `;
 
 const CreateDestinations = (props) => {
@@ -112,6 +116,8 @@ const CreateDestinations = (props) => {
                                                     escapeWithReference: false
                                                 }
                                             }}
+                                            // minDate={new Date()}
+                                            // maxDate={addDays(new Date(), 5)}
                                             selectsStart
                                             startDate={new Date()}
                                             className="startDate"

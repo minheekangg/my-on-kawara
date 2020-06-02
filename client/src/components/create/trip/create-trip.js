@@ -4,6 +4,7 @@ import { Button, Form, Input, TextArea } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "moment/locale/nl";
+import moment from "moment";
 
 import CreateDestination from '../destination';
 
@@ -49,7 +50,10 @@ const CreateTrip = (props) => {
         e.preventDefault();
 
         if (!!formValidation()) {
-            props.createTrip({...form, people: people});
+            const formattedStartDate = moment(startDate, "MM/DD/YYYY");
+            const formatttedEndDate = moment(endDate, "MM/DD/YYYY");
+            
+            props.createTrip({...form, people, startDate: formattedStartDate, endDate: formatttedEndDate});
             setIsTripFilledOut(true)
         };
   
@@ -90,8 +94,6 @@ const CreateTrip = (props) => {
         return <CreateDestination minDate={form.startDate} maxDate={form.endDate} />
     }
 
-    console.log('forn is', startDate)
-
     return (
         <StyledFormWrapper>
             <Form onSubmit={handleSubmit}>
@@ -112,7 +114,13 @@ const CreateTrip = (props) => {
                     <label>
                         Start Date:
                         <DatePicker
-                            fluid selected={startDate} onChange={date => setStartDate(date)}
+                            selected={startDate} 
+                            onChange={date => {
+                                setStartDate(date)
+                                setEndDate(date)
+                            }}
+                            showMonthDropdown
+                            showYearDropdown
                         />
                     </label>
                 </Form.Field>
@@ -120,7 +128,10 @@ const CreateTrip = (props) => {
                     <label>
                         End Date:
                         <DatePicker
-                            fluid selected={endDate} onChange={date => setEndDate(date)}
+                            selected={endDate} 
+                            onChange={date => setEndDate(date)}
+                            showMonthDropdown
+                            showYearDropdown
                         />
                     </label>
                 </Form.Field>
