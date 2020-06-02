@@ -37,8 +37,9 @@ const ArticleWrapper = styled.div`
 
 
 const Articles = (props) => {
-    const { fetchArticles } = props;
-    const { articles } = props;
+    const { fetchArticles, articles } = props;
+    const link = !!props.toEdit ? 'edit' : 'articles';
+    console.log('link is', link)
 
     useEffect(() => {
         fetchArticles();
@@ -49,7 +50,8 @@ const Articles = (props) => {
             <StyledArticlesWrapper>
                 <h2>Travel</h2>
             {articles.map(e=>{
-                return <ArticleWrapper onClick={()=>props.history.push(`articles/${e._id}`)}>
+                console.log('link is', link, e._id)
+                return <ArticleWrapper onClick={()=>props.history.push(`${link}/${e._id}`)}>
                     <div>{e.title}</div>
                     <div>{e.startDate} - {e.endDate}</div>
                 </ArticleWrapper>
