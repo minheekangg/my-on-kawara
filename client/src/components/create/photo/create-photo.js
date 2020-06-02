@@ -1,5 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom';
+import moment from "moment";
 
 import { Image } from "cloudinary-react";
 import { Form, Dropdown, Input } from "semantic-ui-react";
@@ -101,12 +102,15 @@ class CreatePhoto extends React.Component {
     }
 
     const foundDestination = destinations.find(d=>d._id === this.state.photo.destination);
-
-    return foundDestination.dates.map(d => {
+    const dates = calculateDays(foundDestination.startDate, foundDestination.endDate)
+    console.log('inside found destination', foundDestination, dates)
+    
+    debugger
+    return dates.map(d => {
       return {
-            key: d.date,
-            text: d.date,
-            value: d._id,
+            key: d,
+            text: d,
+            value: d,
         };
     })
   }
@@ -210,3 +214,17 @@ class CreatePhoto extends React.Component {
 }
 
 export default withRouter(CreatePhoto);
+
+const calculateDays = (start, end) => {
+  var dates = [];
+
+  var currDate = moment(start).startOf('day');
+  var lastDate = moment(end).startOf('day');
+  dates.push(currDate.clone().format("MM/DD/YYYY"))
+
+  while (currDate.add(1, 'days').diff(lastDate) <= 0) {
+    dates.push(currDate.clone().format("MM/DD/YYYY"));
+  }
+  debugger
+  return dates;
+}

@@ -41,7 +41,7 @@ const CreateDestinations = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        debugger
+
         return props.createDestinations(destinations);
     }
 
