@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
+import moment from "moment";
+
 const StyledWrapper = styled.div`
     max-width: 300px;
     margin: auto;
@@ -50,9 +52,10 @@ const Articles = (props) => {
             <StyledArticlesWrapper>
                 <h2>Travel</h2>
             {articles.map(e=>{
+                const formattedDates = `${moment(e.startDate).format("MM/DD/YYYY")} - ${moment(e.endDate).format("MM/DD/YYYY")}`
                 return <ArticleWrapper key={e._id} onClick={()=>props.history.push(`${link}/${e._id}`)}>
                     <div>{e.title}</div>
-                    <div>{e.startDate} - {e.endDate}</div>
+                    <div>{formattedDates}</div>
                 </ArticleWrapper>
             })}
             </StyledArticlesWrapper>

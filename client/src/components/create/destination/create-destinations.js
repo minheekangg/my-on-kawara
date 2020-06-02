@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "moment/locale/nl";
 
-import { Form, Dropdown, Button } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 
 const StyledFormWrapper = styled.div`
     max-width: 300px;
@@ -61,8 +61,6 @@ const CreateDestinations = (props) => {
         setDestinations(updatedDestinations)
         return;
     }
-
-    console.log('destinations are', destinations, 'props', props)
 
     return (
         <StyledFormWrapper>
