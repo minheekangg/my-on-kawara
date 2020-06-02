@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { Form, Dropdown, Button } from "semantic-ui-react";
@@ -18,8 +18,17 @@ const StyledFormWrapper = styled.div`
 
 const Destination = (props) => {
     const [days] = useState(props.days);
-    const [destinations, setDestinations] = useState(props.destinations);
+    const [destinations, setDestinations] = useState([]);
 
+    useEffect(() => {
+        if (!!props.destinations && props.destinations.length > 0) {
+            props.destinations.map(d => {
+                return setDestinations(destinations => destinations.concat({ city: d.city, dates: d.dates }))
+            })
+        }
+
+        return
+    }, [ setDestinations, props]);
 
     const formatDays = (days) => {
         if (!days || days.length <= 0 ) {
