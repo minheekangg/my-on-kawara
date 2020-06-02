@@ -24,27 +24,11 @@ const StyledFormWrapper = styled.div`
 `;
 
 const CreateDestinations = (props) => {
-    const [days] = useState(props.days);
     const [destinations, setDestinations] = useState([{
         city: "",
         startDate: "",
         endDate: ""
     }]);
-
-
-    const formatDays = (days) => {
-        if (!days || days.length <= 0 ) {
-            return []
-        }
-
-        return days.map(d=> {
-            return {
-                'key': d,
-                'text': d,
-                'value' : d
-            }
-        })
-    }
 
     const handleChange = (value, key, idx)=> {
         let newDestinations = [...destinations];
@@ -57,6 +41,7 @@ const CreateDestinations = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        debugger
         return props.createDestinations(destinations);
     }
 
@@ -76,6 +61,8 @@ const CreateDestinations = (props) => {
         setDestinations(updatedDestinations)
         return;
     }
+
+    console.log('destinations are', destinations, 'props', props)
 
     return (
         <StyledFormWrapper>
@@ -99,40 +86,22 @@ const CreateDestinations = (props) => {
                                     <label>
                                         Start Date:
                                         <DatePicker
-                                            onChange={(e, { value }) => handleChange(value, "startDate", idx)}
+                                            onChange={date => handleChange(date, "startDate", idx)}
                                             selected={d.startDate}
-                                            dateFormat="MM/DD/YYYY"
-                                            isClearable={true}
-                                            placeholderText="Start Date"
-                                            tetherConstraints={[]}
-                                            locale="nl"
-                                            popperPlacement="bottom"
-                                            popperModifiers={{
-                                                flip: {
-                                                    enabled: false
-                                                },
-                                                preventOverflow: {
-                                                    enabled: true,
-                                                    escapeWithReference: false
-                                                }
-                                            }}
-                                            // minDate={new Date()}
-                                            // maxDate={addDays(new Date(), 5)}
-                                            selectsStart
-                                            startDate={new Date()}
-                                            className="startDate"
-                                            showMonthDropdown
-                                            showYearDropdown
+                                            minDate={props.minDate}
+                                            maxDate={props.maxDate}
+                                            startDate={props.minDate}
                                         />
-                                        {/* <Dropdown 
-                                            placeholder='Days in this city' 
-                                            name="days" 
-                                            multiple 
-                                            selection 
-                                            fluid
-                                            options={formatDays(days)} 
-                                            } 
-                                        /> */}
+                                    </label>
+                                    <label>
+                                        End Date:
+                                        <DatePicker
+                                            onChange={date => handleChange(date, "endDate", idx)}
+                                            selected={d.endDate}
+                                            minDate={props.minDate}
+                                            maxDate={props.maxDate}
+                                            startDate={d.startDate}
+                                        />
                                     </label>
                                 </Form.Field>
                             </div>

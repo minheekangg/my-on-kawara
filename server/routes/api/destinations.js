@@ -14,23 +14,23 @@ router.post("/", async(req, res, next) => {
         });
     }
 
-    if (!data.destinations.startDate) {
-        return res.status(422).json({
-            errors: {
-                startDate: "is required"
-            }
-        });
-    }
-
-    if (!data.destinations.startDate) {
-        return res.status(422).json({
-            errors: {
-                endDate: "is required"
-            }
-        });
-    }
-
     const createdDestinations = data.destinations.map(async (trip) => {
+        if (!trip.startDate) {
+            return res.status(422).json({
+                errors: {
+                    startDate: "is required"
+                }
+            });
+        }
+
+        if (!trip.endDate) {
+            return res.status(422).json({
+                errors: {
+                    endDate: "is required"
+                }
+            });
+        }
+
         let createdDestination = await Destination.create({
             startDate: trip.startDate,
             endDate: trip.endDate,
@@ -41,9 +41,9 @@ router.post("/", async(req, res, next) => {
 
     await Promise.all(createdDestinations)
         .then((destinations) => {
-            console.log('new destination is', destinations);
             Trip.findByIdAndUpdate(data.tripId, { 'destinations': destinations })
-                .then((trip)=> {
+            .then((trip)=> {
+                console.log('new trip is', trip);
                     res.json({ destinations: destinations, trip: trip });
                 })
                 .catch((err) => {

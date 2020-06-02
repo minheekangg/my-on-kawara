@@ -91,7 +91,7 @@ const CreateTrip = (props) => {
     }
 
     if (isTripFilledOut) {
-        return <CreateDestination minDate={form.startDate} maxDate={form.endDate} />
+        return <CreateDestination minDate={startDate} maxDate={endDate} />
     }
 
     return (
