@@ -50,8 +50,7 @@ const Articles = (props) => {
             <StyledArticlesWrapper>
                 <h2>Travel</h2>
             {articles.map(e=>{
-                console.log('link is', link, e._id)
-                return <ArticleWrapper onClick={()=>props.history.push(`${link}/${e._id}`)}>
+                return <ArticleWrapper key={e._id} onClick={()=>props.history.push(`${link}/${e._id}`)}>
                     <div>{e.title}</div>
                     <div>{e.startDate} - {e.endDate}</div>
                 </ArticleWrapper>
