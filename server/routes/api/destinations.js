@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const router = require("express").Router();
 const Destination = mongoose.model("Destination");
-const Date = mongoose.model("Date");
 const Trip = mongoose.model("Trip");
 
 router.post("/", async(req, res, next) => {
@@ -15,11 +14,26 @@ router.post("/", async(req, res, next) => {
         });
     }
 
+    if (!data.destinations.startDate) {
+        return res.status(422).json({
+            errors: {
+                startDate: "is required"
+            }
+        });
+    }
+
+    if (!data.destinations.startDate) {
+        return res.status(422).json({
+            errors: {
+                endDate: "is required"
+            }
+        });
+    }
+
     const createdDestinations = data.destinations.map(async (trip) => {
-        let formattedDates = trip.dates.map(d=>({'date': d}));
-        let datesId = await Date.insertMany(formattedDates)
         let createdDestination = await Destination.create({
-            dates: datesId,
+            startDate: trip.startDate,
+            endDate: trip.endDate,
             city: trip.city,
         })
         return createdDestination;
@@ -27,6 +41,7 @@ router.post("/", async(req, res, next) => {
 
     await Promise.all(createdDestinations)
         .then((destinations) => {
+            console.log('new destination is', destinations);
             Trip.findByIdAndUpdate(data.tripId, { 'destinations': destinations })
                 .then((trip)=> {
                     res.json({ destinations: destinations, trip: trip });

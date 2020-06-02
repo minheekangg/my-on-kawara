@@ -7,7 +7,7 @@ const PhotoSchema = new Schema(
         src: { type: String, required: true },
         people: { type: Array, ref: 'Person' },
         location: { type: String },
-        date: { type: String, ref: 'Date'},
+        date: { type: String},
         city: { type: String, ref: 'Destination'},
     },
     { timestamps: true }

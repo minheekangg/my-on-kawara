@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const router = require("express").Router();
 const Photo = mongoose.model("Photo");
-const Date = mongoose.model("Date");
 const Person = mongoose.model("Person");
 const Trip = mongoose.model("Trip");
 const Destination = mongoose.model("Destination");
@@ -35,14 +34,26 @@ router.post("/", async (req, res, next) => {
         });
     }
 
+    if (!data.date) {
+        return res.status(422).json({
+            errors: {
+                date: "is required"
+            }
+        });
+    }
+
+    if (!data.destination) {
+        return res.status(422).json({
+            errors: {
+                city: "is required"
+            }
+        });
+    }
+
     const params = {
         src: data.publicId,
         location: data.location || "",
-    }
-
-    if (!!data.date) {
-        let dateObj = await Date.findOne({_id: data.date});
-        params.date = dateObj.date;
+        date: data.date,
     }
 
     if (!!data.destination) {
@@ -62,13 +73,12 @@ router.post("/", async (req, res, next) => {
             const createdPhotos = data.url.map(async p=> {
                 const newParam = {...params, src: p}
                 let createdPhoto = await Photo.create(newParam)
-                console.log('created photo is', createdPhoto)
                 return createdPhoto
             })
 
             await Promise.all(createdPhotos) 
                 .then(async photos=> {
-                    await Date.findByIdAndUpdate(data.date, {'photos': photos});                
+                    await Destination.findByIdAndUpdate(data.destination, {'photos': photos});                
                     await Trip.findByIdAndUpdate(data.tripId, {'photos': photos});         
 
                     res.json(photos);

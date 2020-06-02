@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { Form, Dropdown, Button } from "semantic-ui-react";
+import { Form, Dropdown, Button, Segment } from "semantic-ui-react";
 
 
 const StyledFormWrapper = styled.div`
@@ -55,7 +55,8 @@ const Destination = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // return props.Destination(destinations);
+        debugger
+        return props.Destination(destinations);
     }
 
     const handleAddBtn = (e) => {
@@ -80,7 +81,9 @@ const Destination = (props) => {
             <Form onSubmit={handleSubmit}>
                     {
                         destinations.map((d, idx) => {
-                            return <div key={`destination-${idx}`}>
+                            const oldDates = d.dates.map(dt=>dt.date);
+                            console.log(oldDates, days)
+                            return <Segment key={`destination-${idx}`} style={{marginBottom: '20px'}}>
                                 <Form.Field>
                                     <label>
                                         City:
@@ -95,7 +98,20 @@ const Destination = (props) => {
                                         />
                                     </label>
                                     <label>
-                                        Days:
+                                        Prev Days:
+                                        <Dropdown 
+                                            placeholder='Days in this city' 
+                                            name="days" 
+                                            multiple 
+                                            selection
+                                            disabled 
+                                            fluid
+                                            value={oldDates}
+                                            options={formatDays(days)} 
+                                        />
+                                    </label>
+                                    <label>
+                                        Updated Days:
                                         <Dropdown 
                                             placeholder='Days in this city' 
                                             name="days" 
@@ -107,12 +123,12 @@ const Destination = (props) => {
                                         />
                                     </label>
                                 </Form.Field>
-                            </div>
+                            </Segment>
                         })
                     }
                 <Button onClick={handleAddBtn}>+</Button>
                 <Button onClick={handleSubtractBtn}>-</Button>
-                <Form.Button style={{ marginTop: '30px', width: '100%' }}>Submit</Form.Button>
+                <Form.Button style={{ marginTop: '30px', width: '100%' }}>Next</Form.Button>
             </Form>
         </StyledFormWrapper>
     );
