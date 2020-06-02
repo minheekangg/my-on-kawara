@@ -3,14 +3,15 @@ import styled from "styled-components";
 import moment from "moment";
 import { Button, Form, Input, TextArea, Dropdown } from "semantic-ui-react";
 
+import Destination from '../destination';
+
 const StyledFormWrapper = styled.div`
     
 `;
 
-const CreateTrip = (props) => {
+const Trip = (props) => {
     const [days, setDays] = useState([]);
     const [people, setPeople] = useState([]);
-    const [destinations, setDestinations] = useState([]);
     const [form, setState] = useState({
         startDate: props.startDate,
         title: props.title,
@@ -19,51 +20,42 @@ const CreateTrip = (props) => {
     });
 
     useEffect(() => {
-        if (!!props.destinations && props.destinations.length > 0) {
-            props.destinations.map(d=> {
-                return setDestinations(destinations => destinations.concat({city: d.city, dates: d.dates}))
-            })
-        }
         if (!!props.people && props.people.length > 0) {
-            props.people.map(d => setPeople(people=>people.concat({name: d.name})))
+            props.people.map(d => setPeople(people => people.concat({ name: d.name })))
         }
 
-        if (!!props.startDate && !!props.endDate) {
-            var dates = [];
+        return
+    }, [setPeople, props, setDays]);
 
-            var currDate = moment(props.startDate, "MM/DD/YYYY").startOf('day');
-            var lastDate = moment(props.endDate, "MM/DD/YYYY").startOf('day');
-            dates.push(currDate.clone().format("MM/DD/YYYY"))
-
-            while (currDate.add(1, 'days').diff(lastDate) <= 0) {
-                dates.push(currDate.clone().format("MM/DD/YYYY"));
-            }
-            
-            dates.map(d=>setDays(days=>days.concat({'key': d, 'text': d, 'value': d })))
-        }
-        
-        return 
-    }, [setPeople, setDestinations, props, setDays]);
 
     const formValidation = () => {
-        const requiredFields = ['startDate', 'endDate', 'title'];
-        requiredFields.forEach(field=> {
-            if (form[field] == "") {
-                return false;
-            }
-        })
-        return true;
+        if (form.startDate !== "" && form.endDate !== "" && form.title !== "") {
+            return true;
+        } else {
+            return false;
+        }
     };
 
-    // const calculateDays = () => {
-           
-    // };
+    const calculateDays = () => {
+        var dates = [];
+
+        var currDate = moment(form.startDate, "MM/DD/YYYY").startOf('day');
+        var lastDate = moment(form.endDate, "MM/DD/YYYY").startOf('day');
+        dates.push(currDate.clone().format("MM/DD/YYYY"))
+
+        while (currDate.add(1, 'days').diff(lastDate) <= 0) {
+            dates.push(currDate.clone().format("MM/DD/YYYY"));
+        }
+
+        setDays(dates);   
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!!formValidation()) {
-            // props.createTrip({...form, people: people});
+            calculateDays();
+            props.updateProp({...form, people: people});
         };
   
     };
@@ -83,45 +75,26 @@ const CreateTrip = (props) => {
         return;
     }
 
-    const handleChange = (value, key, idx) => {
-        let newDestinations = [...destinations];
-        let current = newDestinations[idx];
-        current[key] = value;
-
-        setDestinations(newDestinations);
-        return;
-    }
-
-    const handleAdd = (e, field) => {
+    const handleAddPeople = (e) => {
         e.preventDefault();
-        if (field === 'people') {
-            setPeople(people.concat({ name: "" }))
-        } else if (field === 'destinations') {
-            setDestinations(destinations.concat({city: "'"}))
+        setPeople(people.concat({ name: "" }))
+    }
+
+    const handleSubtractPeople = (e) => {
+        e.preventDefault();
+        if (people.length <= 1) {
+            return;
         }
+        let updatedPeople = [...people];
+        updatedPeople.pop();
+        setPeople(updatedPeople)
         return;
     }
 
-    const handleSubtract = (e, field) => {
-        e.preventDefault();
-        if (field === 'people') {
-            if (people.length <= 1) {
-                return;
-            }
-            let updatedPeople = [...people];
-            updatedPeople.pop();
-            setPeople(updatedPeople)
-        } else if (field === 'destinations') {
-            if (destinations.length <= 1) {
-                return;
-            }
-            let updatedDestinations = [...destinations];
-            updatedDestinations.pop();
-            setDestinations(updatedDestinations)
-        }
-        return;
+    if (days && days.length > 0) {
+        return <Destination days={days} />
     }
-    console.log('form', form)
+
     return (
         <StyledFormWrapper>
             <Form onSubmit={handleSubmit}>
@@ -167,8 +140,8 @@ const CreateTrip = (props) => {
                 <Form.Field>
                     <label>
                         People:
-                        {   people.length > 0 && 
-                            people.map((p, idx)=> {
+                        {people.length > 0 &&
+                            people.map((p, idx) => {
                                 return <Input
                                     type="person"
                                     name="person"
@@ -182,8 +155,8 @@ const CreateTrip = (props) => {
                         }
                         
                     </label>
-                    <Button onClick={e => handleAdd(e, 'people')}>+</Button>
-                    <Button onClick={e => handleSubtract(e, 'people')}>-</Button>
+                    <Button onClick={handleAddPeople}>+</Button>
+                    <Button onClick={handleSubtractPeople}>-</Button>
                 </Form.Field>
                 <Form.Field>
                     <label>
@@ -198,47 +171,10 @@ const CreateTrip = (props) => {
                         />
                     </label>
                 </Form.Field>
-                {
-                    destinations.map((d, idx) => {
-                        const dates = d.dates.map(dt=>dt.date);
-                        return <div key={`destination-${idx}`}>
-                            <Form.Field>
-                                <label>
-                                    City:
-                                        <input
-                                        type="text"
-                                        name="city"
-                                        label="City"
-                                        placeholder="Where does this take place?"
-                                        value={d.city}
-                                        onChange={(e) => handleChange(e.target.value, "city", idx)}
-                                        required
-                                    />
-                                </label>
-                                <label>
-                                    Days:
-                                        <Dropdown
-                                        placeholder='Days in this city'
-                                        name="days"
-                                        multiple
-                                        selection
-                                        fluid
-                                        value={dates}
-                                        options={days}
-                                        onChange={(e, { value }) => handleChange(value, "dates", idx)}
-                                    />
-                                </label>
-                            </Form.Field>
-                        </div>
-                    })
-                }
-                <Button onClick={e => handleAdd(e, 'destinations')}>+</Button>
-                <Button onClick={e => handleSubtract(e, 'destinations')}>-</Button>
-
-                <Button type="submit" style={{width: '100%', marginTop: '30px'}}>Submit</Button>
+                <Button type="submit" style={{width: '100%'}}>Next</Button>
             </Form>
         </StyledFormWrapper>
     );
 };
 
-export default CreateTrip;
+export default Trip;

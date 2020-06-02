@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import Trip from './trip';
 
+import { updateProp } from 'redux/action/updateActions';
+
 const mapStateToProps = (state, ownProps) => {
     const article = state.article && state.article.article;
     return {
@@ -14,4 +16,4 @@ const mapStateToProps = (state, ownProps) => {
     }
 };
 
-export default connect(mapStateToProps)(Trip);
+export default connect(mapStateToProps, {updateProp})(Trip);

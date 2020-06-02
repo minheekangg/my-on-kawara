@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Articles from './articles';
 
-import { fetchArticles } from 'redux/action/articleActions';
+import { fetchArticles } from 'redux/action/fetchActions';
 
 const mapStateToProps = (state, ownProps) => (
     {

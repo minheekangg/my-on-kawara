@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import Edit from "./edit";
 
-import { fetchArticle } from 'redux/action/articleActions';
+import { fetchArticle } from 'redux/action/fetchActions';
+import { updateProp } from 'redux/action/updateActions';
 
 const mapStateToProps = (state) => ({
     article: state.article,
@@ -9,4 +10,10 @@ const mapStateToProps = (state) => ({
     fetched: state.article.fetched,
 });
 
-export default connect(mapStateToProps, { fetchArticle })(Edit);
+const dispatchAction  = {
+    fetchArticle,
+    updateProp
+}
+
+
+export default connect(mapStateToProps, dispatchAction)(Edit);

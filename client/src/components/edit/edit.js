@@ -4,9 +4,7 @@ import { useParams } from "react-router";
 import { Loader, Segment } from 'semantic-ui-react';
 import styled from "styled-components";
 
-// import UpdatePhoto from './photo';
 import UpdateTrip from "./trip";
-// import UpdateDestination from './destination';
 import Articles from '../articles';
 
 const StyledFormWrapper = styled.div`
@@ -22,13 +20,14 @@ const StyledFormWrapper = styled.div`
 
 const EditArticle = (props) => {
     let { articleId } = useParams();
-    const { fetchArticle } = props;
+    const { fetchArticle, updateProp } = props;
 
     useEffect(() => {
         if (!!articleId) {
             fetchArticle(articleId);
+            updateProp({_id: articleId});
         }
-    }, [articleId, fetchArticle]);
+    }, [articleId, fetchArticle, updateProp]);
 
     if ( props.fetched && !props.article.article._id ) {
         return <Articles />

@@ -5,12 +5,6 @@ const initialState = {
 
 export default function destinationReducer(state = initialState, action) {
     switch (action.type) {
-        case ActionTypes.UPDATE_PROP: {
-            return {
-                ...state,
-                ...action.payload,
-            };
-        }
         case ActionTypes.CREATE_DESTINATIONS + '_PENDING': {
             return {
                 ...state,

@@ -34,15 +34,6 @@ export const createDestinations = (destinations) => {
     };
 };
 
-export const updateProp = (payload) => {
-    debugger
-    return (dispatch) => {
-        dispatch(
-            { type: ActionTypes.UPDATE_PROP, payload }
-        )
-    }
-}
-
 export const createTrip = payload => {
     return (dispatch) => {
         dispatch({ type: ActionTypes.CREATE_TRIP + "_PENDING" });

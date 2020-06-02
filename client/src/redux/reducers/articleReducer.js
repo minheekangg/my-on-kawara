@@ -29,6 +29,19 @@ export default function articlesReducer(state = initialState, action) {
                 article
             };
         }
+        case ActionTypes.UPDATE_PROP : {
+            const newArticle = {
+                ...action.payload,
+                ...state.newArticle
+            }
+            return {
+                ...state,
+                newArticle
+            }
+        }
+        // case ActionTypes.UPDATE_ARTICLE + '_PENDING': {
+
+        // }
         case ActionTypes.RESET:
             return initialState
         default:
