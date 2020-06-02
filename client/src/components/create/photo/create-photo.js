@@ -56,8 +56,6 @@ class CreatePhoto extends React.Component {
               url: [...this.state.photo.url, result.info.url],
               publicId: [...this.state.photo.url, result.info.public_id]
             }
-          },()=> {
-            console.log('state is', this.state)
           });
 
         }
@@ -103,9 +101,7 @@ class CreatePhoto extends React.Component {
 
     const foundDestination = destinations.find(d=>d._id === this.state.photo.destination);
     const dates = calculateDays(foundDestination.startDate, foundDestination.endDate)
-    console.log('inside found destination', foundDestination, dates)
-    
-    debugger
+
     return dates.map(d => {
       return {
             key: d,
@@ -225,6 +221,6 @@ const calculateDays = (start, end) => {
   while (currDate.add(1, 'days').diff(lastDate) <= 0) {
     dates.push(currDate.clone().format("MM/DD/YYYY"));
   }
-  debugger
+
   return dates;
 }

@@ -41,8 +41,7 @@ const ArticleWrapper = styled.div`
 const Articles = (props) => {
     const { fetchArticles, articles } = props;
     const link = !!props.toEdit ? 'edit' : 'articles';
-    console.log('link is', link)
-
+    
     useEffect(() => {
         fetchArticles();
     }, [fetchArticles]);

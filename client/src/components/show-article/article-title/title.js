@@ -78,12 +78,9 @@ export default class Title extends React.Component {
                     With love, from
                     <h2>{this.state.title}</h2>
                     {(!!this.state.startDate && !!this.state.endDate) 
-                        ? <span>
-                            {moment(this.state.startDate, "MMMM Do YYYY")}
-                        </span>
-                            -
-                            <span>
-                                {moment(this.state.endDate, "MMMM Do YYYY")}
+                        ? <span style={{textTransform: 'capitalize'}}>
+                            {moment(this.state.startDate).format("MMM DD, YYYY") + " - " + 
+                            moment(this.state.endDate).format("MMM DD, YYYY")}
                             </span> 
                         : null
                     }

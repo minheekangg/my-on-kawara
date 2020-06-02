@@ -70,7 +70,7 @@ const PictureContainer = ({article}) => {
         const desc = [];
 
         if (!!currentPicture.date) {
-            desc.push(<span>{moment(currentPicture.date).format('MMMM Do YYYY')}</span>)
+            desc.push(<span>{moment(currentPicture.date).format('MM/DD/YYYY')}</span>)
         } 
 
         if (!!currentPicture.people) {
