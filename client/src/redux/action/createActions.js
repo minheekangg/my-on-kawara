@@ -8,6 +8,15 @@ export const createDestinations = (destinations) => {
         const state = getState();
         const tripId = state && state.trip && state.trip.trip._id;
 
+        if (!tripId) {
+            const err = 'trip is missing';
+
+            dispatch({
+                type: ActionTypes.CREATE_DESTINATIONS + "_REJECTED",
+                payload: err,
+            });
+        }
+
         return axios
             .post("http://localhost:8000/api/destinations", {
                 headers: {
@@ -70,6 +79,15 @@ export const createPhotos = payload => {
 
         const state = getState();
         const tripId = state && state.trip && state.trip.trip._id;
+
+        if (!tripId) {
+            const err = 'trip is missing';
+
+            dispatch({
+                type: ActionTypes.CREATE_PHOTO + "_REJECTED",
+                payload: err,
+            });
+        }
 
         return axios
             .post("http://localhost:8000/api/photos", {

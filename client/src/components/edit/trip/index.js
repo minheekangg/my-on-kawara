@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Trip from './trip';
 
-import { updateProp } from 'redux/action/updateActions';
+import { updateTrip } from 'redux/action/updateActions';
 
 const mapStateToProps = (state, ownProps) => {
     const article = state.article && state.article.article;
@@ -16,4 +16,4 @@ const mapStateToProps = (state, ownProps) => {
     }
 };
 
-export default connect(mapStateToProps, {updateProp})(Trip);
+export default connect(mapStateToProps, { updateTrip})(Trip);

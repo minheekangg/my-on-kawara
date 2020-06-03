@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const router = require("express").Router();
 const Trip = mongoose.model("Trip");
 const Person = mongoose.model("Person");
+const Destination = mongoose.model("Destination")
 
 router.post("/", async(req, res, next) => {
     const { data } = req.body;
@@ -37,8 +38,6 @@ router.post("/", async(req, res, next) => {
             }
         });
     }
-
-
     
     const createdPeople = data.people.map(async (person) => {
         let foundPerson = await Person.findOne(person);
@@ -99,27 +98,78 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.patch("/:id", (req, res, next) => {
-    const { body } = req;
+    const { data } = req.body;
 
-    if (typeof body.title !== "undefined") {
-        req.trip.title = body.title;
+    if (typeof data.title !== "undefined") {
+        req.trip.title = data.title;
     }
 
-    if (typeof body.startDate !== "undefined") {
-        req.trip.startDate = body.startDate;
+    if (typeof data.startDate !== "undefined") {
+        req.trip.startDate = data.startDate;
     }
 
-    if (typeof body.endDate !== "undefined") {
-        req.trip.endDate = body.endDate;
+    if (typeof data.endDate !== "undefined") {
+        req.trip.endDate = data.endDate;
     }
 
-    if (typeof body.people !== "undefined") {
-        req.trip.people = body.people;
+    if (typeof data.content !== "undefined") {
+        req.trip.content = data.content;
     }
 
-    return req.trip
-        .save()
-        .then(() => res.json({ trip }))
+    console.log('PEOPLE: ', data.people, typeof data.people)
+
+    // if (typeof data.people !== "undefined") {
+    //     req.trip.people = data.people;
+    // } else {
+        const updatedPeople = data.people.map(async (person) => {
+            let foundPerson = await Person.findOne( person);
+            if (!!foundPerson) {
+                return foundPerson
+            } else {
+                let newPerson = await Person.create(person);
+                return newPerson;
+            }
+        })
+        Promise.all(updatedPeople)
+            .then(people => {
+                console.log('done', people);
+                req.trip.people = people;
+                next();
+            })
+            .catch(err=>console.log('error: ', err))
+    // }
+
+}, async function(req, res, next){
+    console.log('moving on', req.peole)
+
+    //go through destinations + update
+    console.log('TESTING: destination', data.destinations)
+
+    // if (typeof data.destination !== "undefined") {
+    //     req.trip.destination = data.destination;
+    //     next();
+    // } 
+
+    const updatedDestinations = data.destinations.map(async city => {
+        let foundDestination = await Destination.findOne(city._id);
+        if (!!foundDestination) {
+            return foundDestination
+        } else {
+            let newPerson = await Destination.create(city);
+            return newPerson;
+        }
+    })
+    Promise.all(updatedDestinations)
+        .then(destinations => {
+            req.trip.destination = destinations
+            next()
+        })
+        .catch(err => console.log('error: ', err))
+
+}, async function (req, res, next) {
+    console.log('FINALLY creating params are', req.trip);
+    req.trip.save()
+        .then(trip => res.json({ trip }))
         .catch(next);
 });
 

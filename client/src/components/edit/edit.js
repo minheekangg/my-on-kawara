@@ -43,7 +43,7 @@ const EditArticle = (props) => {
 
     return(
         <StyledFormWrapper>
-            <UpdateTrip />
+            <UpdateTrip articleId={articleId}/>
             {/* <UpdateDestination /> */}
             {/* <UpdatePhoto /> */}
         </StyledFormWrapper>

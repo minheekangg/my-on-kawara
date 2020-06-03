@@ -3,14 +3,11 @@ import CreateDestinations from './create-destinations';
 
 import { createDestinations } from "redux/action/createActions";
 
-const mapStateToProps = (state, ownProps) => {
-    console.log('state is',ownProps)
-    return {
-        // minDate: (state.trip && state.trip.trip && state.trip.trip.startDate) || new Date(),
-        // maxDate: (state.trip && state.trip.trip && state.trip.trip.endDate) || new Date(),
+const mapStateToProps = (state, ownProps) => (
+    {
         ...ownProps
     }
-};
+);
 
 
 export default connect(mapStateToProps, { createDestinations })(
