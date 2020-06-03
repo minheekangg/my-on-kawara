@@ -8,8 +8,6 @@ import CreatePhoto from "./create-photo";
 const StyledWrapper = styled.div`
     max-width: 300px;
     margin: 50px auto;
-    // height: 100vh;
-    border:1px solid red;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
