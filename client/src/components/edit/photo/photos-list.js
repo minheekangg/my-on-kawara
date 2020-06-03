@@ -1,41 +1,59 @@
-import React from 'react'
+import React, {useState} from 'react';
 
-import { Image } from "cloudinary-react";
 import styled from "styled-components";
 import { Button } from 'semantic-ui-react'
 
-const MY_CLOUD_NAME = process.env.REACT_APP_MY_CLOUD_NAME;
-
 const StyledWrapper = styled.div`
     max-width: 300px;
-    margin: auto;
-    height: 100vh;
+    margin: 50px auto;
+    // height: 100vh;
     border:1px solid red;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 
-    .ui.form{
-        width: 100%;
+    label {
+      display: block;
+      margin: 0 0 .28571429rem 0;
+      color: rgba(0,0,0,.87);
+      font-size: .92857143em;
+      font-weight: 700;
+      text-transform: none;
+      width: 100%;
     }
 `;
+    
+const StyledButton = styled(Button)`
+  &.ui.button {
+    height: 100px;
+    width: 100px;
+    margin: 0;
+    border-radius: 0;
+  }
+`;
 
-const PhotosList  = props => {
+const StyledImage = styled.img`
+    width: 100px;
+    height: 100px;
+`;
+
+
+const PhotosList = props => {
+  const [creating, changeCreating] = useState(false);
+
+    const addNew = e => {
+      console.log(e)
+    }
     if (!props.photos) {
       return null;
     }
     return(
      <StyledWrapper>
-      {props.photos.map((e) => {
-              return (
-                  <Image
-                      key={e}
-                      publicId={e}
-                      width="100"
-                      cloudName={MY_CLOUD_NAME}
-                  />
-              );
+       <label>Images: </label>
+      {props.photos.map((p, idx) => {
+          return < StyledImage key = { p._id + idx } src={p.src} alt={p.city + p.date}/>
           })}
-        <Button basic styled={{width: 100, height: 100}}>Standard</Button>   
+        <StyledButton onClick={addNew}>+</StyledButton>   
     </StyledWrapper>
     )
 }    
