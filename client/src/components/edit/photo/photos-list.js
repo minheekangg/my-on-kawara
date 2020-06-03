@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 
 import styled from "styled-components";
-import { Button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react';
+
+import CreatePhoto from "./create-photo";
 
 const StyledWrapper = styled.div`
     max-width: 300px;
@@ -41,11 +43,8 @@ const StyledImage = styled.img`
 const PhotosList = props => {
   const [creating, changeCreating] = useState(false);
 
-    const addNew = e => {
-      console.log(e)
-    }
-    if (!props.photos) {
-      return null;
+    if (creating) {
+      return <CreatePhoto />;
     }
     return(
      <StyledWrapper>
@@ -53,7 +52,7 @@ const PhotosList = props => {
       {props.photos.map((p, idx) => {
           return < StyledImage key = { p._id + idx } src={p.src} alt={p.city + p.date}/>
           })}
-        <StyledButton onClick={addNew}>+</StyledButton>   
+        <StyledButton onClick={()=>changeCreating(true)}>+</StyledButton>   
     </StyledWrapper>
     )
 }    
