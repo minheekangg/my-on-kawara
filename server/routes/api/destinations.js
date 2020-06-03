@@ -33,8 +33,8 @@ router.post("/", async(req, res, next) => {
         }
 
         let createdDestination = await Destination.create({
-            startDate: ISODate(trip.startDate),
-            endDate: ISODate(trip.endDate),
+            startDate: trip.startDate,
+            endDate: trip.endDate,
             city: trip.city,
         })
         return createdDestination;

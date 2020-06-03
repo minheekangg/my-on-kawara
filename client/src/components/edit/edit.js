@@ -5,12 +5,12 @@ import { Loader, Segment } from 'semantic-ui-react';
 import styled from "styled-components";
 
 import UpdateTrip from "./trip";
+import UpdatePhoto from "./photo";
 import Articles from '../articles';
 
 const StyledFormWrapper = styled.div`
     max-width: 300px;
     margin: auto;
-    display: flex;
     align-items: center;
 
     .ui.form{
@@ -44,8 +44,7 @@ const EditArticle = (props) => {
     return(
         <StyledFormWrapper>
             <UpdateTrip articleId={articleId}/>
-            {/* <UpdateDestination /> */}
-            {/* <UpdatePhoto /> */}
+            <UpdatePhoto />
         </StyledFormWrapper>
     )
 };

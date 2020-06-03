@@ -9,9 +9,7 @@ export const updateProp = (payload) => {
     }
 }
 
-export const updateTrip = payload => {
-    console.log('id is', payload);
-    
+export const updateTrip = payload => {    
     return (dispatch, getState) => {
         dispatch({ type: ActionTypes.UPDATE_ARTICLE + "_PENDING" });
 
@@ -40,7 +38,6 @@ export const updateTrip = payload => {
                 data: {...payload}
             })
             .then((r) => {
-                debugger
                 if (r && r.data && r.data.trip) {
                     dispatch({
                         type: ActionTypes.UPDATE_ARTICLE + "_FULFILLED",
