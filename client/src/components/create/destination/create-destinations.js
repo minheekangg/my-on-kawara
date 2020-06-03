@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "moment/locale/nl";
+import moment from "moment"
 
 import { Form, Button } from "semantic-ui-react";
 
@@ -33,6 +32,10 @@ const CreateDestinations = (props) => {
     const handleChange = (value, key, idx)=> {
         let newDestinations = [...destinations];
         let current = newDestinations[idx];
+
+        if (key === 'startDate' || key === 'endDate') {
+            value = moment(value).utcOffset(0).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        }
         current[key] = value;
         
         setDestinations(newDestinations);

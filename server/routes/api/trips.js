@@ -97,9 +97,9 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-router.patch("/:id", (req, res, next) => {
+router.patch("/:id", async (req, res, next) => {
     const { data } = req.body;
-    console.log('before anything data is', data)
+
     if (typeof data.title !== "undefined") {
         req.trip.title = data.title;
     }
@@ -116,13 +116,15 @@ router.patch("/:id", (req, res, next) => {
         req.trip.content = data.content;
     }
     
-    console.log('PEOPLE: ', data.people, typeof data.people)
+    if (typeof data.people !== "undefined" && typeof data.destinations !== "undefined") {
+        req.trip.people = data.people;
+        req.trip.destinations = data.destinations
+        next();
+    } 
 
-    // if (typeof data.people !== "undefined") {
-    //     req.trip.people = data.people;
-    // } else {
-        const updatedPeople = data.people.map(async (person) => {
-            let foundPerson = await Person.findOne( person);
+    if (typeof data.people !== "undefined") {
+        const updatedPeople = data.people.map(async person => {
+            let foundPerson = await Person.findOne(person);
             if (!!foundPerson) {
                 return foundPerson
             } else {
@@ -130,47 +132,31 @@ router.patch("/:id", (req, res, next) => {
                 return newPerson;
             }
         })
-        Promise.all(updatedPeople)
-            .then(people => {
-                console.log('done', people);
-                req.trip.people = people;
-                next();
-            })
-            .catch(err=>console.log('error: ', err))
-    // }
+        req.trip.people = await Promise.all(updatedPeople);
+    }
 
-}, async function(req, res, next){
-    console.log('moving on', req.peole)
-
-    //go through destinations + update
-    console.log('TESTING: destination', data.destinations)
-
-    // if (typeof data.destination !== "undefined") {
-    //     req.trip.destination = data.destination;
-    //     next();
-    // } 
-
-    const updatedDestinations = data.destinations.map(async city => {
-        let foundDestination = await Destination.findOne(city._id);
-        if (!!foundDestination) {
-            return foundDestination
-        } else {
-            let newPerson = await Destination.create(city);
-            return newPerson;
-        }
-    })
-    Promise.all(updatedDestinations)
-        .then(destinations => {
-            req.trip.destination = destinations
-            next()
+    if (typeof data.destinations !== "undefined") {
+        const updatedDestinations = data.destinations.map(async city => {
+            if (!!city._id) {
+                let updatedCity =  await Destination.findOneAndUpdate(city._id, city);
+                console.log('updated', city)
+                return updatedCity
+            // } else {
+            //     return await Destination.create(city);
+            }
         })
-        .catch(err => console.log('error: ', err))
+        req.trip.destinations = await Promise.all(updatedDestinations);
+        console.log('new ', req.trip.destinations)
+    }
+
+    console.log('before', req.trip);
+    next();
 
 }, async function (req, res, next) {
     console.log('FINALLY creating params are', req.trip);
     req.trip.save()
         .then(trip => res.json({ trip }))
-        .catch(next);
+        .catch(err=>console.log('error', err));
 });
 
 router.delete("/:id", (req, res, next) => {

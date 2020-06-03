@@ -5,8 +5,8 @@ const { Schema } = mongoose;
 const TripSchema = new Schema(
     {
         title: { type: String, required: true },
-        startDate: { type: String, required: true },
-        endDate: { type: String, required: true },
+        startDate: { type: Date, required: true },
+        endDate: { type: Date, required: true },
         people: { type: Array, required: true, ref: 'Person'},
         destinations: { type: Array, required: true, ref: 'Destination' },
         content: { type: String },

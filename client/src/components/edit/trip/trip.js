@@ -26,7 +26,7 @@ const CreateTrip = (props) => {
     useEffect(() => {
         if (!!props.destinations && props.destinations.length > 0) {
             props.destinations.map(d=> {
-                return setDestinations(destinations => destinations.concat({city: d.city, startDate: d.startDate, endDate: d.endDate}))
+                return setDestinations(destinations => destinations.concat({_id: d._id, city: d.city, startDate: d.startDate, endDate: d.endDate}))
             })
         }
         if (!!props.people && props.people.length > 0) {
@@ -41,18 +41,15 @@ const CreateTrip = (props) => {
         const params =  {
             ...updatedForm
         }
-        console.log('before', updatedForm)
+
         if (moment(startDate).diff(moment(props.startDate), 'days') !== 0) {
             params.startDate = moment(startDate).utcOffset(0);
-            console.log('new params are', params)
         }
         
         if (moment(endDate).diff(moment(props.endDate), 'days') !== 0) {
             params.endDate = moment(endDate).utcOffset(0);
-            console.log('new params are', params)
         }
-        console.log('will update', params) 
-        debugger       
+      
         props.updateTrip(params);
     };
 
@@ -102,7 +99,7 @@ const CreateTrip = (props) => {
         if (field === 'people') {
             setPeople(people.concat({ name: "" }))
         } else if (field === 'destinations') {
-            setDestinations(destinations.concat({city: "'"}))
+            setDestinations(destinations.concat({city: "", startDate: startDate, endDate: endDate }))
         }
         return;
     }
@@ -127,7 +124,6 @@ const CreateTrip = (props) => {
         return;
     }
     
-    console.log('updated forn', updatedForm)
     return (
         <StyledFormWrapper>
             <Form onSubmit={handleSubmit}>

@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Form, Input, TextArea } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "moment/locale/nl";
 import moment from "moment";
 
 import CreateDestination from '../destination';
@@ -50,8 +48,8 @@ const CreateTrip = (props) => {
         e.preventDefault();
 
         if (!!formValidation()) {
-            const formattedStartDate = moment(startDate, "MM/DD/YYYY");
-            const formatttedEndDate = moment(endDate, "MM/DD/YYYY");
+            const formattedStartDate = moment(startDate).utcOffset(0).set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+            const formatttedEndDate = moment(endDate).utcOffset(0).set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
             
             props.createTrip({...form, people, startDate: formattedStartDate, endDate: formatttedEndDate});
             setIsTripFilledOut(true)
