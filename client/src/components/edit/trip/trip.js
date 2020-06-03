@@ -49,7 +49,6 @@ const CreateTrip = (props) => {
         if (moment(endDate).diff(moment(props.endDate), 'days') !== 0) {
             params.endDate = moment(endDate).utcOffset(0);
         }
-      
         props.updateTrip(params);
     };
 
@@ -113,6 +112,10 @@ const CreateTrip = (props) => {
             let updatedPeople = [...people];
             updatedPeople.pop();
             setPeople(updatedPeople)
+            setUpdatedForm({
+                ...updatedForm,
+                people: updatedPeople
+            });
         } else if (field === 'destinations') {
             if (destinations.length <= 1) {
                 return;
@@ -120,6 +123,10 @@ const CreateTrip = (props) => {
             let updatedDestinations = [...destinations];
             updatedDestinations.pop();
             setDestinations(updatedDestinations)
+            setUpdatedForm({
+                ...updatedForm,
+                destinations: updatedDestinations
+            });
         }
         return;
     }
@@ -215,24 +222,21 @@ const CreateTrip = (props) => {
                                         required
                                     />
                                 </label>
-                                {!!d.startDate && !!startDate && !!endDate && 
-                                    <label>
-                                        Start Date:
-                                        <DatePicker
-                                            selected={moment(d.startDate).toDate()}
-                                            onChange={date => handleChange(date, "startDate", idx)}
-                                        />
-                                    </label>
-                                }
-                                {!!d.endDate && !!endDate && <Form.Field>
-                                    <label>
-                                        End Date:
-                                        <DatePicker
-                                            selected={moment(d.endDate).toDate()}
-                                            onChange={date => handleChange(date, "endDate", idx)}
-                                        />
-                                    </label>
-                                </Form.Field>}
+                                
+                                <label>
+                                    Start Date:
+                                    <DatePicker
+                                        selected={d.startDate ? moment(d.startDate).toDate() : null}
+                                        onChange={date => handleChange(date, "startDate", idx)}
+                                    />
+                                </label>
+                                <label>
+                                    End Date:
+                                    <DatePicker
+                                        selected={d.endDate ? moment(d.endDate).toDate() : null}
+                                        onChange={date => handleChange(date, "endDate", idx)}
+                                    />
+                                </label>
                             </Form.Field>
                         </div>
                     })

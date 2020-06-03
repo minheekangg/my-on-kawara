@@ -34,9 +34,6 @@ const CreateDestinations = (props) => {
         let newDestinations = [...destinations];
         let current = newDestinations[idx];
         
-        if (key === 'startDate' || key === 'endDate') {
-            value = moment(value).utcOffset(0).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
-        }
         current[key] = value;
         
         setDestinations(newDestinations);
@@ -46,6 +43,16 @@ const CreateDestinations = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        destinations.map(city=>{
+            const startDate = moment(city.startDate).utcOffset(0).set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+            city.startDate = startDate;
+
+            const endDate = moment(city.endDate).utcOffset(0).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+            city.endDate = endDate;
+
+            return city;
+        })
+        
         return props.createDestinations(destinations);
     }
 

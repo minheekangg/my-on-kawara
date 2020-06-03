@@ -15,6 +15,7 @@ router.post("/", async(req, res, next) => {
     }
 
     const createdDestinations = data.destinations.map(async (trip) => {
+        console.log('trip is', trip)
         if (!trip.startDate) {
             return res.status(422).json({
                 errors: {
@@ -32,8 +33,8 @@ router.post("/", async(req, res, next) => {
         }
 
         let createdDestination = await Destination.create({
-            startDate: trip.startDate,
-            endDate: trip.endDate,
+            startDate: ISODate(trip.startDate),
+            endDate: ISODate(trip.endDate),
             city: trip.city,
         })
         return createdDestination;

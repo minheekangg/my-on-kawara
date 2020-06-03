@@ -8,7 +8,6 @@ import moment from "moment";
 
 import CreateDestination from '../destination';
 
-
 const StyledFormWrapper = styled.div`
     max-width: 300px;
     margin: auto;

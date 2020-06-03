@@ -138,14 +138,18 @@ router.patch("/:id", async (req, res, next) => {
     if (typeof data.destinations !== "undefined") {
         const updatedDestinations = data.destinations.map(async city => {
             if (!!city._id) {
-                let updatedCity =  await Destination.findOneAndUpdate(city._id, city);
-                console.log('updated', city)
+                const {_id, ...params} = city;
+                let updatedCity = await Destination.findOneAndUpdate({ _id: _id }, params, { returnOriginal: false }, function (err, destination) {
+                    return destination
+                });
                 return updatedCity
-            // } else {
-            //     return await Destination.create(city);
+            } else {
+                return await Destination.create(city);
             }
         })
-        req.trip.destinations = await Promise.all(updatedDestinations);
+        const newDestinations = await Promise.all(updatedDestinations);
+        console.log('new destinations', newDestinations)
+        req.trip.destinations = newDestinations;
         console.log('new ', req.trip.destinations)
     }
 
