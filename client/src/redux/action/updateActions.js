@@ -17,7 +17,7 @@ export const updateTrip = payload => {
 
         if (!payload.articleId) {
             const state = getState();
-            const tripId = state && state.trip && state.trip.trip._id;
+            const tripId = state && state.article && state.article.article._id;
             
             if (!tripId) {
                 const err = 'trip is missing';

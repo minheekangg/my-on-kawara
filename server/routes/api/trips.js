@@ -99,7 +99,7 @@ router.get("/:id", (req, res, next) => {
 
 router.patch("/:id", (req, res, next) => {
     const { data } = req.body;
-
+    console.log('before anything data is', data)
     if (typeof data.title !== "undefined") {
         req.trip.title = data.title;
     }
@@ -115,7 +115,7 @@ router.patch("/:id", (req, res, next) => {
     if (typeof data.content !== "undefined") {
         req.trip.content = data.content;
     }
-
+    
     console.log('PEOPLE: ', data.people, typeof data.people)
 
     // if (typeof data.people !== "undefined") {

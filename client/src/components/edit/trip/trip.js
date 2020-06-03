@@ -14,12 +14,14 @@ const CreateTrip = (props) => {
     const [startDate, setStartDate] = useState(props.startDate);
     const [endDate, setEndDate] = useState(props.endDate);
     const [people, setPeople] = useState([]);
-    const [articleId] = useState(props.articleId);
     const [destinations, setDestinations] = useState([]);
-    const [form, setState] = useState({
+    const [form, setForm] = useState({
         title: props.title,
         content: props.content,
     });
+    const [updatedForm, setUpdatedForm] = useState({
+        articleId: props.articleId
+    })
 
     useEffect(() => {
         if (!!props.destinations && props.destinations.length > 0) {
@@ -34,37 +36,33 @@ const CreateTrip = (props) => {
         return 
     }, [setPeople, setDestinations, props]);
 
-    const formValidation = props => {
-        const requiredFields = ['startDate', 'endDate', 'title', 'content', 'destinations', 'people', 'articleId'];
-        requiredFields.forEach(field=> {
-            if (form[field] === "") {
-                return false;
-            }
-        })
-        return true;
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        const params = {
-            startDate,
-            endDate,
-            title: form.title,
-            content: form.content,
-            destinations,
-            people,
-            articleId,
+        const params =  {
+            ...updatedForm
         }
-        if (!!formValidation(params)) {
-            props.updateTrip(params);
-        };
-  
+        console.log('before', updatedForm)
+        if (moment(startDate).diff(moment(props.startDate), 'days') !== 0) {
+            params.startDate = moment(startDate).utcOffset(0);
+            console.log('new params are', params)
+        }
+        
+        if (moment(endDate).diff(moment(props.endDate), 'days') !== 0) {
+            params.endDate = moment(endDate).utcOffset(0);
+            console.log('new params are', params)
+        }
+        console.log('will update', params) 
+        debugger       
+        props.updateTrip(params);
     };
 
     const updateField = e => {
-        setState({
+        setForm({
             ...form,
+            [e.target.name]: e.target.value
+        });
+        setUpdatedForm({
+            ...updatedForm,
             [e.target.name]: e.target.value
         });
         return;
@@ -74,15 +72,28 @@ const CreateTrip = (props) => {
         let users = [...people];
         users[idx].name = name;
         setPeople(users);
+        setUpdatedForm({
+            ...updatedForm,
+            people: users
+        });
         return;
     }
 
     const handleChange = (value, key, idx) => {
         let newDestinations = [...destinations];
         let current = newDestinations[idx];
+        
+        if (key === 'startDate' || key === 'endDate') {
+            value = moment(value).utcOffset(0).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        }
+
         current[key] = value;
 
         setDestinations(newDestinations);
+        setUpdatedForm({
+            ...updatedForm,
+            destinations: newDestinations
+        });
         return;
     }
 
@@ -116,6 +127,7 @@ const CreateTrip = (props) => {
         return;
     }
     
+    console.log('updated forn', updatedForm)
     return (
         <StyledFormWrapper>
             <Form onSubmit={handleSubmit}>
@@ -149,7 +161,7 @@ const CreateTrip = (props) => {
                         End Date:
                         <DatePicker
                             selected={moment(endDate).toDate()}
-                            onChange={date => setEndDate(date)}
+                            onChange={date => setEndDate(moment(date).utcOffset(0).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }))}
                             showMonthDropdown
                             showYearDropdown
                             startDate={moment(endDate).toDate()}
@@ -193,8 +205,6 @@ const CreateTrip = (props) => {
                 </Form.Field>
                 {
                     destinations.map((d, idx) => {
-                        const minDate = moment(startDate).diff(moment(d.startDate), 'days') > 1 ? moment(startDate).toDate() : moment(d.startDate).toDate();
-                        const maxDate = moment(endDate).diff(moment(d.endDate), 'days') < 1 ? moment(endDate).toDate() : moment(d.endDate).toDate()
                         return <div key={`destination-${idx}`}>
                             <Form.Field>
                                 <label>
@@ -209,29 +219,24 @@ const CreateTrip = (props) => {
                                         required
                                     />
                                 </label>
-                                {console.log('h', moment(startDate).diff(moment(d.startDate), 'days'), startDate, d.startDate)}
                                 {!!d.startDate && !!startDate && !!endDate && 
                                     <label>
                                         Start Date:
                                         <DatePicker
                                             selected={moment(d.startDate).toDate()}
                                             onChange={date => handleChange(date, "startDate", idx)}
-                                            // minDate={minDate}
-                                            // maxDate={maxDate}
                                         />
                                     </label>
                                 }
-                                {/* {!!d.endDate && !!endDate && <Form.Field>
+                                {!!d.endDate && !!endDate && <Form.Field>
                                     <label>
                                         End Date:
                                         <DatePicker
                                             selected={moment(d.endDate).toDate()}
                                             onChange={date => handleChange(date, "endDate", idx)}
-                                            minDate={startDate}
-                                            maxDate={endDate}
                                         />
                                     </label>
-                                </Form.Field>} */}
+                                </Form.Field>}
                             </Form.Field>
                         </div>
                     })

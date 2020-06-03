@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Trip from './trip';
+import Trip from './trip'
 
 import { updateTrip } from 'redux/action/updateActions';
 
