@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Button, Form, Input, TextArea } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import moment from "moment";
 
 import CreateDestination from '../destination';
