@@ -26,8 +26,7 @@ class CreatePhoto extends React.Component {
     super(props);
     this.state = { 
       photo: {
-        url: [],
-        publicId: [],
+        src: [],
         people: [],
         date: "",
         destination: "",
@@ -50,14 +49,16 @@ class CreatePhoto extends React.Component {
       },
       (error, result) => {
         if (result && result.event === "success") {
+          const newPhoto = {
+            url: result.info.url,
+            publicId: result.info.public_id,
+          }
           this.setState({
             photo: {
               ...this.state.photo,
-              url: [...this.state.photo.url, result.info.url],
-              publicId: [...this.state.photo.url, result.info.public_id]
+              src: [...this.state.photo.src, newPhoto]
             }
           });
-
         }
       }
     ).open()
@@ -132,13 +133,13 @@ class CreatePhoto extends React.Component {
     return (
       <StyledWrapper>
         <Form onSubmit={this.handleSubmit}>
-            {this.state.photo.publicId &&
-                this.state.photo.publicId.length > 0 &&
-                this.state.photo.publicId.map((e) => {
+            {this.state.photo.src &&
+                this.state.photo.src.length > 0 &&
+                this.state.photo.src.map((e) => {
                     return (
                         <Image
-                            key={e}
-                            publicId={e}
+                            key={e.publicId}
+                            publicId={e.publicId}
                             width="100"
                             cloudName={MY_CLOUD_NAME}
                         />

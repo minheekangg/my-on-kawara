@@ -7,9 +7,7 @@ const Destination = mongoose.model("Destination");
 
 router.post("/", async (req, res, next) => {
     const { data } = req.body;
-
-    console.log('data ', data)
-
+    
     if (!data.tripId) {
         return res.status(422).json({
             errors: {
@@ -18,10 +16,10 @@ router.post("/", async (req, res, next) => {
         });
     }
 
-    if (!data.url || !data.publicId) {
+    if (!data.src) {
         return res.status(422).json({
             errors: {
-                url: "is required"
+                src: "is required"
             }
         });
     }
@@ -51,12 +49,9 @@ router.post("/", async (req, res, next) => {
     }
 
     const params = {
-        src: data.publicId,
         location: data.location || "",
         date: data.date,
     }
-
-    console.log('params are', params)
 
     if (!!data.destination) {
         let destinationObj = await Destination.findOne({_id: data.destination});
@@ -71,15 +66,15 @@ router.post("/", async (req, res, next) => {
     await Promise.all(foundPeople)
         .then(async people=> {
             params.people = people;
-
-            const createdPhotos = data.url.map(async p=> {
-                const newParam = {...params, src: p}
-                let createdPhoto = await Photo.create(newParam)
+            const createdPhotos = data.src.map(async p=> {
+                const newParam = {...params, src: p.url, publicId: p.publicId}
+                let createdPhoto = await Photo.create(newParam);
                 return createdPhoto
             })
 
             await Promise.all(createdPhotos) 
                 .then(async photos=> {
+                    console.log(photos)
                     await Destination.findByIdAndUpdate(data.destination, {'photos': photos});                
                     await Trip.findByIdAndUpdate(data.tripId, {'photos': photos});         
 
