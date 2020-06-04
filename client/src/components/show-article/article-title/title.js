@@ -43,10 +43,10 @@ export default class Title extends React.Component {
         super(props);
         this.state = {
             dimensions: null,
-            stickers: props.article.stickers || STICKERS,
-            title: props.article.title || "",
-            startDate: props.article.startDate || "",
-            endDate: props.article.endDate || "",
+            stickers: props.trip.stickers || STICKERS,
+            title: props.trip.title || "",
+            startDate: props.trip.startDate || "",
+            endDate: props.trip.endDate || "",
         }
     }
 

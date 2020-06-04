@@ -11,17 +11,18 @@ export const updateProp = (payload) => {
 
 export const updateTrip = payload => {    
     return (dispatch, getState) => {
-        dispatch({ type: ActionTypes.UPDATE_ARTICLE + "_PENDING" });
+        dispatch({ type: ActionTypes.UPDATE_TRIP + "_PENDING" });
 
-        if (!payload.articleId) {
+        let tripId = payload.tripId
+        if (!tripId) {
             const state = getState();
-            const tripId = state && state.article && state.article.article._id;
+            tripId = state && state.trip && state.trip.trip._id;
             
             if (!tripId) {
                 const err = 'trip is missing';
                 
                 dispatch({
-                    type: ActionTypes.UPDATE_ARTICLE + "_REJECTED",
+                    type: ActionTypes.UPDATE_TRIP + "_REJECTED",
                     payload: err,
                 });
             }
@@ -29,7 +30,7 @@ export const updateTrip = payload => {
         }
 
         return axios
-            .patch(`http://localhost:8000/api/trips/${payload.articleId}`, {
+            .patch(`http://localhost:8000/api/trips/${tripId}`, {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
@@ -40,14 +41,14 @@ export const updateTrip = payload => {
             .then((r) => {
                 if (r && r.data && r.data.trip) {
                     dispatch({
-                        type: ActionTypes.UPDATE_ARTICLE + "_FULFILLED",
+                        type: ActionTypes.UPDATE_TRIP + "_FULFILLED",
                         payload: r.data,
                     });
                 }
             })
             .catch((err) => {
                 dispatch({
-                    type: ActionTypes.UPDATE_ARTICLE + "_REJECTED",
+                    type: ActionTypes.UPDATE_TRIP + "_REJECTED",
                     payload: err,
                 });
             });

@@ -5,13 +5,15 @@ const initialState = {
 
 export default function tripReducer(state = initialState, action) {
     switch (action.type) {
-        case ActionTypes.CREATE_TRIP + '_PENDING': {
+        case ActionTypes.CREATE_TRIP + '_PENDING': 
+        case ActionTypes.UPDATE_TRIP + '_PENDING': {
             return {
                 ...state,
                 fetching: true,
             };
         }
         case ActionTypes.CREATE_TRIP + '_REJECTED': 
+        case ActionTypes.UPDATE_TRIP + '_REJECTED': 
         case ActionTypes.CREATE_DESTINATIONS + '_REJECTED': {
             const error = action.payload && action.payload.response && action.payload.response.data;
 
@@ -22,6 +24,7 @@ export default function tripReducer(state = initialState, action) {
             };
         }
         case ActionTypes.CREATE_TRIP + '_FULFILLED': 
+        case ActionTypes.UPDATE_TRIP + '_FULFILLED': 
         case ActionTypes.CREATE_DESTINATIONS + '_FULFILLED': {
             const trip = action.payload.trip;
 
@@ -31,6 +34,40 @@ export default function tripReducer(state = initialState, action) {
                 fetching: false,
                 trip
             };
+        }
+        case ActionTypes.FETCH_TRIP + '_PENDING': {
+            return {
+                fetching: true
+            };
+        }
+        case ActionTypes.FETCH_TRIP + '_REJECTED': {
+            const error = action.payload.error;
+
+            return {
+                fetching: false,
+                fetched: true,
+                error
+            };
+        }
+        case ActionTypes.FETCH_TRIP + '_FULFILLED': {
+            const trip = action.payload;
+
+            return {
+                ...state,
+                fetched: true,
+                fetching: false,
+                trip
+            };
+        }
+        case ActionTypes.UPDATE_PROP: {
+            const newTrip = {
+                ...action.payload,
+                ...state.newTrip
+            }
+            return {
+                ...state,
+                newTrip
+            }
         }
         case ActionTypes.RESET:
             return initialState

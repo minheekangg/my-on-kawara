@@ -3,7 +3,7 @@ import PictureContainer from './picture-container';
 
 const mapStateToProps = (state, ownProps) => (
     {
-        article: (state.article && state.article.article) || {},
+        trip: (state.trip && state.trip.trip) || {},
         ...ownProps
     }
 );

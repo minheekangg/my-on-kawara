@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import PhotosList from './photos-list';
 
 const mapStateToProps = (state, ownProps) => {
-    const article = state.article && state.article.article;
+    const trip = state.trip && state.trip.trip;
     return {
-        tripId: (article && article._id) || "",
+        tripId: (trip && trip._id) || "",
         ...ownProps
     }
 };

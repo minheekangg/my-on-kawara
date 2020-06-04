@@ -27,9 +27,10 @@ export const fetchArticles = () => {
 }
 
 export const fetchArticle = (id) => {
+
     return (dispatch) => {
         dispatch(
-            { type: ActionTypes.FETCH_ARTICLE + '_PENDING' }
+            { type: ActionTypes.FETCH_TRIP + '_PENDING' }
         )
         return axios.get(
             `http://localhost:8000/api/trips/${id}`,
@@ -42,11 +43,11 @@ export const fetchArticle = (id) => {
             })
             .then(r => {
                 if (r && r.data && r.data.trip) {
-                    dispatch({ type: ActionTypes.FETCH_ARTICLE + '_FULFILLED', payload: r.data.trip });
+                    dispatch({ type: ActionTypes.FETCH_TRIP + '_FULFILLED', payload: r.data.trip });
                 }
             })
             .catch(err=> {
-                dispatch({ type: ActionTypes.FETCH_ARTICLE + '_REJECTED', payload: err });
+                dispatch({ type: ActionTypes.FETCH_TRIP + '_REJECTED', payload: err });
             })
     }
 }

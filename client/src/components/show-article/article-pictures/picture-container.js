@@ -54,16 +54,16 @@ const AdditionalContent = styled.div`
 `;
 
 
-const PictureContainer = ({article}) => {
+const PictureContainer = ({trip}) => {
     const [expandText, setExpandText] = useState(false);
     const [currentPicture, setCurrentPicture] = useState({})
 
     useEffect(() => {
-        if (!!article.photos) {
-            setCurrentPicture(article.photos[0])
+        if (!!trip.photos) {
+            setCurrentPicture(trip.photos[0])
         }
 
-    }, [setCurrentPicture, article.photos])
+    }, [setCurrentPicture, trip.photos])
     
 
     const renderDescription = () => {
@@ -97,7 +97,7 @@ const PictureContainer = ({article}) => {
         )
     }
 
-    if (!article.photos || article.photos.length < 1) {
+    if (!trip.photos || trip.photos.length < 1) {
         return null;
     } 
 
@@ -111,13 +111,13 @@ const PictureContainer = ({article}) => {
         <hr style={{margin: 0}} />
         <PostContentContainer>
             <PicturesContainer>
-                {article.photos.map((p, idx)=> {
+                {trip.photos.map((p, idx)=> {
                     return <img key={p._id+idx} onClick={() => setCurrentPicture(p)} src={p.src} alt={p.city + p.date}/>
                 })}
             </PicturesContainer>
             {renderDescription()}
-            {!!article.content && article.content 
-                ? <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}> { article.content }
+            {!!trip.content && trip.content 
+                ? <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}> { trip.content }
                 </AdditionalContent>
                 : null
             }

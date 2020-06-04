@@ -12,11 +12,11 @@ const App =()=> {
             {/* <NavBar /> */}
             <Switch>
                 <Route exact path="/" render={() => <Redirect to="/articles" />}/>
-                <Route path="/articles/:articleId" component={Article}/>
+                <Route path="/articles/:tripId" component={Article}/>
                 <Route path="/articles" component={Articles}/>
                 {/* TODO: WITH AUTH FOR BELOW LINKS */}
                 <Route path="/create" component={Create}/>
-                <Route path="/edit/:articleId" component={Edit}/>
+                <Route path="/edit/:tripId" component={Edit}/>
                 <Route path="/edit" component={(props)=> <Articles toEdit={true} {...props}/>} />
             </Switch>
         </>

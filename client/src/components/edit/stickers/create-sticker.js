@@ -124,11 +124,9 @@ class CreateSticker extends React.Component {
   handleSubmit = (e) => {
       e.preventDefault();
       this.props.createPhotos(this.state.photo);
-      this.props.history.push("/articles")
+      this.props.history.push(`/articles/${}`)
       return;
   }
-
-  
   
   render() {
     return (

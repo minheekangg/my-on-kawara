@@ -19,17 +19,17 @@ const StyledFormWrapper = styled.div`
 `;
 
 const EditArticle = (props) => {
-    let { articleId } = useParams();
+    let { tripId } = useParams();
     const { fetchArticle, updateProp } = props;
 
     useEffect(() => {
-        if (!!articleId) {
-            fetchArticle(articleId);
-            updateProp({_id: articleId});
+        if (!!tripId) {
+            fetchArticle(tripId);
+            updateProp({_id: tripId});
         }
-    }, [articleId, fetchArticle, updateProp]);
+    }, [tripId, fetchArticle, updateProp]);
 
-    if ( props.fetched && !props.article.article._id ) {
+    if ( props.fetched && !props.trip.trip._id ) {
         return <Articles />
     }
 
@@ -43,7 +43,7 @@ const EditArticle = (props) => {
 
     return(
         <StyledFormWrapper>
-            <UpdateTrip articleId={articleId}/>
+            <UpdateTrip tripId={tripId}/>
             <UpdatePhoto />
         </StyledFormWrapper>
     )

@@ -20,7 +20,7 @@ const CreateTrip = (props) => {
         content: props.content,
     });
     const [updatedForm, setUpdatedForm] = useState({
-        articleId: props.articleId
+        tripId: props.tripId
     })
 
     useEffect(() => {

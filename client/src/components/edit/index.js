@@ -5,9 +5,9 @@ import { fetchArticle } from 'redux/action/fetchActions';
 import { updateProp } from 'redux/action/updateActions';
 
 const mapStateToProps = (state) => ({
-    article: state.article,
-    fetching: state.article.fetching,
-    fetched: state.article.fetched,
+    trip: state.trip,
+    fetching: state.trip.fetching,
+    fetched: state.trip.fetched,
 });
 
 const dispatchAction  = {

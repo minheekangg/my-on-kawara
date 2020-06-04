@@ -5,17 +5,22 @@ export const createDestinations = (destinations) => {
     return (dispatch, getState) => {
         dispatch({ type: ActionTypes.CREATE_DESTINATIONS + "_PENDING" });
 
-        const state = getState();
-        const tripId = state && state.trip && state.trip.trip._id;
+        let tripId = destinations.tripId;
 
         if (!tripId) {
-            const err = 'trip is missing';
+            const state = getState();
+            tripId = state && state.trip && state.trip.trip._id;
 
-            dispatch({
-                type: ActionTypes.CREATE_DESTINATIONS + "_REJECTED",
-                payload: err,
-            });
+            if (!tripId) {
+                const err = 'trip is missing';
+    
+                dispatch({
+                    type: ActionTypes.CREATE_DESTINATIONS + "_REJECTED",
+                    payload: err,
+                });
+            }
         }
+
 
         return axios
             .post("http://localhost:8000/api/destinations", {
@@ -77,16 +82,21 @@ export const createPhotos = payload => {
     return (dispatch, getState) => {
         dispatch({ type: ActionTypes.CREATE_PHOTO + "_PENDING" });
 
-        const state = getState();
-        const tripId = state && state.trip && state.trip.trip._id;
-
+        let tripId = payload.tripId;
+        
         if (!tripId) {
-            const err = 'trip is missing';
+            
+            const state = getState();
+            tripId = state && state.trip && state.trip.trip._id;
 
-            dispatch({
-                type: ActionTypes.CREATE_PHOTO + "_REJECTED",
-                payload: err,
-            });
+            if (!tripId) {
+                const err = 'trip is missing';
+    
+                dispatch({
+                    type: ActionTypes.CREATE_PHOTO + "_REJECTED",
+                    payload: err,
+                });
+            }
         }
 
         return axios

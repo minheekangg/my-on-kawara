@@ -4,14 +4,14 @@ import Trip from './trip'
 import { updateTrip } from 'redux/action/updateActions';
 
 const mapStateToProps = (state, ownProps) => {
-    const article = state.article && state.article.article;
+    const trip = state.trip && state.trip.trip;
     return {
-        startDate: (article && article.startDate) || "",
-        endDate: (article && article.endDate) || "",
-        title: (article && article.title) || "",
-        content: (article && article.content) || "",
-        people: (article && article.people) || [],
-        destinations: (article && article.destinations) || [],
+        startDate: (trip && trip.startDate) || "",
+        endDate: (trip && trip.endDate) || "",
+        title: (trip && trip.title) || "",
+        content: (trip && trip.content) || "",
+        people: (trip && trip.people) || [],
+        destinations: (trip && trip.destinations) || [],
         ...ownProps
     }
 };

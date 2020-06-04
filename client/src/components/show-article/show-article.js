@@ -7,14 +7,15 @@ import ArticleTitle from './article-title';
 import ArticlePictures from './article-pictures';
 
 const ShowArticle = (props) => {
-    let { articleId } = useParams();
+    let { tripId } = useParams();
     const { fetchArticle } = props;
+    console.log('props', props)
 
     useEffect(() => {
-        if (!!articleId) {
-            fetchArticle(articleId);
+        if (!!tripId) {
+            fetchArticle(tripId);
         }
-    }, [articleId, fetchArticle]);
+    }, [tripId, fetchArticle]);
 
     if (props.fetching) {
         return (
@@ -25,7 +26,7 @@ const ShowArticle = (props) => {
     }
 
 
-    return !!props.article 
+    return !!props.trip 
         ? <div>
             <ArticleTitle  />
             <ArticlePictures  />
