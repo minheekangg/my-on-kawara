@@ -75,7 +75,7 @@ const CreateDestinations = (props) => {
 
     return (
         <StyledFormWrapper>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} autoComplete="off">
                     {
                         destinations.map((d, idx) => {
                             return <div key={`destination-${idx}`}>

@@ -132,7 +132,7 @@ class CreatePhoto extends React.Component {
   render() {
     return (
       <StyledWrapper>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} autoComplete="off">
             {this.state.photo.src &&
                 this.state.photo.src.length > 0 &&
                 this.state.photo.src.map((e) => {

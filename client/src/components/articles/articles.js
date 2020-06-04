@@ -4,7 +4,7 @@ import styled from "styled-components";
 import moment from "moment";
 
 const StyledWrapper = styled.div`
-    max-width: 300px;
+    max-width: 400px;
     margin: auto;
     height: 100vh;
     display: flex;
@@ -59,9 +59,7 @@ const Articles = (props) => {
             })}
             </StyledArticlesWrapper>
         </StyledWrapper>
-    ) : (
-        <div>nothing yet</div>
-    );
+    ) : null;
 };
 
 export default Articles;
