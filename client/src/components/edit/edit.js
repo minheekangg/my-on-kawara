@@ -7,6 +7,7 @@ import styled from "styled-components";
 import UpdateTrip from "./trip";
 import UpdatePhoto from "./photo";
 import Articles from '../articles';
+import UpdateStickers from './stickers';
 
 const StyledFormWrapper = styled.div`
     max-width: 300px;
@@ -45,6 +46,7 @@ const EditArticle = (props) => {
         <StyledFormWrapper>
             <UpdateTrip tripId={tripId}/>
             <UpdatePhoto />
+            <UpdateStickers />
         </StyledFormWrapper>
     )
 };

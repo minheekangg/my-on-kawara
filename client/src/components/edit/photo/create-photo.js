@@ -4,11 +4,11 @@ import CreatePhoto from '../../create/photo/create-photo';
 import { createPhotos } from "redux/action/createActions";
 
 const mapStateToProps = (state, ownProps) => {
-  const article = state.article && state.article.article;
+  const trip = state.trip && state.trip.trip;
   return {
-    people: (article && article.people) || [],
-    destinations: (article && article.destinations) || [],
-    tripId: (article && article._id) || "",
+    people: (trip && trip.people) || [],
+    destinations: (trip && trip.destinations) || [],
+    tripId: (trip && trip._id) || "",
     ...ownProps
   }
 };
