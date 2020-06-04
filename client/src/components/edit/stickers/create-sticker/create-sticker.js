@@ -11,27 +11,13 @@ class CreateSticker extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      photo: {
-        url: [],
-        publicId: [],
-      },
-      showWidget: props.showWidget || true,
+      photo: [],
     };
   }
 
   componentDidMount() {
-    
-  }
-  
-  handleSubmit = (e) => {
-      e.preventDefault();
-      this.props.createSticker(this.state.photo);
-      // this.props.history.push(`/articles/${this.props.tripId}`)
-      return;
-  }
-
-  renderWidget = () => {
     const tag = this.props.tripId ? [this.props.tripId] : [];
+
     window.cloudinary.createUploadWidget(
       {
         cloudName: MY_CLOUD_NAME,
@@ -41,31 +27,39 @@ class CreateSticker extends React.Component {
       },
       (error, result) => {
         if (result && result.event === "success") {
+          const newPhoto = {
+            url: result.info.url,
+            publicId: result.info.public_id,
+          }
           this.setState({
-            photo: {
-              ...this.state.photo,
-              url: [...this.state.photo.url, result.info.url],
-              publicId: [...this.state.photo.url, result.info.public_id]
-            }
+            photo: [...this.state.photo, newPhoto]
           });
-  
+
         }
       }
     ).open()
   }
 
+
+  handleSubmit = (e) => {
+      e.preventDefault();
+      this.props.createSticker({ photos: this.state.photo, tripId: this.props.tripId });
+      return;
+  }
+
+  
   render() {
     return (
         <Form onSubmit={this.handleSubmit}>
-          {this.state.showWidget && this.renderWidget()}
-            {this.state.photo.publicId &&
-                this.state.photo.publicId.length > 0 &&
-                this.state.photo.publicId.map((e) => {
+            {this.state.photo &&
+                this.state.photo.length > 0 &&
+                this.state.photo.map((e) => {
                     return (
                         <Image
-                            key={e}
-                            publicId={e}
+                            key={e.publicId}
+                            publicId={e.publicId}
                             width="100"
+                            height="100"
                             cloudName={MY_CLOUD_NAME}
                         />
                     );

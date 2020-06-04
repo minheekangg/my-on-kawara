@@ -19,12 +19,6 @@ export default function createReducer(state = initialState, action) {
                 creating: true,
             };
         }
-        case ActionTypes.CREATE_STICKER + '_PENDING': {
-            return {
-                ...state,
-                creating: true,
-            };
-        }
         case ActionTypes.CREATE_STICKER + '_REJECTED': {
             const error = action.payload && action.payload.response && action.payload.response.data;
 

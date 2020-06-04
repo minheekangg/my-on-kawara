@@ -9,7 +9,6 @@ import ArticlePictures from './article-pictures';
 const ShowArticle = (props) => {
     let { tripId } = useParams();
     const { fetchArticle } = props;
-    console.log('props', props)
 
     useEffect(() => {
         if (!!tripId) {

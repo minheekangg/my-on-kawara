@@ -56,7 +56,7 @@ router.post("/", async (req, res, next) => {
         date: data.date,
     }
 
-    console.log('params are', params);
+    console.log('params are', params)
 
     if (!!data.destination) {
         let destinationObj = await Destination.findOne({_id: data.destination});

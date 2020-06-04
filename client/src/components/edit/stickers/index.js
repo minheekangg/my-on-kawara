@@ -7,6 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     const trip = state.trip && state.trip.trip;
     return {
         photos: (trip && trip.stickers) || [],
+        isCreating: state.stickers && !!state.stickers.isCreating,
         ...ownProps
     }
 };

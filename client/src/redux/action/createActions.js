@@ -134,14 +134,12 @@ export const setCreateSticker = () => {
 }
 
 export const createSticker = payload => {
-    
     return (dispatch, getState) => {
         dispatch({ type: ActionTypes.CREATE_STICKER + "_PENDING" });
 
         let tripId = payload.tripId;
         
-        if (!tripId) {
-            
+        if (!tripId) {     
             const state = getState();
             tripId = state && state.trip && state.trip.trip._id;
 
@@ -156,13 +154,13 @@ export const createSticker = payload => {
         }
 
         return axios
-            .post("http://localhost:8000/api/photos", {
+            .post("http://localhost:8000/api/stickers", {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
                     accept: "application/json"
                 },
-                data: {...payload, tripId}
+                data: payload,
             })
             .then((r) => {
                 if (r && r.data) {

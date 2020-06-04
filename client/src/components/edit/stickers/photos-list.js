@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import styled from "styled-components";
 import { Button } from 'semantic-ui-react';
+
+import CreateSticker from "./create-sticker";
 
 const StyledWrapper = styled.div`
   max-width: 300px;
@@ -45,11 +47,12 @@ const PhotosList = props => {
      <StyledWrapper>
        <PhotosContainer>
         <StyledSemanticLabel>Stickers: </StyledSemanticLabel>
-        {props.photos.map((p, idx) => {
-            return < StyledImage key = { p._id + idx } src={p.src} alt={p.city + p.date}/>
+          {props.photos.map((p, idx) => {
+            return < StyledImage key = { p._id + idx } src={p.url} alt={p.city + p.date}/>
             })}
-          <StyledButton onClick={()=>props.setCreateSticker()}>+</StyledButton>   
+          <StyledButton onClick={() => props.setCreateSticker()}>+</StyledButton>   
        </PhotosContainer>
+       {props.isCreating && <CreateSticker />}
     </StyledWrapper>
     )
 }    

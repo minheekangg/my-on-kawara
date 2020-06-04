@@ -127,8 +127,6 @@ class CreatePhoto extends React.Component {
       this.props.history.push("/articles")
       return;
   }
-
-  
   
   render() {
     return (

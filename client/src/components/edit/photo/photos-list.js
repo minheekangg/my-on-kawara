@@ -52,7 +52,7 @@ const PhotosList = props => {
      <StyledWrapper>
        <PhotosContainer>
         <StyledSemanticLabel>Images: </StyledSemanticLabel>
-        {props.photos.map((p, idx) => {
+          {props.photos.map((p, idx) => {
             return < StyledImage key = { p._id + idx } src={p.src} alt={p.city + p.date}/>
             })}
           <StyledButton onClick={()=>changeCreating(true)}>+</StyledButton>   
