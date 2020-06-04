@@ -133,7 +133,7 @@ const CreateTrip = (props) => {
     
     return (
         <StyledFormWrapper>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} autoComplete="off">
                     <Form.Field>
                         <label>
                             Title:
