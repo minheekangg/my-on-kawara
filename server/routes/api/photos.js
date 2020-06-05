@@ -117,23 +117,44 @@ router.get("/:id", (req, res, next) => {
 
 router.patch("/:id", (req, res, next) => {
     const { body } = req;
+    //can't change src + publicId. Delete if want to change.
 
     if (typeof body.date !== "undefined") {
         req.photo.date = body.date;
     }
 
-    if (typeof body.src !== "undefined") {
-        req.photo.src = body.src;
+    if (typeof body.location !== "undefined") {
+        req.photo.location = body.location;
     }
 
-    if (typeof body.description !== "undefined") {
-        req.photo.description = body.description;
-    }
+    if (typeof body.location !== "undefined") {
+        const createdPeople = data.people.map(async (person) => {
+            let foundPerson = await Person.findOne(person);
+            if (!!foundPerson) {
+                return foundPerson
+            } else {
+                let newPerson = await Person.create(person);
+                return newPerson;
+            }
+        });
 
-    return req.photo
-        .save()
-        .then(() => res.json({ photo: req.photo }))
-        .catch(next);
+        Promise.all(createdPeople)
+            .then(people=> {
+                console.log('people', people)
+                req.photo.people = people;
+                return req.photo
+                    .save()
+                    .then(() => res.json({ photo: req.photo }))
+                    .catch(next);
+            }).catch(next);
+
+    } else {
+        console.log('not updating people')
+        return req.photo
+            .save()
+            .then(() => res.json({ photo: req.photo }))
+            .catch(next);
+    }
 });
 
 router.delete("/:id", (req, res, next) => {
