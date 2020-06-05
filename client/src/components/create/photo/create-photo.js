@@ -214,11 +214,11 @@ export default withRouter(CreatePhoto);
 const calculateDays = (start, end) => {
   var dates = [];
 
-  var currDate = moment(start).startOf('day');
+  var currDate = moment(start).subtract(1, 'days').startOf('day');
   var lastDate = moment(end).startOf('day');
   dates.push(currDate.clone().format("MM/DD/YYYY"))
 
-  while (currDate.add(1, 'days').diff(lastDate) <= 0) {
+  while (currDate.add(1, 'days').diff(lastDate) <= 1) {
     dates.push(currDate.clone().format("MM/DD/YYYY"));
   }
 
