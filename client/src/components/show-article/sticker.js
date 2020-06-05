@@ -106,7 +106,7 @@ export default class Sticker extends React.Component {
     };
 
     render() {
-        const { children, x, y } = this.props;
+        const { children, x, y, width, height } = this.props;
         const { translateX, translateY, isDragging } = this.state;
 
         return (
@@ -117,6 +117,8 @@ export default class Sticker extends React.Component {
                 isDragging={isDragging}
                 img={this.props.img}
                 style={{left: x, top: y}}
+                width={width}
+                height={height}
             >
                 {children}
                 </Container>
