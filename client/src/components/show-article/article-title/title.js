@@ -59,7 +59,7 @@ export default class Title extends React.Component {
                 img={s.url}
                 x={Math.floor(Math.random() * (this.state.dimensions.width - 300))}
                 y={Math.floor(Math.random() * (this.state.dimensions.height - 300))}
-                maxWidth={100}
+                width={100}
                 height={30}
             />
         })

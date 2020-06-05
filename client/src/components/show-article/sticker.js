@@ -1,6 +1,29 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
+const Container = styled.div`
+    cursor: move;
+    width: ${(props) => props.width || 200}px;
+    transform: translate(
+        ${(props) => props.x || 0}px,
+        ${(props) => props.y || 0}px
+    );
+    transition: transform 0.3s ease-in-out;
+    background-image: url(${(props) => props.img});
+    padding-top: ${(props) => props.height || 40}%;
+    background-position: center top;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+
+    ${({ isDragging }) =>
+        isDragging &&
+        css`
+            opacity: 0.8;
+            cursor: grabbing;
+        `};
+`;
+
 export default class Sticker extends React.Component {
     state = {
         isDragging: false,
@@ -100,26 +123,3 @@ export default class Sticker extends React.Component {
         );
     }
 }
-
-const Container = styled.div`
-    cursor: move;
-    width: ${(props) => props.width || 200}px;
-    transform: translate(
-        ${(props) => props.x || 0}px,
-        ${(props) => props.y || 0}px
-    );
-    transition: transform 0.3s ease-in-out;
-    background-image: url(${(props) => props.img});
-    padding-top: ${(props) => props.height || 50}%;
-    background-position: center top;
-    background-size: contain;
-    background-repeat: no-repeat;
-    position: absolute;
-
-    ${({ isDragging }) =>
-        isDragging &&
-        css`
-            opacity: 0.8;
-            cursor: grabbing;
-        `};
-`;
