@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 
 import styled from "styled-components";
-import { Button } from 'semantic-ui-react';
+import { Button, Modal, Image } from 'semantic-ui-react';
+
+import { Redirect } from "react-router";
 
 import CreatePhoto from "./create-photo";
 
@@ -42,15 +44,38 @@ const StyledImage = styled.img`
 `;
 
 
+
+
 const PhotosList = props => {
   const [creating, changeCreating] = useState(false);
+
+  if (props.updating) {
+    return <Redirect to="/edit" />
+  }
 
     return(
      <StyledWrapper>
        <PhotosContainer>
         <StyledSemanticLabel>Images: </StyledSemanticLabel>
           {props.photos.map((p, idx) => {
-            return < StyledImage key = { p._id + idx } src={p.src} alt={p.city + p.date}/>
+            return (
+              <Modal key={p._id + idx} trigger={< StyledImage  src={p.src} alt={p.city + p.date} />} closeIcon>
+                <Modal.Content image>
+                  <Image wrapped size='medium' src={p.src} />
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button
+                      negative
+                      icon='trash'
+                      labelPosition='right'
+                      content='Delete'
+                      onClick={()=>{
+                        props.deletePhoto(p._id, props.tripId)
+                      }}
+                    />
+                </Modal.Actions>
+              </Modal>
+            )
             })}
           <StyledButton onClick={()=>changeCreating(true)}>+</StyledButton>   
        </PhotosContainer>

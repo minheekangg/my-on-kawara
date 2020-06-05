@@ -158,9 +158,23 @@ router.patch("/:id", (req, res, next) => {
 });
 
 router.delete("/:id", (req, res, next) => {
+    if (!req.body.tripId) {
+        return res.status(422).json({
+            errors: {
+                tripId: "is required"
+            }
+        });
+    }
+
     return Photo.findByIdAndRemove(req.photo._id)
-        .then(() => res.sendStatus(200))
-        .catch(next);
+        .then((photo) => 
+            Trip.findByIdAndUpdate(req.body.tripId, {$pull:{ 'photos': {_id: photo._id} }})
+                .then(trip=> {
+                    res.json({trip: trip})
+                })
+                .catch(next)
+        )
+        .catch(next)
 });
 
 module.exports = router;
