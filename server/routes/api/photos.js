@@ -75,8 +75,8 @@ router.post("/", async (req, res, next) => {
             await Promise.all(createdPhotos) 
                 .then(async photos=> {
                     console.log(photos)
-                    await Destination.findByIdAndUpdate(data.destination, {'photos': photos});                
-                    await Trip.findByIdAndUpdate(data.tripId, {'photos': photos});         
+                    await Destination.findByIdAndUpdate(data.destination, { $push: {'photos': photos}});                
+                    await Trip.findByIdAndUpdate(data.tripId, { $push: {'photos': photos}});         
 
                     res.json(photos);
                 })

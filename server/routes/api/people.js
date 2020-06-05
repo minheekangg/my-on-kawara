@@ -17,7 +17,6 @@ router.post("/", (req, res, next) => {
 
     return newPerson.save()
         .then((person) => {
-            console.log('person created', person)
             res.json({ person });
         })
         .catch(()=> {
@@ -29,7 +28,6 @@ router.post("/", (req, res, next) => {
 router.get("/", (req, res, next) => {
     return Person.find()
         .then((people) => {
-            console.log("people fetch done", people);
             res.json({ people });
         })
         .catch(next);

@@ -17,7 +17,7 @@ router.post("/", (req, res, next) => {
 
     Sticker.insertMany(data.photos)
         .then(async photos=> {
-            Trip.findByIdAndUpdate(data.tripId, { 'stickers': photos })
+            Trip.findByIdAndUpdate(data.tripId, { $push: {'stickers': photos }})
                 .then(trip=> res.json(trip))
                 .catch(err=>console.log('error updating trip: ', err))
         })

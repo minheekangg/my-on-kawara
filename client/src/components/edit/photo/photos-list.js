@@ -45,9 +45,6 @@ const StyledImage = styled.img`
 const PhotosList = props => {
   const [creating, changeCreating] = useState(false);
 
-    if (creating) {
-      return <CreatePhoto />;
-    }
     return(
      <StyledWrapper>
        <PhotosContainer>
@@ -57,6 +54,7 @@ const PhotosList = props => {
             })}
           <StyledButton onClick={()=>changeCreating(true)}>+</StyledButton>   
        </PhotosContainer>
+        {creating && <CreatePhoto />}
     </StyledWrapper>
     )
 }    

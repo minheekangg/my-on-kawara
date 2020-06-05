@@ -130,6 +130,7 @@ class CreatePhoto extends React.Component {
   }
   
   render() {
+    console.log(this.props)
     return (
       <StyledWrapper>
         <Form onSubmit={this.handleSubmit} autoComplete="off">
