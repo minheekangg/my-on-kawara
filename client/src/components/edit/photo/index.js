@@ -10,6 +10,7 @@ const mapStateToProps = (state, ownProps) => {
         photos: (trip && trip.photos) || [],
         tripId: (trip && trip._id) || "",
         updating: (state.photo && state.photo.updating) || false,
+        updated: (state.photo && state.photo.updated) || false,
         ...ownProps
     }
 };

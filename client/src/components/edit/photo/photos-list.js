@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import styled from "styled-components";
-import { Button, Modal, Image } from 'semantic-ui-react';
+import { Button, Modal, Image, Loader } from 'semantic-ui-react';
 
 import { Redirect } from "react-router";
 
@@ -49,8 +49,12 @@ const StyledImage = styled.img`
 const PhotosList = props => {
   const [creating, changeCreating] = useState(false);
 
+  if (props.updated) {
+    return window.location.reload();
+  }
+
   if (props.updating) {
-    return <Redirect to="/edit" />
+    return < Loader />
   }
 
     return(

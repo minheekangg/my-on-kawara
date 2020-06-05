@@ -1,7 +1,8 @@
 import { ActionTypes } from '../../utils/constants';
 
 const initialState = {
-    isCreating: false
+    isCreating: false,
+    updating: false,
 };
 
 export default function createReducer(state = initialState, action) {
@@ -13,26 +14,29 @@ export default function createReducer(state = initialState, action) {
                 isCreating,
             };
         }
+        case ActionTypes.DELETE_STICKER + '_PENDING': 
         case ActionTypes.CREATE_STICKER + '_PENDING': {
             return {
                 ...state,
-                creating: true,
+                updating: true,
             };
         }
+        case ActionTypes.DELETE_STICKER + '_REJECTED': 
         case ActionTypes.CREATE_STICKER + '_REJECTED': {
             const error = action.payload && action.payload.response && action.payload.response.data;
 
             return {
-                creating: false,
-                created: false,
+                updating: false,
+                updated: false,
                 error
             };
         }
+        case ActionTypes.DELETE_STICKER + '_FULFILLED': 
         case ActionTypes.CREATE_STICKER + '_FULFILLED': {
             return {
                 ...state,
-                created: true,
-                creating: false,
+                updated: true,
+                updating: false,
             };
         }
         case ActionTypes.RESET:

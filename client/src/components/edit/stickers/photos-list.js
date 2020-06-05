@@ -1,7 +1,9 @@
 import React from 'react';
 
 import styled from "styled-components";
-import { Button } from 'semantic-ui-react';
+import { Button, Modal, Image, Loader } from 'semantic-ui-react';
+
+import { Redirect } from "react-router";
 
 import CreateSticker from "./create-sticker";
 
@@ -43,13 +45,38 @@ const StyledImage = styled.img`
 
 
 const PhotosList = props => {
+
+  if (props.updated) {
+    return window.location.reload();
+  }
+
+  if (props.updating) {
+    return < Loader />
+  }
+
     return(
      <StyledWrapper>
        <PhotosContainer>
         <StyledSemanticLabel>Stickers: </StyledSemanticLabel>
           {props.photos.map((p, idx) => {
-            return < StyledImage key = { p._id + idx } src={p.url} alt={p.city + p.date}/>
-            })}
+            return <Modal key={p._id + idx} trigger={< StyledImage key={p._id + idx} src={p.url} alt={p.city + p.date} />} closeIcon>
+                  <Modal.Content image>
+                    <Image wrapped size='medium' src={p.url} />
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <Button
+                      negative
+                      icon='trash'
+                      labelPosition='right'
+                      content='Delete'
+                      onClick={() => {
+                        props.deleteSticker(p._id, props.tripId)
+                      }}
+                    />
+                  </Modal.Actions>
+                </Modal>
+            }
+            )}
           <StyledButton onClick={() => props.setCreateSticker()}>+</StyledButton>   
        </PhotosContainer>
        {props.isCreating && <CreateSticker />}
