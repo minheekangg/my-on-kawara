@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 
 import styled from "styled-components";
-import { Button, Modal, Image, Loader } from 'semantic-ui-react';
+import { Button, Modal, Loader } from 'semantic-ui-react';
+import { Image } from "cloudinary-react";
 
 import CreatePhoto from "./create-photo";
+const MY_CLOUD_NAME = process.env.REACT_APP_MY_CLOUD_NAME;
 
 const StyledWrapper = styled.div`
   max-width: 300px;
@@ -63,7 +65,13 @@ const PhotosList = props => {
             return (
               <Modal key={p._id + idx} trigger={< StyledImage  src={p.src} alt={p.city + p.date} />} closeIcon>
                 <Modal.Content image>
-                  <Image wrapped size='medium' src={p.src} />
+                  <Image
+                    key={p.publicId}
+                    publicId={p.publicId}
+                    width="100"
+                    cloudName={MY_CLOUD_NAME}
+                    format='jpg'
+                  />
                 </Modal.Content>
                 <Modal.Actions>
                     <Button

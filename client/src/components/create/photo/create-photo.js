@@ -45,7 +45,8 @@ class CreatePhoto extends React.Component {
         cloudName: MY_CLOUD_NAME,
         uploadPreset: UPLOAD_PRESET,
         folder: "trips",
-        tags: tag
+        tags: tag,
+        format: 'jpg',
       },
       (error, result) => {
         if (result && result.event === "success") {
@@ -142,6 +143,7 @@ class CreatePhoto extends React.Component {
                             publicId={e.publicId}
                             width="100"
                             cloudName={MY_CLOUD_NAME}
+                            format='jpg'
                         />
                     );
                 })}

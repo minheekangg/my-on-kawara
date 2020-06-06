@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Fragment } from "react";
 import styled from "styled-components";
 import moment from "moment"
+import { Image } from "cloudinary-react";
+const MY_CLOUD_NAME = process.env.REACT_APP_MY_CLOUD_NAME;
 
 const PictureContainerWrapper = styled.div`
     display: flex;
@@ -105,14 +107,16 @@ const PictureContainer = ({trip}) => {
     return <PictureContainerWrapper>
         <PictureFullBleed
             style={{
-                backgroundImage: `url(${currentPicture.src})`,
+                backgroundImage: `url(http://res.cloudinary.com/${MY_CLOUD_NAME}/image/upload/c_scale/v1/${currentPicture.publicId}.jpg)`
             }}
         ></PictureFullBleed>
         <hr style={{margin: 0}} />
         <PostContentContainer>
             <PicturesContainer>
                 {trip.photos.map((p, idx)=> {
-                    return <img key={p._id+idx} onClick={() => setCurrentPicture(p)} src={p.src} alt={p.city + p.date}/>
+                    return (
+                        <Image format="jpg" crop="scale" key={p._id + idx} onClick={() => setCurrentPicture(p)} publicId={p.publicId} alt={p.city + p.date} cloudName={MY_CLOUD_NAME}/>
+                    )
                 })}
             </PicturesContainer>
             {renderDescription()}
