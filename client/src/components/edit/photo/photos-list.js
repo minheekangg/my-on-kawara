@@ -38,13 +38,6 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const StyledImage = styled.img`
-    width: 100px;
-    height: 100px;
-`;
-
-
-
 
 const PhotosList = props => {
   const [creating, changeCreating] = useState(false);
@@ -63,12 +56,12 @@ const PhotosList = props => {
         <StyledSemanticLabel>Images: </StyledSemanticLabel>
           {props.photos.map((p, idx) => {
             return (
-              <Modal key={p._id + idx} trigger={< StyledImage  src={p.src} alt={p.city + p.date} />} closeIcon>
+              <Modal key={p._id + idx} trigger={< Image format="jpg" width="100" height="100" crop="fill" cloudName={MY_CLOUD_NAME} publicId={p.publicId} alt={p.city + p.date} />} closeIcon>
                 <Modal.Content image>
                   <Image
                     key={p.publicId}
                     publicId={p.publicId}
-                    width="100"
+                    width="300"
                     cloudName={MY_CLOUD_NAME}
                     format='jpg'
                   />

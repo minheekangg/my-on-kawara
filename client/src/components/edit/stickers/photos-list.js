@@ -1,9 +1,12 @@
 import React from 'react';
 
 import styled from "styled-components";
-import { Button, Modal, Image, Loader } from 'semantic-ui-react';
+import { Button, Modal, Loader } from 'semantic-ui-react';
+import { Image } from "cloudinary-react";
 
 import CreateSticker from "./create-sticker";
+
+const MY_CLOUD_NAME = process.env.REACT_APP_MY_CLOUD_NAME;
 
 const StyledWrapper = styled.div`
   max-width: 300px;
@@ -36,12 +39,6 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const StyledImage = styled.img`
-    width: 100px;
-    height: 100px;
-`;
-
-
 const PhotosList = props => {
 
   if (props.updated) {
@@ -57,9 +54,15 @@ const PhotosList = props => {
        <PhotosContainer>
         <StyledSemanticLabel>Stickers: </StyledSemanticLabel>
           {props.photos.map((p, idx) => {
-            return <Modal key={p._id + idx} trigger={< StyledImage key={p._id + idx} src={p.url} alt={p.city + p.date} />} closeIcon>
+            return <Modal trigger={< Image format="jpg" width="100" height="100" crop="fill" cloudName={MY_CLOUD_NAME} key={p._id + idx} src={p.url} alt={p.city + p.date} />} closeIcon>
                   <Modal.Content image>
-                    <Image wrapped size='medium' src={p.url} />
+                    <Image
+                      key={p.publicId}
+                      publicId={p.publicId}
+                      width="300"
+                      cloudName={MY_CLOUD_NAME}
+                      format='jpg'
+                    />
                   </Modal.Content>
                   <Modal.Actions>
                     <Button
