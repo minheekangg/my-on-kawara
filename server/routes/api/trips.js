@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 const router = require("express").Router();
 const Trip = mongoose.model("Trip");
 const Person = mongoose.model("Person");
-const Destination = mongoose.model("Destination")
+const Destination = mongoose.model("Destination");
+const Sticker = mongoose.model("Sticker");
+const Photo = mongoose.model("Photo");
 
 router.post("/", async(req, res, next) => {
     const { data } = req.body;
@@ -148,25 +150,76 @@ router.patch("/:id", async (req, res, next) => {
             }
         })
         const newDestinations = await Promise.all(updatedDestinations);
-        console.log('new destinations', newDestinations)
         req.trip.destinations = newDestinations;
-        console.log('new ', req.trip.destinations)
     }
 
-    console.log('before', req.trip);
     next();
 
 }, async function (req, res, next) {
-    console.log('FINALLY creating params are', req.trip);
+
     req.trip.save()
         .then(trip => res.json({ trip }))
-        .catch(err=>console.log('error', err));
+        .catch(()=>next);
 });
 
-router.delete("/:id", (req, res, next) => {
-    return Trip.findByIdAndRemove(req.trip._id)
-        .then(() => res.sendStatus(200))
-        .catch(next);
+router.delete("/:id", async (req, res, next) => {
+
+    try {
+        const deletedDestinations = req.trip.destinations.map(async d => {
+            return await Destination.findOneAndDelete({ id: d._id })
+        })
+        let destinationPromise = Promise.all(deletedDestinations)
+        console.log('destinations', destinationPromise);
+
+        let deletedPhotos = req.trip.photos.map(async d => {
+            return await Photo.findOneAndDelete({ id: d._id })
+        })
+        let photoPromise = Promise.all(deletedPhotos)
+        console.log('photos', photoPromise);
+
+        let deletedStickers = req.trip.stickers.map(async d => {
+            return await Sticker.findOneAndDelete({ id: d._id })
+        })
+        let stickerPromise = Promise.all(deletedStickers)
+        console.log('stickers', stickerPromise);
+
+        await Promise.all([destinationPromise, photoPromise, stickerPromise])
+            .then(() => {
+                req.trip.delete()
+                    .then(() => res.sendStatus(200))
+                    .catch(next);
+                })
+            .catch(next)
+
+    } catch (err) {
+        console.log('err is', err)
+        next()
+    }
+    // var promises = [
+    //     new Promise(async function (resolve, reject) {
+    //         // delete destinations
+    //         const deletedDestnations = 
+
+    //         await Promise.all(deletedDestnations)
+    //             .then((destinations) => resolve(destinations))
+    //             .catch((err)=>reject(err))
+    //     }),
+        // new Promise(async function (resolve, reject) {
+        //     // delete photos
+            
+        //     await Promise.all(deletedPhotos)
+        //         .then((photos) => resolve(photos))
+        //         .catch((err) => reject(err))
+        // }),
+    //     new Promise(async function (resolve, reject) {
+    //         // delete stickers
+    //         const 
+    //         await Promise.all(deletedStickers)
+    //             .then((stickers) => resolve(stickers))
+    //             .catch((err) => reject(err))
+    //     })
+    // ];
+    
 });
 
 module.exports = router;

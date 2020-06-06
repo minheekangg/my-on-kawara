@@ -88,27 +88,4 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-// router.patch("/:id", (req, res, next) => {
-//     const { body } = req;
-
-//     if (typeof body.date !== "undefined") {
-//         req.destination.date = body.date;
-//     }
-
-//     if (typeof body.destination !== "undefined") {
-//         req.destination.destination = body.destination;
-//     }
-
-//     return req.destination
-//         .save()
-//         .then(() => res.json({ destination: req.destination.toJSON() }))
-//         .catch(next);
-// });
-
-// router.delete("/:id", (req, res, next) => {
-//     return Destination.findByIdAndRemove(req.destination._id)
-//         .then(() => res.sendStatus(200))
-//         .catch(next);
-// });
-
 module.exports = router;

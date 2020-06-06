@@ -3,8 +3,6 @@ import React from 'react';
 import styled from "styled-components";
 import { Button, Modal, Image, Loader } from 'semantic-ui-react';
 
-import { Redirect } from "react-router";
-
 import CreateSticker from "./create-sticker";
 
 const StyledWrapper = styled.div`
@@ -50,7 +48,7 @@ const PhotosList = props => {
     return window.location.reload();
   }
 
-  if (props.updating) {
+  if (props.updating && !props.updated) {
     return < Loader />
   }
 

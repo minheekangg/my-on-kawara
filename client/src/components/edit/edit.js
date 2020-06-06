@@ -8,6 +8,7 @@ import UpdateTrip from "./trip";
 import UpdatePhoto from "./photo";
 import Articles from '../articles';
 import UpdateStickers from './stickers';
+import DeleteTripBtn from './delete-trip';
 
 const StyledFormWrapper = styled.div`
     max-width: 300px;
@@ -47,6 +48,7 @@ const EditArticle = (props) => {
             <UpdateTrip tripId={tripId}/>
             <UpdatePhoto />
             <UpdateStickers />
+            <DeleteTripBtn tripId={tripId}/>
         </StyledFormWrapper>
     )
 };
