@@ -7,8 +7,10 @@ const MY_CLOUD_NAME = process.env.REACT_APP_MY_CLOUD_NAME;
 const PictureContainerWrapper = styled.div`
     display: flex;
     height: calc(100vh - 20px);
-    margin: 10px;
+    padding: 10px;
     overflow: hidden;
+    position: relative;
+    background-color: white;
 `;
 const PictureFullBleed = styled.div`
     width: 50vw;
@@ -16,49 +18,86 @@ const PictureFullBleed = styled.div`
     background-repeat: no-repeat;
     background-size: contain;
     margin: 10px;
+
+    @media screen and (max-width: 400px) {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        margin: 0;
+        background-color: white;
+        padding: 10px;
+        z-index: -1;
+
+        &.active{
+            z-index: 3;
+        }
+    }
 `;
 const PostContentContainer = styled.div`
     width: 50vw;
     margin: 10px;
     overflow: hidden;
+    position: relative;
+
+    @media screen and (max-width: 400px) {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        margin: 0;
+    }
 `;
 const PicturesContainer = styled.div`
-    height: 80vh;
-    
     img {
-        // width: 100px;
-        // height: 100px;
         margin: 10px;
         cursor: pointer;
+    }
+
+    @media screen and (max-width: 400px) {
+        margin: auto -10px;
+        align-items: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        height: auto;
+
+       img {
+           margin: 5px;
+       }
     }
 `;
 
 const PictureDescription = styled.div`
-    padding: 30px 15px 0;
+    padding: 10px 15px;
+    bottom: 0;
+    position: absolute;
+    width: 100%
+    height: 30px;
+    background-color: white;
+    transition: all 0.5s;
+    cursor:pointer;
+    
+    &.active {
+        height: auto;
+    }
+    &.not-active {
+        height: 30px;
+    }
 `;
 
 const AdditionalContent = styled.div`
-    margin: 10px;
     font-size: 14px;
+    padding: 10px;
     border-top: 1px solid;
     height: 100%;
-    background-color: white;
-    padding: 10px;
-    transition: all 0.5s;
-    cursor:pointer;
-
-    &.active {
-        transform: translateY(-80vh);
-    }
-    &.not-active {
-        
-    }
 `;
 
 
 const PictureContainer = ({trip}) => {
     const [expandText, setExpandText] = useState(false);
-    const [currentPicture, setCurrentPicture] = useState({})
+    const [currentPicture, setCurrentPicture] = useState({});
+    const [showImage, setShowImage] = useState(false);
 
     useEffect(() => {
         if (!!trip.photos) {
@@ -93,8 +132,13 @@ const PictureContainer = ({trip}) => {
         }
 
         return (
-            <PictureDescription>
+            <PictureDescription onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}>
                 {desc.map((e, idx)=> <Fragment key={idx}>{e}</Fragment>)}
+                {!!trip.content && trip.content
+                    ? <AdditionalContent> {trip.content}
+                    </AdditionalContent>
+                    : null
+                }
             </PictureDescription>
         )
     }
@@ -103,9 +147,14 @@ const PictureContainer = ({trip}) => {
         return null;
     } 
 
+    const handleClick=(picture)=> {
+        setCurrentPicture(picture);
+        setShowImage(true);
+    }
+
     
     return <PictureContainerWrapper>
-        <PictureFullBleed
+        <PictureFullBleed className={showImage && "active"} onClick={()=>setShowImage(false)}
             style={{
                 backgroundImage: `url(http://res.cloudinary.com/${MY_CLOUD_NAME}/image/upload/v1/${currentPicture.publicId}.jpg)`
             }}
@@ -115,16 +164,12 @@ const PictureContainer = ({trip}) => {
             <PicturesContainer>
                 {trip.photos.map((p, idx)=> {
                     return (
-                        <Image format="jpg" crop="fit" key={p._id + idx} onClick={() => setCurrentPicture(p)} publicId={p.publicId} alt={p.city + p.date} cloudName={MY_CLOUD_NAME}><Transformation width="100" height="100" crop="fill" /></Image>
+                        <Image format="jpg" crop="fit" key={p._id + idx} onClick={() => handleClick(p)} publicId={p.publicId} alt={p.city + p.date} cloudName={MY_CLOUD_NAME}><Transformation width="100" height="100" crop="fill" /></Image>
                     )
                 })}
             </PicturesContainer>
             {renderDescription()}
-            {!!trip.content && trip.content 
-                ? <AdditionalContent onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}> { trip.content }
-                </AdditionalContent>
-                : null
-            }
+            
         </PostContentContainer>
     </PictureContainerWrapper>
 };
