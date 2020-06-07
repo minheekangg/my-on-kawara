@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom';
 
 import { Image } from "cloudinary-react";
-import { Form } from "semantic-ui-react";
+import { Form, Checkbox } from "semantic-ui-react";
 
 const MY_CLOUD_NAME = process.env.REACT_APP_MY_CLOUD_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
@@ -12,6 +12,7 @@ class CreateSticker extends React.Component {
     super(props);
     this.state = { 
       photo: [],
+      isSmall: true,
     };
   }
 
@@ -43,6 +44,10 @@ class CreateSticker extends React.Component {
 
   handleSubmit = (e) => {
       e.preventDefault();
+      this.state.photo.forEach(p=>{
+        return p.size = this.state.isSmall ? 'small' : 'large';
+      })
+
       this.props.createSticker({ photos: this.state.photo, tripId: this.props.tripId });
       return;
   }
@@ -64,6 +69,8 @@ class CreateSticker extends React.Component {
                         />
                     );
                 })}
+          <Checkbox checked={this.state.isSmall}
+            onChange={()=>this.setState({isSmall :!this.state.isSmall })} label="picture is small"/>
           <Form.Button>Submit</Form.Button>
         </Form>
     );

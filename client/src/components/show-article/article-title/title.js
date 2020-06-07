@@ -6,7 +6,7 @@ import Sticker from '../sticker';
 
 const TitleWrapper = styled.div`
     height: calc(100vh - 20px);
-    background-color: #f2eade;
+    // background-color: #f2eade;
     position: relative;
     margin: 10px;
     overflow: hidden;
@@ -14,7 +14,7 @@ const TitleWrapper = styled.div`
     .title-container {
         position: absolute;
         margin: auto;
-        background-color: #f2eade;
+        // background-color: #f2eade;
         width: 300px;
         border: 1px solid;
         margin: 10px;
@@ -60,7 +60,7 @@ export default class Title extends React.Component {
                 img={s.url}
                 x={Math.floor(Math.random() * (this.state.dimensions.width - 300))}
                 y={Math.floor(Math.random() * (this.state.dimensions.height - 300))}
-                width={200}
+                width={s.size && s.size === 'large' ? 300 : 150}
                 height={50}
             />
         })

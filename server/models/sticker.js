@@ -6,6 +6,7 @@ const StickerSchema = new Schema(
     {
         url: { type: String, required: true },
         publicId: { type: String, required: true},
+        size: { type: String, required: true }
     },
     { timestamps: false }
 );

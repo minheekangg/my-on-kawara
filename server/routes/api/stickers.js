@@ -5,6 +5,7 @@ const Sticker = mongoose.model("Sticker");
 
 router.post("/", (req, res, next) => {
     const { data } = req.body;
+    console.log('incoming', data.photos)
 
     if (!data.tripId) {
         return res.status(422).json({
