@@ -96,7 +96,7 @@ router.param("id", (req, res, next, id) => {
 router.get("/:id", (req, res, next) => {
     const { photos } = req.trip;
     const sortedPhotos = photos.sort((a,b) => {
-        return new Date(a.date) - new Date(b.date)
+        return (new Date(a.date) - new Date(b.date)) || (a.createdAt - b.createdAt)
     });
 
     req.photos = sortedPhotos;
