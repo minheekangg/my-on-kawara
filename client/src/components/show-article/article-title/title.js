@@ -41,6 +41,7 @@ export default class Title extends React.Component {
             title: props.trip.title || "",
             startDate: props.trip.startDate || "",
             endDate: props.trip.endDate || "",
+            people: props.trip.people || []
         }
     }
 
@@ -65,19 +66,28 @@ export default class Title extends React.Component {
         })
     }
 
+    renderPeople = people => {
+        if (people.length === 1) {
+            return <div>{people[0].name}</div>
+        } 
+        const peopleNames = people.map(e => e.name)
+        return <div> {peopleNames.join(", ")}</div>
+    }
+
     render(){
+        const {title, startDate, endDate, people} = this.state;
         return (
             <TitleWrapper>
                 <div className="title-container">
-                    With love, from
-                    <h2>{this.state.title}</h2>
-                    {(!!this.state.startDate && !!this.state.endDate) 
+                    <h2>{title}</h2>
+                    {(!!startDate && !!endDate) 
                         ? <span style={{textTransform: 'capitalize'}}>
-                            {moment(this.state.startDate).format("MMM DD, YYYY") + " - " + 
-                            moment(this.state.endDate).format("MMM DD, YYYY")}
+                            {moment(startDate).format("MMM DD, YYYY") + " - " + 
+                            moment(endDate).format("MMM DD, YYYY")}
                             </span> 
                         : null
                     }
+                    { people && people.length > 0 && this.renderPeople(people)}
                     
                 </div>
                 <StickerContainer
