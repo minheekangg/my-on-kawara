@@ -76,7 +76,7 @@ const PictureDescription = styled.div`
 const TripDescription = styled.div`
     bottom: 0;
     position: absolute;
-    width: 100%
+    width: 100%;
     height: 20px;
     background-color: white;
     transition: all 0.5s;
