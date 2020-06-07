@@ -69,11 +69,15 @@ const PicturesContainer = styled.div`
 `;
 
 const PictureDescription = styled.div`
-    padding: 10px 15px;
+    bottom: 0;
+    position: absolute;
+`;
+
+const TripDescription = styled.div`
     bottom: 0;
     position: absolute;
     width: 100%
-    height: 30px;
+    height: 20px;
     background-color: white;
     transition: all 0.5s;
     cursor:pointer;
@@ -82,7 +86,7 @@ const PictureDescription = styled.div`
         height: auto;
     }
     &.not-active {
-        height: 30px;
+        height: 20px;
     }
 `;
 
@@ -111,34 +115,29 @@ const PictureContainer = ({trip}) => {
         const desc = [];
 
         if (!!currentPicture.date) {
-            desc.push(<span>{moment(currentPicture.date).format('MM/DD/YYYY')}</span>)
+            desc.push(<span style={{color: 'red'}}>{moment(currentPicture.date).format('\'YY/MM/DD')}</span>)
         } 
 
-        if (!!currentPicture.people) {
-            if (currentPicture.people.length === 1) {
-                desc.push(<span> {currentPicture.people[0].name} </span>)
-            } else {
-                const peopleNames = currentPicture.people.map(e => e.name)
-                desc.push(<span> {peopleNames.join(", ")} </span>)
-            }
-        } 
+        // if (!!currentPicture.people) {
+        //     if (currentPicture.people.length === 1) {
+        //         desc.push(<span> {currentPicture.people[0].name} - </span>)
+        //     } else {
+        //         const peopleNames = currentPicture.people.map(e => e.name)
+        //         desc.push(<span> {peopleNames.join(", ")}  - </span>)
+        //     }
+        // } 
         
         if (!!currentPicture.location) {
-            desc.push(<span><a target="_blank" rel="noopener noreferrer" href={currentPicture.location}>location</a> </span>)
+            desc.push(<span> <a target="_blank" rel="noopener noreferrer" href={currentPicture.location}>location</a> </span>)
         }
 
         if (!!currentPicture.city) {
-            desc.push(<span>{currentPicture.city}</span>)
+            desc.push(<span> {currentPicture.city} </span>)
         }
 
         return (
-            <PictureDescription onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}>
+            <PictureDescription>
                 {desc.map((e, idx)=> <Fragment key={idx}>{e}</Fragment>)}
-                {!!trip.content && trip.content
-                    ? <AdditionalContent> {trip.content}
-                    </AdditionalContent>
-                    : null
-                }
             </PictureDescription>
         )
     }
@@ -158,7 +157,9 @@ const PictureContainer = ({trip}) => {
             style={{
                 backgroundImage: `url(http://res.cloudinary.com/${MY_CLOUD_NAME}/image/upload/v1/${currentPicture.publicId}.jpg)`
             }}
-        ></PictureFullBleed>
+        >
+        {renderDescription()}
+        </PictureFullBleed>
         <hr style={{margin: 0}} />
         <PostContentContainer>
             <PicturesContainer>
@@ -168,8 +169,14 @@ const PictureContainer = ({trip}) => {
                     )
                 })}
             </PicturesContainer>
-            {renderDescription()}
-            
+            <TripDescription onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}>
+                {expandText ? 'Less' : 'More'}
+                {!!trip.content && trip.content
+                    ? <AdditionalContent> {trip.content}
+                    </AdditionalContent>
+                    : null
+                }
+            </TripDescription>
         </PostContentContainer>
     </PictureContainerWrapper>
 };
