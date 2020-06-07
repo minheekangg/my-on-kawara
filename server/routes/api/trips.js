@@ -94,6 +94,13 @@ router.param("id", (req, res, next, id) => {
 });
 
 router.get("/:id", (req, res, next) => {
+    const { photos } = req.trip;
+    const sortedPhotos = photos.sort((a,b) => {
+        return new Date(a.date) - new Date(b.date)
+    });
+
+    req.photos = sortedPhotos;
+
     return res.json({
         trip: req.trip
     });

@@ -117,15 +117,6 @@ const PictureContainer = ({trip}) => {
         if (!!currentPicture.date) {
             desc.push(<span style={{color: 'red'}}>{moment(currentPicture.date).format('\'YY/MM/DD')}</span>)
         } 
-
-        // if (!!currentPicture.people) {
-        //     if (currentPicture.people.length === 1) {
-        //         desc.push(<span> {currentPicture.people[0].name} - </span>)
-        //     } else {
-        //         const peopleNames = currentPicture.people.map(e => e.name)
-        //         desc.push(<span> {peopleNames.join(", ")}  - </span>)
-        //     }
-        // } 
         
         if (!!currentPicture.location) {
             desc.push(<span> <a target="_blank" rel="noopener noreferrer" href={currentPicture.location}>location</a> </span>)
