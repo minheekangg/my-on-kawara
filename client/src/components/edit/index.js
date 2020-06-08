@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import Edit from "./edit";
+import withAuth from "../hoc/withAuth";
 
 import { fetchArticle } from 'redux/action/fetchActions';
 import { updateProp } from 'redux/action/updateActions';
@@ -16,4 +17,4 @@ const dispatchAction  = {
 }
 
 
-export default connect(mapStateToProps, dispatchAction)(Edit);
+export default withAuth(connect(mapStateToProps, dispatchAction)(Edit));

@@ -8,19 +8,36 @@ const CLIENT_ID = process.env.REACT_APP_OAUTH;
 
 const withAuth = (WrappedComponent) => {
     class AuthorizedComponent extends React.Component {
+        state = { isSignedIn: null };
+
         componentDidMount() {
             window.gapi.load('client:auth2', ()=> {
                 window.gapi.client.init({
                     clientId: CLIENT_ID,
                     scope: 'email'
+                }).then(()=> {
+                    this.auth = window.gapi.auth2.getAuthInstance();
+                    this.setState({isSignedIn: this.auth.isSignedIn.get()});
+                    this.auth.isSignedIn.listen(this.onAuthChange);
                 })
             })
         }
 
+        onAuthChange = () => {
+            this.setState({isSignedIn: this.auth.isSignedIn.get() })
+        }
+
         render() {
+            if ( this.state.isSignedIn === null ) {
+                return null;
+            } else if (this.state.isSignedIn) {
+                return <WrappedComponent {...this.props} />
+            } else {
+                return <div>should sign in</div>
+            }
             // // console.log('%c INSIDE RENDER FOR HOC', 'color: green')
             // if (localStorage.getItem('jwt') && this.props.loggedIn) {
-            //     return <WrappedComponent {...this.props} />
+            //     
             // } else if (localStorage.getItem('jwt') && (this.props.authenticatingUser || !this.props.loggedIn)) {
             //     return <Loader active inline="centered" />
             // } else {
