@@ -27,7 +27,6 @@ const StyledArticlesWrapper = styled.div`
 const ArticleWrapper = styled.div`
     display: flex;
     justify-content: space-between;
-    // border: 1px solid blue;
     min-width: 100%;
     margin: 10px 0;
     cursor: pointer;
@@ -46,20 +45,21 @@ const Articles = (props) => {
         fetchArticles();
     }, [fetchArticles]);
 
-    return props.articles && !!props.articles.length ? (
-        <StyledWrapper>
-            <StyledArticlesWrapper>
+    return <StyledWrapper>
+        {props.articles && !!props.articles.length 
+            ? <StyledArticlesWrapper>
                 <h2>Travel</h2>
-            {articles.map(e=>{
-                const formattedDates = `${moment(e.startDate).format("MM/DD/YYYY")} - ${moment(e.endDate).format("MM/DD/YYYY")}`
-                return <ArticleWrapper key={e._id} onClick={()=>props.history.push(`${link}/${e._id}`)}>
-                    <div>{e.title}</div>
-                    <div>{formattedDates}</div>
-                </ArticleWrapper>
-            })}
+                {articles.map(e => {
+                    const formattedDates = `${moment(e.startDate).format("MM/DD/YYYY")} - ${moment(e.endDate).format("MM/DD/YYYY")}`
+                    return <ArticleWrapper key={e._id} onClick={() => props.history.push(`${link}/${e._id}`)}>
+                        <div>{e.title}</div>
+                        <div>{formattedDates}</div>
+                    </ArticleWrapper>
+                })}
             </StyledArticlesWrapper>
-        </StyledWrapper>
-    ) : null;
+            : <div>coming soon!</div>
+        }
+    </StyledWrapper>
 };
 
 export default Articles;
