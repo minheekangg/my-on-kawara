@@ -44,14 +44,6 @@ app.use(cors());
 app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(
-//     session({
-//         secret: "LightBlog",
-//         cookie: { maxAge: 60000 },
-//         resave: false,
-//         saveUninitialized: false
-//     })
-// );
 
 if (!isProduction) {
     app.use(errorHandler());
@@ -72,6 +64,7 @@ app.use(require("./routes"));
 
 // Send anything that doesn't match above to the react client
 app.get('*', (req, res) => {
+    console.log('will pass do', __dirname);
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
