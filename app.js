@@ -61,11 +61,11 @@ if (!isProduction) {
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Add models
-require('./models/Trip');
-require('./models/Photo');
-require('./models/Person');
-require('./models/Destination');
-require('./models/Sticker');
+require('./models/trip');
+require('./models/photo');
+require('./models/person');
+require('./models/destination');
+require('./models/sticker');
 
 // Add routes
 app.use(require("./routes"));
