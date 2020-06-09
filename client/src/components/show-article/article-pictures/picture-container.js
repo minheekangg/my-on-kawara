@@ -116,7 +116,7 @@ const PictureContainer = ({trip}) => {
         const desc = [];
 
         if (!!currentPicture.date) {
-            desc.push(<span style={{color: 'red'}}>{moment(currentPicture.date).format('\'YY/MM/DD')}</span>)
+            desc.push(<span>{moment(currentPicture.date).format('\'YY/MM/DD')}</span>)
         } 
         
         if (!!currentPicture.location) {
