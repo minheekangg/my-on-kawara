@@ -44,7 +44,6 @@ app.use(cors());
 app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "public")));
 app.use(
     session({
         secret: "LightBlog",
@@ -70,6 +69,11 @@ require('./models/Sticker');
 
 // Add routes
 app.use(require("./routes"));
+
+// Send anything that doesn't match above to the react client
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 app.use((req, res, next) => {
     const err = new Error("Not Found");
@@ -99,10 +103,6 @@ app.use((err, req, res) => {
             error: {}
         }
     });
-});
-
-app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 const server = app.listen(8000, () =>
