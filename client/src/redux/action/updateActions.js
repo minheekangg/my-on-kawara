@@ -1,6 +1,8 @@
 import { ActionTypes } from '../../utils/constants';
 import axios from "axios";
 
+const baseURL = process.env.REACT_APP_FIXIE_URL || 'http://localhost:8000';
+
 export const updateProp = (payload) => {
     return (dispatch) => {
         dispatch(
@@ -30,7 +32,7 @@ export const updateTrip = payload => {
         }
 
         return axios
-            .patch(`http://localhost:8000/api/trips/${tripId}`, {
+            .patch(`${baseURL}/api/trips/${tripId}`, {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",

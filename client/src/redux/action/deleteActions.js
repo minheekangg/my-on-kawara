@@ -1,12 +1,15 @@
 import { ActionTypes } from '../../utils/constants';
 import axios from "axios";
 
+
+const baseURL = process.env.REACT_APP_FIXIE_URL || 'http://localhost:8000';
+
 export const deleteTrip = id => {    
     return (dispatch) => {
         dispatch({ type: ActionTypes.DELETE_TRIP + "_PENDING" });
 
         return axios
-            .delete(`http://localhost:8000/api/trips/${id}`, {
+            .delete(`${baseURL}/api/trips/${id}`, {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
@@ -49,7 +52,7 @@ export const deletePhoto = (id, tripId) => {
         }
         
         return axios
-            .delete(`http://localhost:8000/api/photos/${id}`, {
+            .delete(`${baseURL}/api/photos/${id}`, {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
@@ -90,11 +93,10 @@ export const deleteSticker = (id, tripId) => {
                     payload: err,
                 });
             }
-
         }
         
         return axios
-            .delete(`http://localhost:8000/api/stickers/${id}`, {
+            .delete(`${baseURL}/api/stickers/${id}`, {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",

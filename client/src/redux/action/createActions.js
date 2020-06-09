@@ -1,6 +1,8 @@
 import { ActionTypes } from '../../utils/constants';
 import axios from "axios";
 
+const baseURL = process.env.REACT_APP_FIXIE_URL || 'http://localhost:8000';
+
 export const createDestinations = (destinations) => {
     return (dispatch, getState) => {
         dispatch({ type: ActionTypes.CREATE_DESTINATIONS + "_PENDING" });
@@ -23,7 +25,7 @@ export const createDestinations = (destinations) => {
 
 
         return axios
-            .post("http://localhost:8000/api/destinations", {
+            .post(baseURL + "/api/destinations", {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
@@ -52,7 +54,7 @@ export const createTrip = payload => {
     return (dispatch) => {
         dispatch({ type: ActionTypes.CREATE_TRIP + "_PENDING" });
         return axios
-            .post("http://localhost:8000/api/trips", {
+            .post(baseURL + "/api/trips", {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
@@ -100,7 +102,7 @@ export const createPhotos = payload => {
         }
 
         return axios
-            .post("http://localhost:8000/api/photos", {
+            .post(baseURL + "/api/photos", {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
@@ -154,7 +156,7 @@ export const createSticker = payload => {
         }
 
         return axios
-            .post("http://localhost:8000/api/stickers", {
+            .post(baseURL + "/api/stickers", {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                     "Content-Type": "application/json",
