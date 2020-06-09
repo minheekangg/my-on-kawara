@@ -58,13 +58,8 @@ if (!isProduction) {
     app.use(errorHandler());
 } 
 
-// // Serve any static files
-// app.use(express.static(path.join(__dirname, "client/build")));
-// // Handle React routing, return all requests to React app
-// app.get("*", function (req, res) {
-//     res.sendFile(path.join(__dirname, "client/build", "index.html"));
-// });
-
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Add models
 require('./models/Trip');
@@ -104,6 +99,10 @@ app.use((err, req, res) => {
             error: {}
         }
     });
+});
+
+app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 const server = app.listen(8000, () =>
