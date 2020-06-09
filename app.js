@@ -44,14 +44,14 @@ app.use(cors());
 app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(
-    session({
-        secret: "LightBlog",
-        cookie: { maxAge: 60000 },
-        resave: false,
-        saveUninitialized: false
-    })
-);
+// app.use(
+//     session({
+//         secret: "LightBlog",
+//         cookie: { maxAge: 60000 },
+//         resave: false,
+//         saveUninitialized: false
+//     })
+// );
 
 if (!isProduction) {
     app.use(errorHandler());
@@ -105,6 +105,6 @@ app.use((err, req, res) => {
     });
 });
 
-const server = app.listen(8000, () =>
+const server = app.listen(process.env.PORT || 800, () =>
     console.log("Server started on http://localhost:8000")
 );
