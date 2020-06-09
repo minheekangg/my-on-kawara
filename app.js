@@ -93,5 +93,5 @@ app.use((err, req, res) => {
 });
 
 const server = app.listen(process.env.PORT || 8000, () =>
-    console.log("Server started on " + app.get('port'))
+    console.log("Server started on " + process.env.PORT || 8000)
 );
