@@ -90,6 +90,6 @@ app.use((err, req, res) => {
     });
 });
 
-const server = app.listen(process.env.PORT || 800, () =>
-    console.log("Server started on http://localhost:8000")
+const server = app.listen(process.env.PORT || 8000, () =>
+    console.log("Server started on " + app.get('port'))
 );
