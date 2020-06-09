@@ -36,8 +36,6 @@ const cors = require("cors");
 const errorHandler = require("errorhandler");
 const logger = require("morgan");
 
-const isProduction = process.env.NODE_ENV === "production";
-
 const app = express();
 
 app.use(cors());
@@ -80,19 +78,6 @@ app.use((req, res, next) => {
     err.status = 404;
     next(err);
 });
-
-if (!isProduction) {
-    app.use((err, req, res) => {
-        res.status(err.status || 500);
-
-        res.json({
-            errors: {
-                message: err.message,
-                error: err
-            }
-        });
-    });
-}
 
 app.use((err, req, res) => {
     res.status(err.status || 500);
