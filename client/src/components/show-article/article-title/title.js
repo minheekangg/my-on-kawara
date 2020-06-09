@@ -56,7 +56,7 @@ export default class Title extends React.Component {
     renderStickers(){
         return this.state.dimensions && this.state.stickers.map(s=> {
             return <Sticker
-                key={s}
+                key={s._id}
                 img={s.url}
                 x={Math.floor(Math.random() * (this.state.dimensions.width - 300))}
                 y={Math.floor(Math.random() * (this.state.dimensions.height - 300))}
