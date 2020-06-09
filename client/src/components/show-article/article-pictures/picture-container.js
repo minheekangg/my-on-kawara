@@ -81,6 +81,7 @@ const TripDescription = styled.div`
     background-color: white;
     transition: all 0.5s;
     cursor:pointer;
+    white-space: pre-line;
     
     &.active {
         height: auto;
