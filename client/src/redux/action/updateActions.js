@@ -56,3 +56,48 @@ export const updateTrip = payload => {
             });
     };
 }
+
+export const updatePhoto = payload => {    
+    return (dispatch, getState) => {
+        dispatch({ type: ActionTypes.UPDATE_PHOTO + "_PENDING" });
+
+        let tripId = payload.tripId
+        if (!tripId) {
+            const state = getState();
+            tripId = state && state.trip && state.trip.trip._id;
+            
+            if (!tripId) {
+                const err = 'trip is missing';
+                
+                dispatch({
+                    type: ActionTypes.UPDATE_PHOTO + "_REJECTED",
+                    payload: err,
+                });
+            }
+
+        }
+
+        return axios
+            .patch(`${baseURL}/api/photos/${payload._id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    accept: "application/json"
+                },
+                data: {...payload, tripId}
+            })
+            .then((r) => {
+                if (r && r.data && r.data.trip) {
+                    dispatch({
+                        type: ActionTypes.UPDATE_PHOTO + "_FULFILLED",
+                        payload: r.data,
+                    });
+                }
+            })
+            .catch((err) => {
+                dispatch({
+                    type: ActionTypes.UPDATE_PHOTO + "_REJECTED",
+                    payload: err,
+                });
+            });
+    };
+}

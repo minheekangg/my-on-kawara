@@ -54,7 +54,7 @@ const PhotosList = props => {
        <PhotosContainer>
         <StyledSemanticLabel>Stickers: </StyledSemanticLabel>
           {props.photos.map((p, idx) => {
-            return <Modal trigger={< Image format="jpg" width="100" height="100" crop="fill" cloudName={MY_CLOUD_NAME} key={p._id + idx} publicId={p.publicId} alt={p.city + p.date} />} closeIcon>
+            return <Modal key={p._id + idx} trigger={< Image format="jpg" width="100" height="100" crop="fill" cloudName={MY_CLOUD_NAME}  publicId={p.publicId} alt={'semtimental sticker ' + idx} />} closeIcon>
                   <Modal.Content image>
                     <Image
                       key={p.publicId}
@@ -62,6 +62,7 @@ const PhotosList = props => {
                       width="300"
                       cloudName={MY_CLOUD_NAME}
                       format='jpg'
+                     alt={'semtimental sticker ' + idx}
                     />
                   </Modal.Content>
                   <Modal.Actions>
