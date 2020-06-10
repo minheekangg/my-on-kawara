@@ -2,7 +2,11 @@ import React, { useState, useEffect, Fragment } from "react";
 import styled from "styled-components";
 import moment from "moment"
 import { Image, Transformation } from "cloudinary-react";
+import { Icon } from 'semantic-ui-react'
+
+
 const MY_CLOUD_NAME = process.env.REACT_APP_MY_CLOUD_NAME;
+const mobileBP = '600px';
 
 const PictureContainerWrapper = styled.div`
     display: flex;
@@ -19,7 +23,7 @@ const PictureFullBleed = styled.div`
     background-size: contain;
     margin: 10px;
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: ${mobileBP}) {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -41,7 +45,7 @@ const PostContentContainer = styled.div`
     overflow: hidden;
     position: relative;
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: ${mobileBP}) {
         width: 100%;
         height: 100%;
         background-color: white;
@@ -51,14 +55,23 @@ const PostContentContainer = styled.div`
 const PicturesContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
-    
+    justify-content: center;
+
     img {
         margin: 10px;
         cursor: pointer;
     }
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 800px) {
+        margin: auto -10px;
+
+       img {
+           margin: 5px;
+           width: 80px
+       }
+    }
+
+    @media screen and (max-width: ${mobileBP}) {
         margin: auto -10px;
         align-items: flex-start;
         height: auto;
@@ -72,6 +85,12 @@ const PicturesContainer = styled.div`
 const PictureDescription = styled.div`
     bottom: 0;
     position: absolute;
+    color: red;
+    text-transform: uppercase;
+
+    a { 
+        color: inherit;
+    }
 `;
 
 const TripDescription = styled.div`
@@ -120,12 +139,13 @@ const PictureContainer = ({trip}) => {
             desc.push(<span>{moment(currentPicture.date).format('\'YY/MM/DD')}</span>)
         } 
         
-        if (!!currentPicture.location) {
-            desc.push(<span> <a target="_blank" rel="noopener noreferrer" href={currentPicture.location}>location</a> </span>)
-        }
-
+        
         if (!!currentPicture.city) {
             desc.push(<span> {currentPicture.city} </span>)
+        }
+
+        if (!!currentPicture.location) {
+            desc.push(<span> <a target="_blank" rel="noopener noreferrer" href={currentPicture.location}><Icon link name='map marker' /></a></span>)
         }
 
         return (
