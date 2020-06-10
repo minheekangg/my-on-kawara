@@ -29,10 +29,10 @@ if (process.env.MONGODB_URI) {
 }
 
 const path = require("path");
+const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
-const session = require("express-session");
-const cors = require("cors");
+// const session = require("express-session");
 const errorHandler = require("errorhandler");
 const logger = require("morgan");
 
