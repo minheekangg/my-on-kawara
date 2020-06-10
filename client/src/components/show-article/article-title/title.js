@@ -4,6 +4,8 @@ import moment from "moment";
 
 import Sticker from '../sticker';
 
+const mobileBP = '600px';
+
 const TitleWrapper = styled.div`
     height: calc(100vh - 20px);
     // background-color: #f2eade;
@@ -23,6 +25,12 @@ const TitleWrapper = styled.div`
         padding: 30px;
         z-index: 3;
         text-align: center;
+
+        @media screen and (max-width: ${mobileBP}) {
+            padding: 15px;
+            bottom: 0;
+            // h2 { margin: 0;}
+        }
     }
 `;
 
