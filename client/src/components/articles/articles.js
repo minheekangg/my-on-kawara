@@ -16,6 +16,7 @@ const StyledArticlesWrapper = styled.div`
     border: 1px solid;
     flex-direction: column;
     padding: 10px;
+    margin: 10px;
     width: 100%;
 
     h2 {

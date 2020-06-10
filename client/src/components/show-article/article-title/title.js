@@ -7,7 +7,7 @@ import Sticker from '../sticker';
 const mobileBP = '600px';
 
 const TitleWrapper = styled.div`
-    height: calc(100vh - 20px);
+    height: calc(100vh - 30px);
     // background-color: #f2eade;
     position: relative;
     margin: 10px;
@@ -29,7 +29,7 @@ const TitleWrapper = styled.div`
         @media screen and (max-width: ${mobileBP}) {
             padding: 15px;
             bottom: 0;
-            // h2 { margin: 0;}
+            margin: 0;
         }
     }
 `;
@@ -37,6 +37,7 @@ const TitleWrapper = styled.div`
 const StickerContainer = styled.div`
     position: relative;
     overflow: hidden;
+    margin: -30px -30px;
     height: 100vh;
 `;
 
