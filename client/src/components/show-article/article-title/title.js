@@ -14,7 +14,7 @@ const TitleWrapper = styled.div`
     .title-container {
         position: absolute;
         margin: auto;
-        // background-color: #f2eade;
+        background-color: white;
         width: 300px;
         border: 1px solid;
         margin: 10px;

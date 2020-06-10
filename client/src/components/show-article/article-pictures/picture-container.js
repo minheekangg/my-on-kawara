@@ -49,6 +49,10 @@ const PostContentContainer = styled.div`
     }
 `;
 const PicturesContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    
     img {
         margin: 10px;
         cursor: pointer;
@@ -57,9 +61,6 @@ const PicturesContainer = styled.div`
     @media screen and (max-width: 400px) {
         margin: auto -10px;
         align-items: flex-start;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
         height: auto;
 
        img {
