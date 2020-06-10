@@ -1,7 +1,7 @@
 import { ActionTypes } from '../../utils/constants';
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_FIXIE_URL || 'http://localhost:8000';
+const baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:8000';
 
 export const updateProp = (payload) => {
     return (dispatch) => {
