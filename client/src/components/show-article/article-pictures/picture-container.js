@@ -56,6 +56,8 @@ const PicturesContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    max-height: calc(100% - 30px);
+    overflow-y: scroll;
 
     img {
         margin: 10px;
@@ -97,25 +99,35 @@ const TripDescription = styled.div`
     bottom: 0;
     position: absolute;
     width: 100%;
-    height: 20px;
     background-color: white;
-    transition: all 0.5s;
+
     cursor:pointer;
     white-space: pre-line;
-    
+    padding: 10px;
+    height: auto;
+    max-height: 30px;
+    transition: all 0.5s ease-in;
+
     &.active {
-        height: auto;
+        max-height: 100%;
+        overflow-y: scroll;
     }
-    &.not-active {
-        height: 20px;
+
+    &.active>div {
+        max-height: 100vh;
+    }
+    &.not-active>div {
+        max-height: 0;
     }
 `;
-
+    
 const AdditionalContent = styled.div`
     font-size: 14px;
     padding: 10px;
     border-top: 1px solid;
     height: 100%;
+    max-height: 0;
+    transition: all 0.5s ease-in;
 `;
 
 
@@ -185,7 +197,7 @@ const PictureContainer = ({trip}) => {
             <TripDescription onClick={() => setExpandText(!expandText)} className={expandText ? 'active' : 'not-active'}>
                 {expandText ? 'Less' : 'More'}
                 {!!trip.content && trip.content
-                    ? <AdditionalContent> {trip.content}
+                    ? <AdditionalContent > {trip.content}
                     </AdditionalContent>
                     : null
                 }
