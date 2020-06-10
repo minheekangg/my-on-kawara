@@ -2,14 +2,14 @@ import { ActionTypes } from '../../utils/constants';
 import axios from 'axios';
 
 const baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:8000';
+console.log('base url is', baseURL)
 
 export const fetchArticles = () => {
     return (dispatch) => {
         dispatch(
             { type: ActionTypes.FETCH_ARTICLES + '_PENDING' }
         )
-        return axios.get(
-            baseURL + "/api/trips",
+        return axios.get(baseURL + "/api/trips",
             {
                 headers: {
                     // Authorization: `Bearer ${localStorage.getItem("jwt")}`,
