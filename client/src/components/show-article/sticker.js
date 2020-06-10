@@ -40,12 +40,15 @@ export default class Sticker extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener("mousemove", this.handleMouseMove);
+        window.removeEventListener("touchmove", this.handleMouseMove);
         window.removeEventListener("mouseup", this.handleMouseUp);
     }
 
     handleMouseDown = ({ clientX, clientY }) => {
         window.addEventListener("mousemove", this.handleMouseMove);
         window.addEventListener("mouseup", this.handleMouseUp);
+        window.removeEventListener("touchmove", this.handleMouseMove);
+
 
         if (this.props.onDragStart) {
             this.props.onDragStart();
@@ -86,7 +89,9 @@ export default class Sticker extends React.Component {
 
     handleMouseUp = () => {
         window.removeEventListener("mousemove", this.handleMouseMove);
-        window.removeEventListener("mouseup", this.handleMouseUp);
+        window.removeEventListener("mouseup", this.handleMouseUp); 
+        window.removeEventListener("touchmove", this.handleMouseMove);
+
 
         this.setState(
             {
