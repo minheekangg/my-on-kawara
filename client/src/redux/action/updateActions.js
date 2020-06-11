@@ -76,7 +76,6 @@ export const updatePhoto = payload => {
             }
 
         }
-
         return axios
             .patch(`${baseURL}/api/photos/${payload._id}`, {
                 headers: {

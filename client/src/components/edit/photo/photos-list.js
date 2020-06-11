@@ -80,7 +80,7 @@ const PhotosList = props => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.updatePhotos(photo);
+    props.updatePhoto(photo);
     return;
   }
 

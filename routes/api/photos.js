@@ -115,6 +115,47 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
+router.patch("/:id", async (req, res, next) => {
+    const { data } = req.body;
+
+    if (typeof data.destination !== "undefined") {
+        req.photo.city = data.destination;
+    }
+
+    if (typeof data.date !== "undefined") {
+        req.photo.date = data.date;
+    }
+
+    if (typeof data.location !== "undefined") {
+        req.photo.location = data.location;
+    }
+
+    req.photo.save()
+        .then(async photo => {
+            const {_id, ...params} = photo;
+            let query = {
+                _id: data.tripId,
+                'photos._id':  _id
+            }
+            let update;
+            if (params && params._doc) {
+                update = {
+                    $set: {
+                        'photos.$.date': params._doc.date,
+                        'photos.$.location': params._doc.location,
+                        'photos.$.city': params._doc.city,
+                    }
+                }
+            }
+            let options = { upsert: false }
+
+            Trip.findOneAndUpdate(query, update, options)
+                .then(trip => {
+                    res.json({ trip })
+                }).catch(err=>console.log('her', err))
+            })    
+});
+
 router.delete("/:id", (req, res, next) => {
     if (!req.body.tripId) {
         return res.status(422).json({
