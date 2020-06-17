@@ -69,7 +69,8 @@ const PicturesContainer = styled.div`
 
        img {
            margin: 5px;
-           width: 80px
+           width: 80px;
+           height: 80px;
        }
     }
 
